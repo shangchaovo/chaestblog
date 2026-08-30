@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="liquid">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RSS 订阅 · chaestblog</title>
+    <meta name="description" content="订阅 chaestblog 的最新博文。复制 RSS 地址并添加到你常用的阅读器。" />
+    <link rel="canonical" href="https://chaestblog.pages.dev/rss/" />
+    <link rel="alternate" type="application/rss+xml" title="chaestblog RSS" href="https://chaestblog.pages.dev/rss.xml" />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+    <link rel="stylesheet" href="/css/themes.css?v=20260830a" />
+    <link rel="stylesheet" href="/css/styles.css?v=20260830a" />
+    <script>
+      (function () {
+        try {
+          var theme = localStorage.getItem("hubTheme");
+          if (theme === "liquid" || theme === "eye" || theme === "ink") {
+            document.documentElement.dataset.theme = theme;
+            return;
+          }
+          if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+            document.documentElement.dataset.theme = "ink";
+          }
+        } catch (error) {}
+      })();
+    </script>
+  </head>
+  <body class="page rss-page">
+    <div class="atmosphere" aria-hidden="true">
+      <span class="blob blob-a"></span>
+      <span class="blob blob-b"></span>
+      <span class="blob blob-c"></span>
+    </div>
+    <header class="nav glass">
+      <a class="brand" href="/">
+        <img class="brand-avatar" src="/assets/avatar.jpg" alt="Chase Xie" width="40" height="40" />
+        <span class="brand-copy"><strong>Chase Xie</strong><small>Personal Hub</small></span>
+      </a>
+      <nav class="nav-links" aria-label="页面">
+        <a href="/#sites">站点</a>
+        <a href="/notes/">观点</a>
+        <a href="/about/">关于</a>
+        <a href="/#contact">联系</a>
+      </nav>
+      <div class="theme-switch" role="radiogroup" aria-label="主题">
+        <button class="theme-btn" type="button" data-theme="liquid" aria-pressed="true" title="Liquid Glass"><i class="orb orb-liquid" aria-hidden="true"></i><span>玻璃</span></button>
+        <button class="theme-btn" type="button" data-theme="eye" aria-pressed="false" title="护眼"><i class="orb orb-eye" aria-hidden="true"></i><span>护眼</span></button>
+        <button class="theme-btn" type="button" data-theme="ink" aria-pressed="false" title="墨夜"><i class="orb orb-ink" aria-hidden="true"></i><span>墨夜</span></button>
+      </div>
+    </header>
+
+    <main class="rss-view">
+      <section class="rss-hero glass">
+        <div class="rss-copy">
+          <p class="kicker">RSS 2.0 · Feed is live</p>
+          <h1>把更新交给阅读器</h1>
+          <p class="lede">Chase Xie 关于市场工具、AI 算力、HBM 与独立产品的个人笔记。</p>
+          <div class="rss-address">
+            <label for="rssFeedUrl">订阅地址</label>
+            <div class="rss-address-row">
+              <input id="rssFeedUrl" type="url" readonly value="https://chaestblog.pages.dev/rss.xml" />
+              <button class="btn primary" id="copyRssBtn" type="button">复制地址</button>
+            </div>
+            <p id="rssCopyStatus" aria-live="polite">复制后，粘贴到 RSS 阅读器的“添加订阅”中。</p>
+          </div>
+        </div>
+        <div class="rss-beacon" aria-hidden="true">
+          <span class="rss-ring rss-ring-a"></span>
+          <span class="rss-ring rss-ring-b"></span>
+          <img src="/assets/icons/rss.svg" alt="" width="92" height="92" />
+        </div>
+      </section>
+
+      <section class="rss-help">
+        <div><p class="kicker">How it works</p><h2>这就是可订阅的源</h2></div>
+        <p>Chrome 原先显示的 XML 是给阅读器读取的数据，不是报错。复制上面的地址，粘贴到你使用的 RSS 阅读器中，就能收到后续更新。</p>
+      </section>
+
+      <section class="rss-entries" aria-labelledby="rssEntriesTitle">
+        <div class="rss-section-head"><h2 id="rssEntriesTitle">最近更新</h2><span>1 篇</span></div>
+        <a class="rss-entry glass" href="/notes/hbm-supply/">
+          <span class="rss-entry-icon"><img src="/assets/icons/notes.svg" alt="" width="42" height="42" /></span>
+          <span class="rss-entry-copy">
+            <time>2026-08-17</time>
+            <strong>HBM 比标题先紧</strong>
+            <small>HBM 和先进封装是当前 AI 开支里比 GPU 标题更硬的供给约束。供给爬坡比叙事重要。</small>
+          </span>
+          <span class="rss-entry-arrow" aria-hidden="true">→</span>
+        </a>
+      </section>
+    </main>
+    <script src="/js/page.js?v=20260830a" type="module"></script>
+    <script src="/js/rss.js?v=20260830a" type="module"></script>
+  </body>
+</html>

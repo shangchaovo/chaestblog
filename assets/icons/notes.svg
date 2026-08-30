@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="notes-bg" x1="10" y1="2" x2="54" y2="62">
+      <stop stop-color="#e4d4ff"/>
+      <stop offset=".5" stop-color="#8b6cf0"/>
+      <stop offset="1" stop-color="#4d2fad"/>
+    </linearGradient>
+    <linearGradient id="notes-paper" x1="18" y1="12" x2="46" y2="52">
+      <stop stop-color="#fffefb"/>
+      <stop offset="1" stop-color="#efe6d6"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="url(#notes-bg)"/>
+  <rect x="1.2" y="1.2" width="61.6" height="61.6" rx="14.8" fill="none" stroke="#fff" stroke-opacity=".35"/>
+  <path d="M14 12h36" stroke="#fff" stroke-width="2.4" stroke-linecap="round" opacity=".35"/>
+  <rect x="16" y="14" width="32" height="38" rx="4" fill="url(#notes-paper)"/>
+  <path d="M16 22h32" stroke="#d7c49a" stroke-width="2"/>
+  <path d="M22 30h20M22 36h20M22 42h14" stroke="#8b6cf0" stroke-width="2.1" stroke-linecap="round" opacity=".7"/>
+  <circle cx="44" cy="16" r="5.5" fill="#ffdd00"/>
+  <path d="M44 13.2v4.2M42 16h4" stroke="#8a5310" stroke-width="1.4" stroke-linecap="round"/>
+</svg>

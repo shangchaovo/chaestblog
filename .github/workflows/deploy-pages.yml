@@ -1,0 +1,39 @@
+# Push 后由 GitHub Actions 发到 Cloudflare Pages，不需要再开本机。
+# 在仓库 Settings → Secrets and variables → Actions 加一条：
+#   CLOUDFLARE_API_TOKEN  （Cloudflare Pages 编辑权限）
+name: Deploy chaestblog
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: pages-chaestblog
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Stage Pages files
+        run: |
+          set -euo pipefail
+          STAGE=dist
+          mkdir -p "$STAGE"
+          node scripts/build-static.mjs
+          cp index.html 404.html robots.txt rss.xsl _headers "$STAGE/"
+          for dir in assets css js data functions shared about notes rss; do
+            cp -R "$dir" "$STAGE/"
+          done
+      - uses: cloudflare/wrangler-action@v3
+        env:
+          npm_config_yes: "true"
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: "7cc8529bb0488ee3f2e232fb6d79a875"
+          command: pages deploy dist --project-name chaestblog --branch main --commit-dirty=true

@@ -1,0 +1,18 @@
+{
+  "updatedAt": "2026-08-25T12:23:00.223Z",
+  "items": [
+    {
+      "id": "n_cmipldxjd4",
+      "title": "CPU和GPU将1:1",
+      "body": "关注AMD（HBM机柜抢占英伟达市场份额，CPU目前第一，CPU和GPU数量的重构），INTEL（皇家半导体，川普的喊单，重兴美国工业，转移台积电工艺，进军内存市场）",
+      "createdAt": "2026-08-25T12:22:23.560Z"
+    },
+    {
+      "id": "n_hbm",
+      "slug": "hbm-supply",
+      "title": "HBM 比标题先紧",
+      "body": "HBM 和先进封装是当前 AI 开支里比 GPU 标题更硬的约束。供给爬坡比叙事重要。数字会变，判断留在独立页面。",
+      "createdAt": "2026-08-17T00:00:00.000Z"
+    }
+  ]
+}

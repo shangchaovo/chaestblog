@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="liquid">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HBM 比标题先紧 · Chase Xie</title>
+    <meta name="description" content="HBM（High Bandwidth Memory）和先进封装，是当前 AI 训练与推理资本开支里比 GPU 标题更硬的供给约束。这篇写我为什么这么看、在盯什么。" />
+    <link rel="canonical" href="https://chaestblog.pages.dev/notes/hbm-supply/" />
+    <link rel="alternate" type="application/rss+xml" title="chaestblog RSS" href="https://chaestblog.pages.dev/rss.xml" />
+    <meta property="og:type" content="article" />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:site_name" content="chaestblog" />
+    <meta property="og:url" content="https://chaestblog.pages.dev/notes/hbm-supply/" />
+    <meta property="og:title" content="HBM 比标题先紧 · Chase Xie" />
+    <meta property="og:description" content="HBM 和先进封装是当前 AI 开支里比 GPU 标题更硬的约束。供给爬坡比叙事重要。" />
+    <meta property="og:image" content="https://chaestblog.pages.dev/assets/og.jpg" />
+    <meta property="article:published_time" content="2026-08-17T00:00:00.000Z" />
+    <meta property="article:author" content="Chase Xie" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@johny_xie" />
+    <meta name="twitter:title" content="HBM 比标题先紧 · Chase Xie" />
+    <meta name="twitter:description" content="HBM 和先进封装是当前 AI 开支里比 GPU 标题更硬的约束。供给爬坡比叙事重要。" />
+    <meta name="twitter:image" content="https://chaestblog.pages.dev/assets/og.jpg" />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+    <link rel="stylesheet" href="/css/themes.css?v=20260830a" />
+    <link rel="stylesheet" href="/css/styles.css?v=20260830a" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "HBM 比标题先紧",
+        "description": "HBM 和先进封装是当前 AI 开支里比 GPU 标题更硬的供给约束。",
+        "inLanguage": "zh-CN",
+        "datePublished": "2026-08-17",
+        "dateModified": "2026-08-17",
+        "mainEntityOfPage": "https://chaestblog.pages.dev/notes/hbm-supply/",
+        "image": "https://chaestblog.pages.dev/assets/og.jpg",
+        "author": {
+          "@type": "Person",
+          "@id": "https://chaestblog.pages.dev/#person",
+          "name": "Chase Xie",
+          "url": "https://chaestblog.pages.dev/"
+        },
+        "publisher": {
+          "@type": "Person",
+          "@id": "https://chaestblog.pages.dev/#person",
+          "name": "Chase Xie"
+        }
+      }
+    </script>
+    <script>
+      (function () {
+        try {
+          var theme = localStorage.getItem("hubTheme");
+          if (theme === "liquid" || theme === "eye" || theme === "ink") {
+            document.documentElement.dataset.theme = theme;
+            return;
+          }
+          if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+            document.documentElement.dataset.theme = "ink";
+          }
+        } catch (error) {}
+      })();
+    </script>
+  </head>
+  <body class="page article-page">
+    <div class="atmosphere" aria-hidden="true">
+      <span class="blob blob-a"></span>
+      <span class="blob blob-b"></span>
+      <span class="blob blob-c"></span>
+    </div>
+    <header class="nav glass">
+      <a class="brand" href="/">
+        <img class="brand-avatar" src="/assets/avatar.jpg" alt="Chase Xie" width="40" height="40" />
+        <span class="brand-copy">
+          <strong>Chase Xie</strong>
+          <small>Personal Hub</small>
+        </span>
+      </a>
+      <nav class="nav-links" aria-label="页面">
+        <a href="/#sites">站点</a>
+        <a href="/notes/">观点</a>
+        <a href="/about/">关于</a>
+        <a href="/#contact">联系</a>
+      </nav>
+      <div class="theme-switch" role="radiogroup" aria-label="主题">
+        <button class="theme-btn" type="button" data-theme="liquid" aria-pressed="true" title="Liquid Glass"><i class="orb orb-liquid" aria-hidden="true"></i><span>玻璃</span></button>
+        <button class="theme-btn" type="button" data-theme="eye" aria-pressed="false" title="护眼"><i class="orb orb-eye" aria-hidden="true"></i><span>护眼</span></button>
+        <button class="theme-btn" type="button" data-theme="ink" aria-pressed="false" title="墨夜"><i class="orb orb-ink" aria-hidden="true"></i><span>墨夜</span></button>
+      </div>
+    </header>
+    <main class="page-doc">
+      <p class="crumbs"><a href="/">chaestblog</a> / <a href="/notes/">观点</a> / HBM</p>
+      <p class="kicker">Notes</p>
+      <h1>HBM 比标题先紧</h1>
+      <p class="updated">2026-08-17 · Chase Xie</p>
+      <p class="lede">HBM（High Bandwidth Memory，高带宽内存）和先进封装，是当前 AI 训练与推理资本开支里，比 GPU 标题更硬的供给约束。</p>
+      <div class="prose">
+        <h2>HBM 是什么</h2>
+        <p>HBM 是把多层 DRAM 叠起来、用硅通孔连到计算芯片旁边的高带宽内存。训练和推理都要它：算力芯片再快，内存带宽跟不上，利用率就会掉下来。</p>
+        <h2>我为什么先盯供给，而不是标题</h2>
+        <ol>
+          <li>GPU 谁都会讲。真正卡脖子的，经常是 HBM 产能和把芯片、HBM、基板叠在一起的先进封装（比如 CoWoS 一类）。</li>
+          <li>资本开支还在，不等于每一层供应链都同时松开。哪一层爬得慢，哪一层的价格和交期就更有信息量。</li>
+          <li>标题可以一天一个，爬坡是季度级的。所以我把「什么时候真的出来」写在前面。</li>
+        </ol>
+        <h2>我在盯什么</h2>
+        <ul>
+          <li>存储：Micron（MU）的 HBM 与 DRAM，看产能而不是单日涨跌。</li>
+          <li>代工：台积电（TSM）的先进制程和 CoWoS 一类封装产能。</li>
+          <li>同一笔 AI 开支的另一侧：NVIDIA 的出货节奏，Broadcom 的自定义加速芯片和网络交换。</li>
+        </ul>
+        <p>更完整的个股备忘在首页的 <a href="/#watch">最近盯的板块</a>。那是个人记录，不是买卖建议。</p>
+        <h2>一句话</h2>
+        <p>最近看票还是围着同一笔 AI 开支转。GPU 谁都会讲，我更想看 HBM 和先进封装什么时候真的爬上来。</p>
+      </div>
+      <p class="disclaimer">个人观察，用来固定我当时为什么这么看。不是投资建议，也不构成任何推荐。</p>
+    </main>
+    <script src="/js/page.js?v=20260830a" type="module"></script>
+  </body>
+</html>

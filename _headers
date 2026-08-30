@@ -1,0 +1,21 @@
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: DENY
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=()
+  Content-Security-Policy: default-src 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self'; font-src 'self'; form-action 'self'
+
+# CSS / JS 在 HTML 里带 ?v= 指纹，可以放心长缓存；改了记得 bump 版本号
+/css/*
+  Cache-Control: public, max-age=604800
+
+/js/*
+  Cache-Control: public, max-age=604800
+
+# 截图和图标偶尔会原地替换，留一天 + 后台重验证
+/assets/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+# 种子稿只在接口挂了时才被读，短缓存
+/data/*
+  Cache-Control: public, max-age=300

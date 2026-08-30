@@ -1,0 +1,63 @@
+{
+  "disclaimer": "个人记录，用来写我为什么盯这条线。不是投资建议，也不构成任何推荐。",
+  "updatedAt": "2026-08-25T12:38:58.150Z",
+  "sectors": [
+    {
+      "id": "s_ai",
+      "name": "光模块CPO",
+      "thesis": "AI算力瓶颈在当前通信传输上，需要替代铜缆来高效传输数据还有算力",
+      "stocks": [
+        {
+          "id": "nvda",
+          "symbol": "LITE",
+          "name": "LITE",
+          "reason": "美国光模块"
+        },
+        {
+          "id": "k_zl4lmzfg16",
+          "symbol": "MRVL",
+          "name": "迈威尔",
+          "reason": "黄仁勋喊单万亿，看到5折当下也存在被低估，算力，光模块，ASIC芯片定制老二（仅次于博通）"
+        }
+      ]
+    },
+    {
+      "id": "s_mem",
+      "name": "存储 / HBM",
+      "thesis": "HBM 供给紧，存储周期和 AI 需求叠在一起。跟踪爬坡比跟踪标题重要。",
+      "stocks": [
+        {
+          "id": "k_km9qe45lg8",
+          "symbol": "SNDK",
+          "name": "闪迪",
+          "reason": "和海力士后续开发HBF，当下美国NAND，波动率如MEME，但是后续可能会因为利润往HBM靠近，市场份额被长江扩产能而被重新定价被分化"
+        },
+        {
+          "id": "k_ug3w148avz",
+          "symbol": "SKHY",
+          "name": "SK海力士",
+          "reason": "HBM目前市场份额最高的公存储公司，深耕HBM但是因为韩国DISCOUNT目前市场定价在美国而不再韩国，跟三星可以平起平坐的存储公司，处于价值洼地，严重被低估，长期订单被锁定但是后续HBM爆发力还没被定价"
+        },
+        {
+          "id": "mu",
+          "symbol": "MU",
+          "name": "Micron",
+          "reason": "机构报团，存储最稳的标的，美国纯正血统，方向风向标，HBM制造能力后续最可能因为血统高等还有美国重振工业而被带起来，不缺订单，皇家存储"
+        }
+      ]
+    },
+    {
+      "id": "s_8qqhmvgm14",
+      "name": "电力",
+      "thesis": "美国基础电力设施不好，AI算力非常缺电，在马斯克牛逼没实现之前就买",
+      "stocks": [
+        {
+          "id": "k_59ykj6iuq5",
+          "symbol": "BE",
+          "name": "Bloom energy",
+          "reason": "有订单锁定，电力老二，相比GEV爆发力更强，一根K熊转牛，白宫严选"
+        }
+      ]
+    }
+  ]
+}

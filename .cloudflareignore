@@ -1,0 +1,11 @@
+.git
+.gitignore
+.env
+.env.example
+server.js
+scripts
+launchd
+logs
+*.md
+.wrangler
+node_modules

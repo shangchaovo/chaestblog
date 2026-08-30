@@ -1,0 +1,14 @@
+User-agent: Googlebot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: *
+Allow: /
+Disallow: /api/
+
+Sitemap: https://chaestblog.pages.dev/sitemap.xml

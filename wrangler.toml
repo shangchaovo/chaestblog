@@ -1,0 +1,11 @@
+# name = "chaestblog"
+# compatibility_date = "2026-08-17"
+# pages_build_output_dir = "."
+#
+# 用 scripts/deploy-pages.sh 发布（默认 --branch main 生产分支），
+# 不要直接把仓库根目录传上去（会带上 server.js）。
+# 在 Cloudflare Dashboard 绑定：
+#   HUB_ADMIN_TOKEN  管理口令
+#   KV namespace     绑定名 HUB_KV（需要 Workers KV 编辑权限，Pages 编辑不够）
+# 自定义域名 chaestblog.is-a.dev：Pages 已上线后，等 is-a-dev/register 的
+# domains/chaestblog.json PR 合并，再到 https://cf-pages.is-a.dev 绑定。

@@ -1,0 +1,136 @@
+{
+  "profile": {
+    "name": "Chase Xie",
+    "kicker": "嗨，我是",
+    "title": "把常用的工具放在一张桌上",
+    "bio": "Chase Xie 是独立开发者。这个站点汇总已经挂在公网上的市场工具和学习产品，以及最近在盯的 AI 算力与 HBM。想用的直接点进去。",
+    "avatar": "assets/avatar.jpg"
+  },
+  "socials": [
+    {
+      "id": "github",
+      "icon": "github",
+      "label": "GitHub",
+      "handle": "shangchaovo",
+      "href": "https://github.com/shangchaovo",
+      "kind": "link"
+    },
+    {
+      "id": "email",
+      "icon": "mail",
+      "label": "邮箱",
+      "handle": "shangchaoxie888@gmail.com",
+      "href": "mailto:shangchaoxie888@gmail.com",
+      "kind": "link"
+    },
+    {
+      "id": "bmc",
+      "icon": "coffee",
+      "label": "请我喝杯咖啡",
+      "handle": "buymeacoffee.com/chasetse",
+      "href": "https://buymeacoffee.com/chasetse",
+      "kind": "link"
+    },
+    {
+      "id": "x",
+      "icon": "x",
+      "label": "X",
+      "handle": "@johny_xie",
+      "href": "https://x.com/johny_xie",
+      "kind": "link"
+    },
+    {
+      "id": "telegram",
+      "icon": "telegram",
+      "label": "Telegram",
+      "handle": "",
+      "href": "",
+      "kind": "soon"
+    }
+  ],
+  "canonical": "https://chaestblog.pages.dev/",
+  "projects": [
+    {
+      "id": "predict-pulse",
+      "icon": "pulse",
+      "tint": "green",
+      "name": "Predict Pulse",
+      "tag": "预测市场",
+      "summary": "聚合预测市场的每日热点与盘口变化，追踪聪明钱持仓、套利机会和带来源权重的观点情绪；每条信号都保留原文，方便回到市场核验。",
+      "live": "https://predict-pulse.signal-harbor.workers.dev/?view=sentiment",
+      "shot": "assets/shots/predict-pulse.jpg",
+      "status": "live"
+    },
+    {
+      "id": "signal-harbor",
+      "icon": "chart",
+      "tint": "cyan",
+      "name": "Signal Harbor",
+      "tag": "美股研究",
+      "summary": "聚合美股 AI、半导体与云计算的新闻情绪、分析师观点和 OCC 官方期权持仓，集中查看 Put/Call Wall、Max Pain 与可核验来源。",
+      "live": "https://signal-harbor-terminal.signal-harbor.workers.dev/#overview",
+      "shot": "assets/shots/signal-harbor.jpg",
+      "status": "live"
+    },
+    {
+      "id": "wordpaper",
+      "icon": "book",
+      "tint": "violet",
+      "name": "WordPaper",
+      "tag": "学习",
+      "summary": "每日单词 + 艾宾浩斯复习做成手机 / 电脑壁纸，支持多用户账号与 Liquid Glass 界面。",
+      "live": "https://wordpaper.pages.dev/",
+      "github": "https://github.com/shangchaovo/daily-wallpaper",
+      "shot": "assets/shots/wordpaper.jpg",
+      "status": "live"
+    },
+    {
+      "id": "terminal",
+      "icon": "terminal",
+      "tint": "cyan",
+      "name": "加密终端",
+      "tag": "加密",
+      "summary": "跨所资金费率套利、Meme 异动、清算热图与期权 Wall，统一在一个深色终端里。",
+      "live": "https://crypto-funding-arbitrage.pages.dev/",
+      "github": "https://github.com/shangchaovo/crypto-funding-arbitrage",
+      "githubPublic": false,
+      "shot": "assets/shots/terminal.jpg",
+      "status": "live"
+    },
+    {
+      "id": "research",
+      "icon": "chart",
+      "tint": "amber",
+      "name": "外资投行研报",
+      "tag": "股票",
+      "summary": "追踪 UBS / Citi / MS / JPM 等对 AI 算力主线的评级与目标价，多源抓取 + LLM 摘要。",
+      "live": "https://fresearch.cc.cd/",
+      "github": "https://github.com/shangchaovo/ib-research",
+      "shot": "assets/shots/research.jpg",
+      "status": "live"
+    },
+    {
+      "id": "dailytrade",
+      "icon": "candles",
+      "tint": "gold",
+      "name": "交易每日报告",
+      "tag": "交易",
+      "summary": "开盘前的作战台：A股量化扫描、外资研报、美股监控、宏观跨资产和社媒情绪，合成一张每日交易报告。",
+      "live": "https://dailytrade.cc.cd/",
+      "shot": "assets/shots/dailytrade.jpg",
+      "status": "live"
+    },
+    {
+      "id": "resume",
+      "icon": "file",
+      "tint": "rose",
+      "name": "简历工坊",
+      "tag": "工具",
+      "summary": "面向校招的纯前端简历编辑器：左表单右 A4，导出矢量 PDF，数据只存在你的浏览器。",
+      "live": "https://resume-5lv.pages.dev/",
+      "github": "https://github.com/shangchaovo/resume-site",
+      "shot": "assets/shots/resume.jpg",
+      "status": "live"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="chat-bg" x1="10" y1="2" x2="54" y2="62">
+      <stop stop-color="#9be7c4"/>
+      <stop offset=".5" stop-color="#2bb673"/>
+      <stop offset="1" stop-color="#0f7a4a"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="url(#chat-bg)"/>
+  <rect x="1.2" y="1.2" width="61.6" height="61.6" rx="14.8" fill="none" stroke="#fff" stroke-opacity=".35"/>
+  <path d="M14 12h36" stroke="#fff" stroke-width="2.4" stroke-linecap="round" opacity=".35"/>
+  <path fill="#fff" d="M16 20h32a6 6 0 0 1 6 6v14a6 6 0 0 1-6 6H28l-9.2 8.2c-.9.8-2.3.1-2.3-1.1V46H16a6 6 0 0 1-6-6V26a6 6 0 0 1 6-6z"/>
+  <circle cx="26" cy="33" r="2.4" fill="#2bb673"/>
+  <circle cx="32" cy="33" r="2.4" fill="#2bb673"/>
+  <circle cx="38" cy="33" r="2.4" fill="#2bb673"/>
+</svg>

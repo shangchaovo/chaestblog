@@ -1,0 +1,520 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="liquid">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chase Xie · 市场工具与学习产品导航</title>
+    <meta name="description" content="独立开发者 Chase Xie 的个人导航：Predict Pulse、Signal Harbor、WordPaper、加密终端、外资研报、交易日报和校招简历工坊，以及最近在盯的 AI 算力与 HBM。" />
+    <meta name="google-site-verification" content="O95cw5EyVnewTnY-gCXj8kBVqnA2D88TB6CyO-TnIzk" />
+    <link rel="canonical" href="https://chaestblog.pages.dev/" />
+    <link rel="alternate" type="application/rss+xml" title="chaestblog RSS" href="https://chaestblog.pages.dev/rss.xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:site_name" content="chaestblog" />
+    <meta property="og:url" content="https://chaestblog.pages.dev/" />
+    <meta property="og:title" content="Chase Xie · 市场工具与学习产品导航" />
+    <meta property="og:description" content="独立开发者。把已上线的市场工具和学习产品放在一页，并写下最近在盯的 AI 算力与 HBM。" />
+    <meta property="og:image" content="https://chaestblog.pages.dev/assets/og.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@johny_xie" />
+    <meta name="twitter:title" content="Chase Xie · 市场工具与学习产品导航" />
+    <meta name="twitter:description" content="独立开发者。把已上线的市场工具和学习产品放在一页，并写下最近在盯的 AI 算力与 HBM。" />
+    <meta name="twitter:image" content="https://chaestblog.pages.dev/assets/og.jpg" />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+    <link rel="stylesheet" href="/css/themes.css?v=20260830a" />
+    <link rel="stylesheet" href="/css/styles.css?v=20260830a" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://chaestblog.pages.dev/#website",
+            "url": "https://chaestblog.pages.dev/",
+            "name": "chaestblog",
+            "inLanguage": "zh-CN",
+            "description": "Chase Xie 的个人导航：已上线的市场工具、学习产品，以及最近在盯的板块。",
+            "publisher": { "@id": "https://chaestblog.pages.dev/#person" }
+          },
+          {
+            "@type": "Person",
+            "@id": "https://chaestblog.pages.dev/#person",
+            "name": "Chase Xie",
+            "url": "https://chaestblog.pages.dev/",
+            "image": "https://chaestblog.pages.dev/assets/avatar.jpg",
+            "jobTitle": "独立开发者",
+            "description": "做市场工具和学习产品，公开 Predict Pulse、Signal Harbor、WordPaper、加密终端、外资研报、交易日报和校招简历工坊。",
+            "email": "mailto:shangchaoxie888@gmail.com",
+            "sameAs": [
+              "https://github.com/shangchaovo",
+              "https://x.com/johny_xie",
+              "https://buymeacoffee.com/chasetse"
+            ]
+          }
+        ]
+      }
+    </script>
+    <script>
+      (function () {
+        try {
+          var theme = localStorage.getItem("hubTheme");
+          if (theme === "liquid" || theme === "eye" || theme === "ink") {
+            document.documentElement.dataset.theme = theme;
+            return;
+          }
+          // 没手动选过就跟系统：深色系统进墨夜
+          if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+            document.documentElement.dataset.theme = "ink";
+          }
+        } catch (error) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <svg xmlns="http://www.w3.org/2000/svg" class="sprite" aria-hidden="true">
+      <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3 v4 M12 17 v4 M3 12 h4 M17 12 h4 M6.2 6.2 l2.6 2.6 M15.2 15.2 l2.6 2.6 M17.8 6.2 l-2.6 2.6 M8.8 15.2 l-2.6 2.6"/><circle cx="12" cy="12" r="2.2"/></symbol>
+      <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.4"/><path d="M14.8 9.2 10.4 10.6 9.2 14.8 13.6 13.4 Z"/></symbol>
+      <symbol id="i-apps" viewBox="0 0 24 24"><rect x="4" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.6"/></symbol>
+      <symbol id="i-feather" viewBox="0 0 24 24"><path d="M20 4 C13 4 6.5 11 5 19"/><path d="M14 4.8 5.6 18.6"/><path d="M11.5 8.2 h6.2 M9.2 12.2 h6.4"/></symbol>
+      <symbol id="i-trend" viewBox="0 0 24 24"><path d="M3.6 16.6 8.8 11.4 12.4 15 20.4 7"/><path d="M14.6 7 H20.4 V12.8"/></symbol>
+      <symbol id="i-chat" viewBox="0 0 24 24"><path d="M5.2 17.6 V7.6 A2.4 2.4 0 0 1 7.6 5.2 h8.8 A2.4 2.4 0 0 1 18.8 7.6 v6.2 A2.4 2.4 0 0 1 16.4 16.2 H9.2 Z"/><path d="M8.4 9.6 h7.2 M8.4 12.6 h4.6"/></symbol>
+      <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3.5" y="5.5" width="17" height="13" rx="2.2"/><path d="M4.2 7.2 12 13.1 19.8 7.2"/></symbol>
+      <symbol id="i-coffee" viewBox="0 0 24 24"><path d="M5 9 h11 v6.2 a3.6 3.6 0 0 1 -3.6 3.6 H8.6 A3.6 3.6 0 0 1 5 15.2 Z"/><path d="M16 10.2 h2.4 a2.4 2.4 0 0 1 0 4.8 H16"/><path d="M7.2 4.8 v2 M10.5 4.4 v2.4 M13.8 4.8 v2"/><path d="M6 20.4 h9"/></symbol>
+      <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6.4 C10.2 4.9 7.2 4.5 4.2 5.1 V18.2 C7.2 17.6 10.2 18 12 19.5 C13.8 18 16.8 17.6 19.8 18.2 V5.1 C16.8 4.5 13.8 4.9 12 6.4 Z"/><path d="M12 6.4 V19.5"/></symbol>
+      <symbol id="i-terminal" viewBox="0 0 24 24"><rect x="3.4" y="5" width="17.2" height="14" rx="2.2"/><path d="M7 10.2 9.6 12.4 7 14.6 M12.2 14.8 h4.6"/></symbol>
+      <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 19.4 V5.4 M4 19.4 H20"/><path d="M8 15.2 V11.2 M12 15.2 V8.4 M16 15.2 V10 M20 15.2 V6.8"/></symbol>
+      <symbol id="i-file" viewBox="0 0 24 24"><path d="M7 3.6 H13.6 L17.4 7.4 V20.4 H7 Z"/><path d="M13.6 3.6 V7.4 H17.4"/><path d="M9.6 12.2 h4.8 M9.6 15.4 h4.8"/></symbol>
+      <symbol id="i-candles" viewBox="0 0 24 24"><path d="M7 6 v12 M17 4 v16"/><rect x="5.2" y="9" width="3.6" height="7" rx="0.8"/><rect x="15.2" y="7.2" width="3.6" height="8.2" rx="0.8"/><path d="M12 8 v10"/><rect x="10.2" y="10.4" width="3.6" height="5.2" rx="0.8"/></symbol>
+      <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M7 12 h10 M13 7 l5 5 -5 5"/></symbol>
+      <symbol id="i-external" viewBox="0 0 24 24"><path d="M14 5 h5 v5"/><path d="M19 5 10.5 13.5"/><path d="M17 13.2 v5.2 H5 V7 h5.2"/></symbol>
+      <symbol id="i-send" viewBox="0 0 24 24"><path d="M21 3 10.2 13.8"/><path d="M21 3 14.2 21 10.2 13.8 3 9.8 Z"/></symbol>
+      <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5 v14 M5 12 h14"/></symbol>
+      <symbol id="i-edit" viewBox="0 0 24 24"><path d="M13.2 6.2 17.8 10.8"/><path d="M4.6 19.4 6.4 14.2 16.4 4.2 a2 2 0 0 1 2.8 0 l.6.6 a2 2 0 0 1 0 2.8 L9.8 17.6 Z"/></symbol>
+      <symbol id="i-trash" viewBox="0 0 24 24"><path d="M5 7.2 h14"/><path d="M9.2 7.2 V5.4 h5.6 v1.8"/><path d="M7.2 7.2 V19 a1.6 1.6 0 0 0 1.6 1.6 h6.4 A1.6 1.6 0 0 0 16.8 19 V7.2"/></symbol>
+      <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5.4" y="10.4" width="13.2" height="9.2" rx="2"/><path d="M8.2 10.4 V7.8 a3.8 3.8 0 0 1 7.6 0 v2.6"/></symbol>
+      <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8.2" r="3.2"/><path d="M5.4 19.2 a6.6 6.6 0 0 1 13.2 0"/></symbol>
+      <symbol id="i-dot" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/></symbol>
+      <symbol id="i-github" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M12 .3C5.37.3 0 5.67 0 12.3c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58 0-.28-.01-1.04-.02-2.04-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.5 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.25 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.62-5.48 5.92.43.37.81 1.1.81 2.22 0 1.6-.01 2.89-.01 3.29 0 .32.21.69.82.57C20.56 22.1 24 17.6 24 12.3 24 5.67 18.63.3 12 .3Z"/></symbol>
+      <symbol id="i-x" viewBox="0 0 24 24"><path d="M4 4 20 20 M14.6 4 4 20 M20 4 9.8 16.4"/></symbol>
+      <symbol id="i-telegram" viewBox="0 0 24 24"><path d="M21.2 4.6 3.6 11.4 10.2 13.6 17.2 8 12.2 14.8 10.2 13.6 10.1 19.4 Z"/></symbol>
+      <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.2"/><path d="M15.4 15.4 20 20"/></symbol>
+    </svg>
+
+    <div class="atmosphere" aria-hidden="true">
+      <span class="blob blob-a"></span>
+      <span class="blob blob-b"></span>
+      <span class="blob blob-c"></span>
+    </div>
+    <div id="danmakuStage" class="danmaku-stage" aria-hidden="true"></div>
+
+    <header class="nav glass">
+      <a class="brand" href="/">
+        <img class="brand-avatar" src="/assets/avatar.jpg" alt="Chase Xie" width="40" height="40" />
+        <span class="brand-copy">
+          <strong>Chase Xie</strong>
+          <small>Personal Hub</small>
+        </span>
+      </a>
+      <nav class="nav-links" aria-label="页面区块">
+        <a href="#sites"><svg class="ic"><use href="#i-compass"></use></svg>站点</a>
+        <a href="/notes/"><svg class="ic"><use href="#i-feather"></use></svg>观点</a>
+        <a href="#watch"><svg class="ic"><use href="#i-trend"></use></svg>关注</a>
+        <a href="/about/"><svg class="ic"><use href="#i-user"></use></svg>关于</a>
+        <a href="#contact"><svg class="ic"><use href="#i-chat"></use></svg>联系</a>
+      </nav>
+      <button class="palette-entry" id="openPaletteBtn" type="button" aria-controls="paletteDialog" hidden>
+        <svg class="ic"><use href="#i-search"></use></svg><span>搜索</span><kbd class="palette-key">⌘K</kbd>
+      </button>
+      <button class="admin-entry" id="openAdminBtn" type="button" aria-controls="adminDialog">
+        <svg class="ic"><use href="#i-lock"></use></svg><span>管理</span>
+      </button>
+      <div class="theme-switch" role="radiogroup" aria-label="主题">
+        <button class="theme-btn" type="button" data-theme="liquid" aria-pressed="true" title="Liquid Glass">
+          <i class="orb orb-liquid" aria-hidden="true"></i><span>玻璃</span>
+        </button>
+        <button class="theme-btn" type="button" data-theme="eye" aria-pressed="false" title="护眼">
+          <i class="orb orb-eye" aria-hidden="true"></i><span>护眼</span>
+        </button>
+        <button class="theme-btn" type="button" data-theme="ink" aria-pressed="false" title="墨夜">
+          <i class="orb orb-ink" aria-hidden="true"></i><span>墨夜</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section id="top" class="hero-bento">
+        <article class="identity glass">
+          <div class="identity-top">
+            <button class="avatar-frame" id="heroAvatarBtn" type="button" title="Chase Xie">
+              <img id="heroAvatar" class="hero-avatar" src="/assets/avatar.jpg" alt="Chase Xie" width="168" height="168" />
+            </button>
+            <div>
+              <p class="kicker" id="profileKicker"><svg class="ic"><use href="#i-spark"></use></svg> 嗨，我是</p>
+              <h1 id="profileName">Chase Xie</h1>
+              <p class="headline" id="profileTitle">把常用的工具放在一张桌上</p>
+            </div>
+          </div>
+          <p class="lead" id="profileBio">Chase Xie 是独立开发者。这个站点汇总已经挂在公网上的市场工具和学习产品，以及最近在盯的 AI 算力与 HBM。想用的直接点进去。</p>
+          <p class="now" id="profileNow">
+            <span class="now-kicker">最近在做</span>
+            <span class="now-text">把已经在跑的几个站收到一张桌上。</span>
+            <button class="btn ghost admin-only" id="editNowBtn" type="button">改</button>
+          </p>
+          <div class="hero-actions" id="heroActions">
+            <a class="btn primary" href="https://buymeacoffee.com/chasetse" target="_blank" rel="noopener">请我喝杯咖啡</a>
+            <a class="btn" rel="me noopener" href="https://github.com/shangchaovo" target="_blank">GitHub</a>
+            <a class="btn" rel="me noopener" href="https://x.com/johny_xie" target="_blank">X</a>
+            <a class="btn" href="mailto:shangchaoxie888@gmail.com">写信</a>
+          </div>
+          <div class="stat-row" id="statRow">
+            <div class="stat"><b>7</b><span>在线站点</span></div>
+            <div class="stat"><b>2</b><span>条观点</span></div>
+            <div class="stat"><b>6</b><span>只在盯</span></div>
+          </div>
+        </article>
+      </section>
+
+      <section id="sites" class="section">
+        <div class="section-head">
+          <div>
+            <p class="kicker"><svg class="ic"><use href="#i-compass"></use></svg> 01 · Live</p>
+            <h2>在线上的</h2>
+          </div>
+            <p class="hint">点开就是正在跑的站点</p>
+        </div>
+        <div class="admin-only editor-bar">
+          <button class="btn primary" id="addProjectBtn" type="button"><svg class="ic"><use href="#i-plus"></use></svg>添加项目</button>
+          <span class="editor-hint">可修改介绍、排序、上下线，并上传真实页面截图</span>
+        </div>
+        <div class="board-marquee" id="boardMarquee">
+        <div class="project-board" id="siteGrid">
+          <article class="card glass" data-id="predict-pulse" data-tint="green">
+            <a class="shot" href="https://predict-pulse.signal-harbor.workers.dev/?view=sentiment" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/shots/predict-pulse.webp"><img src="/assets/shots/predict-pulse.jpg" alt="Predict Pulse 预测市场观点与情绪页面截图" width="1280" height="800" loading="lazy" decoding="async"></picture></a>
+            <div class="card-top">
+              <span class="well app"><img class="app-icon" src="/assets/icons/pulse.svg" alt="" width="46" height="46"></span>
+              <span class="pill live"><i class="live-dot" aria-hidden="true"></i>在线</span>
+            </div>
+            <div>
+              <span class="pill">预测市场</span>
+              <h3>Predict Pulse</h3>
+            </div>
+            <p>聚合预测市场的每日热点与盘口变化，追踪聪明钱持仓、套利机会和带来源权重的观点情绪；每条信号都保留原文，方便回到市场核验。</p>
+            <div class="card-links">
+              <a class="btn primary" href="https://predict-pulse.signal-harbor.workers.dev/?view=sentiment" target="_blank" rel="noopener">打开</a>
+            </div>
+          </article>
+          <article class="card glass" data-tint="cyan">
+            <a class="shot" href="https://signal-harbor-terminal.signal-harbor.workers.dev/#overview" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/shots/signal-harbor.webp"><img src="/assets/shots/signal-harbor.jpg" alt="Signal Harbor 美股研究终端页面截图" width="1280" height="800" loading="lazy" decoding="async"></picture></a>
+            <div class="card-top">
+              <span class="well app"><img class="app-icon" src="/assets/icons/chart.svg" alt="" width="46" height="46"></span>
+              <span class="pill live"><i class="live-dot" aria-hidden="true"></i>在线</span>
+            </div>
+            <div>
+              <span class="pill">美股研究</span>
+              <h3>Signal Harbor</h3>
+            </div>
+            <p>聚合美股 AI、半导体与云计算的新闻情绪、分析师观点和 OCC 官方期权持仓，集中查看 Put/Call Wall、Max Pain 与可核验来源。</p>
+            <div class="card-links">
+              <a class="btn primary" href="https://signal-harbor-terminal.signal-harbor.workers.dev/#overview" target="_blank" rel="noopener">打开</a>
+            </div>
+          </article>
+          <article class="card glass" data-tint="violet">
+            <a class="shot" href="https://wordpaper.pages.dev/" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/shots/wordpaper.webp"><img src="/assets/shots/wordpaper.jpg" alt="WordPaper 单词壁纸页面截图" width="1280" height="800" loading="lazy" decoding="async"></picture></a>
+            <div class="card-top">
+              <span class="well app"><img class="app-icon" src="/assets/icons/book.svg" alt="" width="46" height="46"></span>
+              <span class="pill live"><i class="live-dot" aria-hidden="true"></i>在线</span>
+            </div>
+            <div>
+              <span class="pill">学习</span>
+              <h3>WordPaper</h3>
+            </div>
+            <p>每日单词 + 艾宾浩斯复习做成手机 / 电脑壁纸，支持多用户账号与 Liquid Glass 界面。</p>
+            <div class="card-links">
+              <a class="btn primary" href="https://wordpaper.pages.dev/" target="_blank" rel="noopener">打开</a>
+              <a class="btn" href="https://github.com/shangchaovo/daily-wallpaper" target="_blank" rel="noopener">GitHub</a>
+            </div>
+          </article>
+          <article class="card glass" data-tint="cyan">
+            <a class="shot" href="https://crypto-funding-arbitrage.pages.dev/" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/shots/terminal.webp"><img src="/assets/shots/terminal.jpg" alt="加密终端页面截图" width="1280" height="800" loading="lazy" decoding="async"></picture></a>
+            <div class="card-top">
+              <span class="well app"><img class="app-icon" src="/assets/icons/terminal.svg" alt="" width="46" height="46"></span>
+              <span class="pill live"><i class="live-dot" aria-hidden="true"></i>在线</span>
+            </div>
+            <div>
+              <span class="pill">加密</span>
+              <h3>加密终端</h3>
+            </div>
+            <p>跨所资金费率套利、Meme 异动、清算热图与期权 Wall，统一在一个深色终端里。</p>
+            <div class="card-links">
+              <a class="btn primary" href="https://crypto-funding-arbitrage.pages.dev/" target="_blank" rel="noopener">打开</a>
+            </div>
+          </article>
+          <article class="card glass" data-tint="amber">
+            <a class="shot" href="https://fresearch.cc.cd/" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/shots/research.webp"><img src="/assets/shots/research.jpg" alt="外资投行研报页面截图" width="1280" height="800" loading="lazy" decoding="async"></picture></a>
+            <div class="card-top">
+              <span class="well app"><img class="app-icon" src="/assets/icons/chart.svg" alt="" width="46" height="46"></span>
+              <span class="pill live"><i class="live-dot" aria-hidden="true"></i>在线</span>
+            </div>
+            <div>
+              <span class="pill">股票</span>
+              <h3>外资投行研报</h3>
+            </div>
+            <p>追踪 UBS / Citi / MS / JPM 等对 AI 算力主线的评级与目标价，多源抓取 + LLM 摘要。</p>
+            <div class="card-links">
+              <a class="btn primary" href="https://fresearch.cc.cd/" target="_blank" rel="noopener">打开</a>
+              <a class="btn" href="https://github.com/shangchaovo/ib-research" target="_blank" rel="noopener">GitHub</a>
+            </div>
+          </article>
+          <article class="card glass" data-tint="gold">
+            <a class="shot" href="https://dailytrade.cc.cd/" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/shots/dailytrade.webp"><img src="/assets/shots/dailytrade.jpg" alt="交易每日报告页面截图" width="1280" height="800" loading="lazy" decoding="async"></picture></a>
+            <div class="card-top">
+              <span class="well app"><img class="app-icon" src="/assets/icons/candles.svg" alt="" width="46" height="46"></span>
+              <span class="pill live"><i class="live-dot" aria-hidden="true"></i>在线</span>
+            </div>
+            <div>
+              <span class="pill">交易</span>
+              <h3>交易每日报告</h3>
+            </div>
+            <p>开盘前的作战台：A股量化扫描、外资研报、美股监控、宏观跨资产和社媒情绪，合成一张每日交易报告。</p>
+            <div class="card-links">
+              <a class="btn primary" href="https://dailytrade.cc.cd/" target="_blank" rel="noopener">打开</a>
+            </div>
+          </article>
+          <article class="card glass" data-tint="rose">
+            <a class="shot" href="https://resume-5lv.pages.dev/" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/shots/resume.webp"><img src="/assets/shots/resume.jpg" alt="简历工坊页面截图" width="1280" height="800" loading="lazy" decoding="async"></picture></a>
+            <div class="card-top">
+              <span class="well app"><img class="app-icon" src="/assets/icons/file.svg" alt="" width="46" height="46"></span>
+              <span class="pill live"><i class="live-dot" aria-hidden="true"></i>在线</span>
+            </div>
+            <div>
+              <span class="pill">工具</span>
+              <h3>简历工坊</h3>
+            </div>
+            <p>面向校招的纯前端简历编辑器：左表单右 A4，导出矢量 PDF，数据只存在你的浏览器。</p>
+            <div class="card-links">
+              <a class="btn primary" href="https://resume-5lv.pages.dev/" target="_blank" rel="noopener">打开</a>
+              <a class="btn" href="https://github.com/shangchaovo/resume-site" target="_blank" rel="noopener">GitHub</a>
+            </div>
+          </article>
+        </div>
+        </div>
+      </section>
+
+      <div class="magazine">
+        <section id="notes" class="section">
+          <div class="section-head">
+            <div>
+              <p class="kicker"><svg class="ic"><use href="#i-feather"></use></svg> 02 · Notes</p>
+              <h2>观点</h2>
+            </div>
+            <p class="hint"><a href="/notes/">全部观点 →</a></p>
+          </div>
+          <div class="admin-only editor-bar">
+            <button class="btn primary" id="addNoteBtn" type="button"><svg class="ic"><use href="#i-plus"></use></svg>写一条</button>
+          </div>
+          <div class="notes" id="noteList">
+            <article class="note glass" data-id="n_cmipldxjd4">
+              <time>2026年8月25日</time>
+              <h3>CPU和GPU将1:1</h3>
+              <p>关注AMD（HBM机柜抢占英伟达市场份额，CPU目前第一，CPU和GPU数量的重构），INTEL（皇家半导体，川普的喊单，重兴美国工业，转移台积电工艺，进军内存市场）</p>
+            </article>
+            <article class="note glass" data-id="n_hbm">
+              <time>2026年8月17日</time>
+              <h3><a href="/notes/hbm-supply/">HBM 比标题先紧</a></h3>
+              <p>HBM 和先进封装是当前 AI 开支里比 GPU 标题更硬的约束。供给爬坡比叙事重要。数字会变，判断留在独立页面。</p>
+              <p class="note-more"><a href="/notes/hbm-supply/">阅读全文</a></p>
+            </article>
+          </div>
+        </section>
+
+        <section id="watch" class="section">
+          <div class="section-head">
+            <div>
+              <p class="kicker"><svg class="ic"><use href="#i-trend"></use></svg> 03 · Watch</p>
+              <h2>最近盯的板块</h2>
+            </div>
+            <p class="hint">最近在看的方向，不是买卖建议</p>
+          </div>
+          <div class="admin-only editor-bar">
+            <button class="btn primary" id="addSectorBtn" type="button"><svg class="ic"><use href="#i-plus"></use></svg>加板块</button>
+            <button class="btn" id="addStockBtn" type="button"><svg class="ic"><use href="#i-plus"></use></svg>加个股</button>
+          </div>
+          <div id="watchList">
+            <article class="sector glass" data-id="s_ai" data-tint="amber">
+              <div class="card-top">
+                <span class="well app"><img class="app-icon" src="/assets/icons/watch.svg" alt="" width="48" height="48"></span>
+                <span class="pill">2 只</span>
+              </div>
+              <h3>光模块CPO</h3>
+              <p>AI算力瓶颈在当前通信传输上，需要替代铜缆来高效传输数据还有算力</p>
+              <div class="stocks">
+                <div class="stock"><div class="stock-head"><span class="symbol">LITE</span><strong>LITE</strong></div><p>美国光模块</p></div>
+                <div class="stock"><div class="stock-head"><span class="symbol">MRVL</span><strong>迈威尔</strong></div><p>黄仁勋喊单万亿，看到5折当下也存在被低估，算力，光模块，ASIC芯片定制老二（仅次于博通）</p></div>
+              </div>
+            </article>
+            <article class="sector glass" data-id="s_mem" data-tint="amber">
+              <div class="card-top">
+                <span class="well app"><img class="app-icon" src="/assets/icons/watch.svg" alt="" width="48" height="48"></span>
+                <span class="pill">3 只</span>
+              </div>
+              <h3>存储 / HBM</h3>
+              <p>HBM 供给紧，存储周期和 AI 需求叠在一起。跟踪爬坡比跟踪标题重要。</p>
+              <div class="stocks">
+                <div class="stock"><div class="stock-head"><span class="symbol">SNDK</span><strong>闪迪</strong></div><p>和海力士后续开发HBF，当下美国NAND，波动率如MEME，但是后续可能会因为利润往HBM靠近，市场份额被长江扩产能而被重新定价被分化</p></div>
+                <div class="stock"><div class="stock-head"><span class="symbol">SKHY</span><strong>SK海力士</strong></div><p>HBM目前市场份额最高的公存储公司，深耕HBM但是因为韩国DISCOUNT目前市场定价在美国而不再韩国，跟三星可以平起平坐的存储公司，处于价值洼地，严重被低估，长期订单被锁定但是后续HBM爆发力还没被定价</p></div>
+                <div class="stock"><div class="stock-head"><span class="symbol">MU</span><strong>Micron</strong></div><p>机构报团，存储最稳的标的，美国纯正血统，方向风向标，HBM制造能力后续最可能因为血统高等还有美国重振工业而被带起来，不缺订单，皇家存储</p></div>
+              </div>
+            </article>
+            <article class="sector glass" data-id="s_8qqhmvgm14" data-tint="amber">
+              <div class="card-top">
+                <span class="well app"><img class="app-icon" src="/assets/icons/watch.svg" alt="" width="48" height="48"></span>
+                <span class="pill">1 只</span>
+              </div>
+              <h3>电力</h3>
+              <p>美国基础电力设施不好，AI算力非常缺电，在马斯克牛逼没实现之前就买</p>
+              <div class="stocks">
+                <div class="stock"><div class="stock-head"><span class="symbol">BE</span><strong>Bloom energy</strong></div><p>有订单锁定，电力老二，相比GEV爆发力更强，一根K熊转牛，白宫严选</p></div>
+              </div>
+            </article>
+          </div>
+          <p class="disclaimer" id="watchDisclaimer">个人记录，用来写我为什么盯这条线。不是投资建议，也不构成任何推荐。</p>
+        </section>
+      </div>
+
+      <section id="contact" class="section">
+        <div class="section-head">
+          <div>
+            <p class="kicker"><svg class="ic"><use href="#i-chat"></use></svg> 04 · Contact</p>
+            <h2>联系与支持</h2>
+          </div>
+          <p class="hint">GitHub、X，或者请我喝杯咖啡</p>
+        </div>
+        <div class="contact-grid" id="contactGrid">
+          <a class="contact glass" rel="me noopener" href="https://github.com/shangchaovo" target="_blank">
+            <span class="well app"><img class="app-icon" src="/assets/icons/github.svg" alt="" width="56" height="56"></span>
+            <small>GitHub</small>
+            <strong>shangchaovo</strong>
+          </a>
+          <a class="contact glass" href="mailto:shangchaoxie888@gmail.com">
+            <span class="well app"><img class="app-icon" src="/assets/icons/mail.svg" alt="" width="56" height="56"></span>
+            <small>邮箱</small>
+            <strong>shangchaoxie888@gmail.com</strong>
+          </a>
+          <a class="contact glass" href="https://buymeacoffee.com/chasetse" target="_blank" rel="noopener">
+            <span class="well app"><img class="app-icon" src="/assets/icons/coffee.svg" alt="" width="56" height="56"></span>
+            <small>请我喝杯咖啡</small>
+            <strong>buymeacoffee.com/chasetse</strong>
+          </a>
+          <a class="contact glass" rel="me noopener" href="https://x.com/johny_xie" target="_blank">
+            <span class="well app"><img class="app-icon" src="/assets/icons/x.svg" alt="" width="56" height="56"></span>
+            <small>X</small>
+            <strong>@johny_xie</strong>
+          </a>
+          <a class="contact glass" href="/rss/">
+            <span class="well app"><img class="app-icon" src="/assets/icons/rss.svg" alt="" width="56" height="56"></span>
+            <small>RSS 订阅</small>
+            <strong>关注最新博文</strong>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <form class="dock glass is-collapsed" id="danmakuForm">
+      <button class="dock-toggle" id="toggleDockBtn" type="button" aria-expanded="false" aria-controls="dockFields">
+        <span class="dock-mark" aria-hidden="true"><img class="app-icon" src="/assets/icons/chat.svg" alt="" width="42" height="42"></span>
+        <span>留言</span>
+      </button>
+      <div class="dock-fields" id="dockFields">
+        <label class="sr-only" for="danmakuNick">昵称</label>
+        <input class="nick" id="danmakuNick" name="nick" maxlength="12" placeholder="路过" autocomplete="nickname" />
+        <label class="sr-only" for="danmakuText">打个招呼</label>
+        <input id="danmakuText" name="text" maxlength="36" placeholder="路过的话，打个招呼…" required />
+        <button class="btn primary" type="submit"><svg class="ic"><use href="#i-send"></use></svg>发送</button>
+        <button class="btn ghost" id="toggleDanmakuViewBtn" type="button" aria-pressed="false">显示弹幕</button>
+        <button class="btn ghost" id="closeDockBtn" type="button">收起</button>
+      </div>
+    </form>
+
+    <dialog id="paletteDialog" aria-label="命令面板">
+      <div class="modal glass palette">
+        <div class="palette-head">
+          <svg class="ic"><use href="#i-search"></use></svg>
+          <label class="sr-only" for="paletteInput">搜索站点、观点与板块</label>
+          <input id="paletteInput" type="search" role="combobox" aria-expanded="true" aria-controls="paletteList"
+                 aria-autocomplete="list" autocomplete="off" placeholder="搜站点、观点、板块，或切主题…" />
+          <button class="btn ghost" id="paletteClose" type="button">Esc</button>
+        </div>
+        <ul class="palette-list" id="paletteList" role="listbox" aria-label="搜索结果"></ul>
+        <p class="palette-foot">↑↓ 选择 · Enter 打开 · 也可以直接按 /</p>
+      </div>
+    </dialog>
+
+    <dialog id="adminDialog">
+      <form class="modal glass" id="adminForm">
+        <p class="kicker"><svg class="ic"><use href="#i-lock"></use></svg> Author</p>
+        <h3>作者入口</h3>
+        <p>输入管理口令后，即可管理项目、发布观点、更新关注板块与恢复历史版本。</p>
+        <label class="field">
+          <span>管理口令</span>
+          <input id="adminToken" type="password" name="token" autocomplete="current-password" />
+        </label>
+        <div class="modal-actions">
+          <button class="btn ghost" id="adminCancelBtn" type="button">取消</button>
+          <button class="btn primary" id="adminLoginBtn" type="submit">进入</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="adminPanelDialog">
+      <div class="modal glass admin-panel">
+        <div class="panel-heading">
+          <div>
+            <p class="kicker"><svg class="ic"><use href="#i-apps"></use></svg> Content Studio</p>
+            <h3>内容工作台</h3>
+            <p>所有保存都会自动保留最近 10 个版本。</p>
+          </div>
+          <button class="btn ghost" id="adminPanelClose" type="button">关闭</button>
+        </div>
+        <div class="panel-grid">
+          <button class="panel-action" id="panelAddProjectBtn" type="button"><strong>添加项目</strong><span>介绍、链接、排序与截图</span></button>
+          <button class="panel-action" id="panelAddNoteBtn" type="button"><strong>发布观点</strong><span>标题、正文与文章路径</span></button>
+          <button class="panel-action" id="panelAddSectorBtn" type="button"><strong>添加板块</strong><span>维护关注逻辑与个股</span></button>
+        </div>
+        <div class="panel-tools">
+          <p class="panel-label">数据安全</p>
+          <div class="modal-actions">
+            <button class="btn" id="downloadBackupBtn" type="button">下载完整备份</button>
+            <button class="btn" id="restoreDefaultsBtn" type="button">恢复默认观点与关注</button>
+            <button class="btn ghost" id="undoProjectsBtn" type="button">撤销项目保存</button>
+            <button class="btn ghost" id="undoNotesBtn" type="button">撤销观点保存</button>
+            <button class="btn ghost" id="undoWatchlistBtn" type="button">撤销关注保存</button>
+          </div>
+        </div>
+        <div class="panel-footer">
+          <button class="btn danger" id="clearDanmakuBtn" type="button">清空留言</button>
+          <button class="btn ghost" id="logoutBtn" type="button">退出管理</button>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog id="editorDialog">
+      <form class="modal glass" id="editorForm">
+        <h3 id="editorTitle">编辑</h3>
+        <div id="editorFields"></div>
+        <div class="modal-actions">
+          <button class="btn ghost" id="editorCancel" type="button">取消</button>
+          <button class="btn primary" type="submit">保存</button>
+        </div>
+      </form>
+    </dialog>
+
+    <div class="toast-host" id="toastHost" aria-live="polite"></div>
+    <script src="/js/app.js?v=20260830a" type="module"></script>
+    <noscript>
+      Chase Xie 是独立开发者。站点、观点和盯盘不需要 JavaScript 也能读。
+      关于：/about/ · HBM 笔记：/notes/hbm-supply/
+    </noscript>
+  </body>
+</html>
