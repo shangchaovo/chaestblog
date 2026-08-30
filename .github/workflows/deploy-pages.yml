@@ -33,7 +33,9 @@ jobs:
       - uses: cloudflare/wrangler-action@v3
         env:
           npm_config_yes: "true"
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: "7cc8529bb0488ee3f2e232fb6d79a875"
+          wranglerVersion: "4.113.0"
           command: pages deploy dist --project-name chaestblog --branch main --commit-dirty=true
