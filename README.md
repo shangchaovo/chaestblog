@@ -1,22 +1,24 @@
 # chaestblog
 
-我的个人页：[chaestblog.pages.dev](https://chaestblog.pages.dev/)
+个人页，也是我那些已经挂在公网上的工具的入口。
 
-已经挂在公网上的工具放第一屏，下面是最近的观点和盯盘。路过可以打个招呼。卡片上写「在线」是真的去探活的，不是摆设。
+**线上：[chaestblog.pages.dev](https://chaestblog.pages.dev/)**
 
-现在挂上去的：
+第一屏是正在跑的站点，下面是最近写的观点和正在盯的板块。路过可以打个招呼。卡片上的「在线」会真的去探活（带一点延迟），挂了能看出来，不是写死的绿点。
 
-- [加密终端](https://crypto-funding-arbitrage.pages.dev/) — 资金费率 / Meme / 清算 / 期权，[源码](https://github.com/shangchaovo/crypto-funding-arbitrage)
-- [外资研报](https://fresearch.cc.cd/) — 投行评级和目标价，[源码](https://github.com/shangchaovo/ib-research)
-- [WordPaper](https://wordpaper.pages.dev/) — 单词壁纸，[源码](https://github.com/shangchaovo/wordpaper)
-- [简历工坊](https://resume-5lv.pages.dev/) — 校招简历，[源码](https://github.com/shangchaovo/resume-site)
-- [Predict Pulse](https://predict-pulse.signal-harbor.workers.dev/?view=sentiment) — 预测市场
-- [Signal Harbor](https://signal-harbor-terminal.signal-harbor.workers.dev/#overview) — 美股研究
-- [交易每日报告](https://dailytrade.cc.cd/) — 开盘前看一眼
+## 挂上去的站
 
-## 站点上有什么
+- **[加密终端](https://crypto-funding-arbitrage.pages.dev/)** — 资金费率套利、链上 Meme 异动、主力清算热图、BTC/ETH 期权墙。[源码](https://github.com/shangchaovo/crypto-funding-arbitrage)
+- **[外资研报](https://fresearch.cc.cd/)** — UBS / Citi / 摩跟 / 大摩的评级和目标价，发完之后相对 SPY 验证过没有。[源码](https://github.com/shangchaovo/ib-research)
+- **[WordPaper](https://wordpaper.pages.dev/)** — 把每天要背的单词做成壁纸，雅思 / 四六级 / 考研 / 日语都有。[源码](https://github.com/shangchaovo/wordpaper)
+- **[简历工坊](https://resume-5lv.pages.dev/)** — 校招简历编辑器，左表单右 A4，导出矢量 PDF。[源码](https://github.com/shangchaovo/resume-site)
+- **[Predict Pulse](https://predict-pulse.signal-harbor.workers.dev/?view=sentiment)** — 预测市场的热点盘口、聪明钱持仓和带来源权重的情绪。
+- **[Signal Harbor](https://signal-harbor-terminal.signal-harbor.workers.dev/#overview)** — 美股 AI / 半导体新闻、分析师观点、OCC 官方期权持仓墙。
+- **[交易每日报告](https://dailytrade.cc.cd/)** — 开盘前把 A 股扫描、外资研报、美股监控和宏观拼成一张日报。
 
-- **在线站点**：就是上面这些。卡片上的「在线」带延迟，挂了会看出来。
+## 站点上还有什么
+
+- **在线站点**：就是上面这些。探活失败会从「在线」变成挂掉。
 - **观点**：首页列表 + [`/notes/`](https://chaestblog.pages.dev/notes/) 归档。填了文章路径就会有独立页面，RSS / sitemap 跟着更新。
 - **盯盘**：最近在看的板块和个股，个人记录，不是投资建议。
 - **⌘K**（或按 `/`）：搜站点、观点、板块，也能切主题。
