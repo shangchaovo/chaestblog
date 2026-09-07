@@ -1,28 +1,22 @@
-# Chase Xie · chaestblog
+# chaestblog
 
-独立开发者的个人枢纽站：**一页看完已经挂在公网上的市场工具和学习产品**，再写下最近的观点和盯盘。
+我的个人页：[chaestblog.pages.dev](https://chaestblog.pages.dev/)
 
-**线上站点：[chaestblog.pages.dev](https://chaestblog.pages.dev/)**
+已经挂在公网上的工具放第一屏，下面是最近的观点和盯盘。路过可以打个招呼。卡片上写「在线」是真的去探活的，不是摆设。
 
-Personal hub for Chase Xie’s live **market terminals**, **WordPaper**, **FResearch**, and **campus resume builder** — plus notes and a watchlist.
+现在挂上去的：
 
-## 核心用处
+- [加密终端](https://crypto-funding-arbitrage.pages.dev/) — 资金费率 / Meme / 清算 / 期权，[源码](https://github.com/shangchaovo/crypto-funding-arbitrage)
+- [外资研报](https://fresearch.cc.cd/) — 投行评级和目标价，[源码](https://github.com/shangchaovo/ib-research)
+- [WordPaper](https://wordpaper.pages.dev/) — 单词壁纸，[源码](https://github.com/shangchaovo/wordpaper)
+- [简历工坊](https://resume-5lv.pages.dev/) — 校招简历，[源码](https://github.com/shangchaovo/resume-site)
+- [Predict Pulse](https://predict-pulse.signal-harbor.workers.dev/?view=sentiment) — 预测市场
+- [Signal Harbor](https://signal-harbor-terminal.signal-harbor.workers.dev/#overview) — 美股研究
+- [交易每日报告](https://dailytrade.cc.cd/) — 开盘前看一眼
 
-这不是博客框架，而是一张「已经能用」的工作台：卡片上的「在线」会真实探活（带延迟），点进去就是正在跑的站点。
+## 站点上有什么
 
-| 产品 | 核心用处 | 线上 | 源码 |
-| --- | --- | --- | --- |
-| Predict Pulse | 预测市场热点、聪明钱与带权重的情绪 | [打开](https://predict-pulse.signal-harbor.workers.dev/?view=sentiment) | — |
-| Signal Harbor | 美股 AI/半导体新闻、分析师观点、OCC 期权墙 | [打开](https://signal-harbor-terminal.signal-harbor.workers.dev/#overview) | — |
-| WordPaper | 每日单词壁纸 + 艾宾浩斯复习 | [wordpaper.pages.dev](https://wordpaper.pages.dev/) | [wordpaper](https://github.com/shangchaovo/wordpaper) |
-| 加密终端 | 资金费率套利 / Meme / 清算热图 / 期权 Wall | [crypto-funding-arbitrage.pages.dev](https://crypto-funding-arbitrage.pages.dev/) | [crypto-funding-arbitrage](https://github.com/shangchaovo/crypto-funding-arbitrage) |
-| 外资研报 | 投行评级、目标价、相对 SPY 验证 | [fresearch.cc.cd](https://fresearch.cc.cd/) | [ib-research](https://github.com/shangchaovo/ib-research) |
-| 交易每日报告 | 开盘前跨市场作战台 | [dailytrade.cc.cd](https://dailytrade.cc.cd/) | — |
-| 简历工坊 | 校招 A4 简历，导出矢量 PDF | [resume-5lv.pages.dev](https://resume-5lv.pages.dev/) | [resume-site](https://github.com/shangchaovo/resume-site) |
-
-## 站点上还有什么
-
-- **在线站点**：上表这些产品。卡片上的「在线」是真实探活，带延迟。
+- **在线站点**：就是上面这些。卡片上的「在线」带延迟，挂了会看出来。
 - **观点**：首页列表 + [`/notes/`](https://chaestblog.pages.dev/notes/) 归档。填了文章路径就会有独立页面，RSS / sitemap 跟着更新。
 - **盯盘**：最近在看的板块和个股，个人记录，不是投资建议。
 - **⌘K**（或按 `/`）：搜站点、观点、板块，也能切主题。
