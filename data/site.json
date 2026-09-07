@@ -80,7 +80,7 @@
       "tag": "学习",
       "summary": "每日单词 + 艾宾浩斯复习做成手机 / 电脑壁纸，支持多用户账号与 Liquid Glass 界面。",
       "live": "https://wordpaper.pages.dev/",
-      "github": "https://github.com/shangchaovo/daily-wallpaper",
+      "github": "https://github.com/shangchaovo/wordpaper",
       "shot": "assets/shots/wordpaper.jpg",
       "status": "live"
     },
@@ -93,7 +93,7 @@
       "summary": "跨所资金费率套利、Meme 异动、清算热图与期权 Wall，统一在一个深色终端里。",
       "live": "https://crypto-funding-arbitrage.pages.dev/",
       "github": "https://github.com/shangchaovo/crypto-funding-arbitrage",
-      "githubPublic": false,
+      "githubPublic": true,
       "shot": "assets/shots/terminal.jpg",
       "status": "live"
     },
