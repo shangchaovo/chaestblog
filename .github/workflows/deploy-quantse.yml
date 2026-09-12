@@ -1,0 +1,22 @@
+name: Deploy quantse dashboard
+on:
+  push:
+    paths:
+      - 'quantse-site/**'
+      - '.github/workflows/deploy-quantse.yml'
+    branches: [main]
+  workflow_dispatch:
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: 7cc8529bb0488ee3f2e232fb6d79a875
+          command: pages deploy quantse-site --project-name=quantse --commit-dirty=true

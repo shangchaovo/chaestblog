@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ETH v3 云端备份模拟盘</title>
+  <style>
+    :root {
+      --bg: #0b1220;
+      --card: #121a2b;
+      --line: #243049;
+      --text: #e8eefc;
+      --muted: #8fa3c8;
+      --good: #3ecf8e;
+      --bad: #ff6b7a;
+      --accent: #6ea8ff;
+      --warn: #f0b429;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "PingFang SC", "Noto Sans SC", sans-serif;
+      background: radial-gradient(1200px 600px at 10% -10%, #1a2744, var(--bg));
+      color: var(--text);
+      min-height: 100vh;
+    }
+    header {
+      padding: 20px 24px 8px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+    }
+    h1 { font-size: 1.25rem; margin: 0; font-weight: 650; }
+    .sub { color: var(--muted); font-size: 0.9rem; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      border: 1px solid var(--line); background: #0f1728;
+      padding: 4px 10px; border-radius: 999px; font-size: 0.8rem; color: var(--muted);
+    }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--warn); }
+    .dot.ok { background: var(--good); }
+    .dot.bad { background: var(--bad); }
+    main { padding: 8px 24px 32px; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      margin: 12px 0 18px;
+    }
+    .card {
+      background: linear-gradient(180deg, #152038, var(--card));
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px 16px;
+    }
+    .label { color: var(--muted); font-size: 0.78rem; margin-bottom: 6px; }
+    .value { font-size: 1.35rem; font-weight: 650; letter-spacing: -0.02em; }
+    .value.small { font-size: 1rem; font-weight: 600; }
+    .pos { color: var(--good); }
+    .neg { color: var(--bad); }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+    th, td {
+      text-align: left;
+      padding: 10px 8px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+    th { color: var(--muted); font-weight: 600; position: sticky; top: 0; background: #101827; }
+    .wrap { overflow: auto; max-height: 62vh; border: 1px solid var(--line); border-radius: 14px; }
+    .pill {
+      display: inline-block; padding: 2px 8px; border-radius: 999px;
+      font-size: 0.75rem; border: 1px solid var(--line);
+    }
+    .pill.target { color: var(--good); }
+    .pill.stop { color: var(--bad); }
+    .pill.rsi, .pill.time { color: var(--warn); }
+    .pill.open { color: var(--accent); }
+    footer { color: var(--muted); font-size: 0.8rem; padding: 0 24px 24px; }
+    code { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>ETH v3 · 云端备份模拟盘</h1>
+      <div class="sub">只读展示 · 历史成交保留 · 每 15 秒自动刷新 · 本机仍可照常跑</div>
+    </div>
+    <div class="badge"><span id="liveDot" class="dot"></span><span id="liveText">连接中…</span></div>
+  </header>
+  <main>
+    <div class="grid" id="cards"></div>
+    <div class="card" style="margin-bottom:14px">
+      <div class="label">当前仓位 / 冷却</div>
+      <div id="position" class="value small">—</div>
+    </div>
+    <div class="wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>时间</th>
+            <th>方向</th>
+            <th>入场</th>
+            <th>出场</th>
+            <th>原因</th>
+            <th>盈亏</th>
+            <th>持仓条数</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </main>
+  <footer>数据源：云端 <code>state/eth_v3_state.json</code> + <code>ledger/eth_v3_trades.jsonl</code>。不改策略分数，不下真实单。</footer>
+  <script>
+    const fmt = (n, d=2) => (n == null || Number.isNaN(Number(n))) ? '—' : Number(n).toLocaleString('en-US', {maximumFractionDigits:d, minimumFractionDigits:d});
+    const money = (n) => (n == null ? '—' : '$' + fmt(n, 2));
+    const pct = (n) => (n == null ? '—' : fmt(n, 2) + '%');
+    const when = (s) => {
+      if (!s) return '—';
+      try {
+        const d = new Date(s);
+        if (Number.isNaN(d.getTime())) return s;
+        return d.toLocaleString('zh-CN', { hour12: false, timeZone: 'Asia/Singapore' }) + ' SGT';
+      } catch { return s; }
+    };
+
+    async function refresh() {
+      try {
+        const [st, tr] = await Promise.all([
+          fetch('./state.json', { cache: 'no-store' }).then(r => r.json()),
+          fetch('./trades.json', { cache: 'no-store' }).then(r => r.json()),
+        ]);
+        const s = st.state || {};
+        const sum = st.summary || {};
+        document.getElementById('liveDot').className = 'dot ok';
+        document.getElementById('liveText').textContent = '已连接 · ' + when(sum.generated_at);
+
+        const cards = [
+          ['权益', money(sum.equity)],
+          ['现金', money(s.current_cash)],
+          ['累计收益', pct(sum.return_pct), (sum.return_pct||0) >= 0 ? 'pos' : 'neg'],
+          ['已实现盈亏', money(sum.realized_pnl), (sum.realized_pnl||0) >= 0 ? 'pos' : 'neg'],
+          ['成交笔数', String(sum.trade_count ?? '—')],
+          ['胜率', sum.win_rate == null ? '—' : pct(sum.win_rate)],
+          ['最新价', money(s.latest_market_price)],
+          ['数据状态', s.data_status || '—'],
+        ];
+        document.getElementById('cards').innerHTML = cards.map(([label, val, cls]) =>
+          `<div class="card"><div class="label">${label}</div><div class="value ${cls||''}">${val}</div></div>`
+        ).join('');
+
+        let posHtml = s.in_position
+          ? `持仓中 · 入场 ${money(s.entry_price)} · 止损 ${money(s.effective_stop || s.stop_price)} · 止盈 ${money(s.target_price)} · 数量 ${fmt(s.position_size,4)}`
+          : '空仓';
+        if (s.cooldown_until) posHtml += ` · 冷却至 ${when(s.cooldown_until)}`;
+        document.getElementById('position').textContent = posHtml;
+
+        const rows = (tr.trades || []).map(t => {
+          const reason = t.exited ? (t.exit_reason || '—') : 'open';
+          const cls = t.exited ? (t.exit_reason || '') : 'open';
+          const pnlCls = (t.pnl||0) >= 0 ? 'pos' : 'neg';
+          return `<tr>
+            <td>${when(t.entry_time)}<div class="sub">${t.exited ? when(t.exit_time) : ''}</div></td>
+            <td>${t.direction || 'LONG'}</td>
+            <td>${money(t.entry_price)}</td>
+            <td>${t.exited ? money(t.exit_price) : '—'}</td>
+            <td><span class="pill ${cls}">${reason}</span></td>
+            <td class="${pnlCls}">${t.exited ? money(t.pnl) + ' (' + pct(t.pnl_pct) + ')' : '—'}</td>
+            <td>${t.bars_held ?? '—'}</td>
+          </tr>`;
+        }).join('') || `<tr><td colspan="7" class="sub">暂无成交</td></tr>`;
+        document.getElementById('rows').innerHTML = rows;
+      } catch (e) {
+        document.getElementById('liveDot').className = 'dot bad';
+        document.getElementById('liveText').textContent = '连接失败，重试中…';
+      }
+    }
+    refresh();
+    setInterval(refresh, 15000);
+  </script>
+</body>
+</html>
