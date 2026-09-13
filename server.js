@@ -33,6 +33,7 @@ const MIME = {
   ".html": "text/html; charset=utf-8",
   ".css": "text/css; charset=utf-8",
   ".js": "application/javascript; charset=utf-8",
+  ".mjs": "application/javascript; charset=utf-8",
   ".json": "application/json; charset=utf-8",
   ".svg": "image/svg+xml",
   ".jpg": "image/jpeg",
@@ -45,7 +46,7 @@ const MIME = {
   ".xsl": "application/xml; charset=utf-8",
 };
 
-const STATIC_ROOTS = new Set(["css", "js", "data", "assets", "about", "notes", "rss"]);
+const STATIC_ROOTS = new Set(["css", "js", "shared", "data", "assets", "about", "notes", "rss"]);
 const STATIC_FILES = new Set(["index.html", "404.html", "robots.txt", "rss.xsl"]);
 const rates = new Map();
 const loginFailures = new Map();
@@ -516,6 +517,12 @@ const server = http.createServer(async (req, res) => {
     }
     if (req.method !== "GET" && req.method !== "HEAD") {
       send(res, 405, "Method Not Allowed");
+      return;
+    }
+    // 复刻 functions/index.js：首页首屏观点和计数来自当前内容，避免旧静态条目闪现。
+    if (url.pathname === "/" || url.pathname === "/index.html") {
+      const html = view.homePage(fs.readFileSync(path.join(ROOT, "index.html"), "utf8"), readJson("notes.json", { items: [] }));
+      send(res, 200, req.method === "HEAD" ? "" : html, { "Content-Type": MIME[".html"] });
       return;
     }
     // 和线上一样：手写的静态页优先，剩下的交给动态渲染

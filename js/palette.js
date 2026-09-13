@@ -1,6 +1,7 @@
-import { esc } from "./util.js";
-import { getState } from "./app.js";
-import { applyTheme } from "./theme.js";
+import { esc } from "./util.js?v=20260905a";
+import { getState } from "./app.js?v=20260905a";
+import { applyTheme } from "./theme.js?v=20260905a";
+import { noteHref } from "../shared/notes.mjs?v=20260905a";
 
 const MAX_RESULTS = 12;
 
@@ -40,10 +41,10 @@ function commands() {
     out.push({
       group: "观点",
       title: note.title,
-      hint: note.slug ? "全文" : "首页",
+      hint: note.slug ? "全文" : "短记",
       keys: `${note.title} ${note.body}`,
       run: () => {
-        location.href = note.slug ? `/notes/${note.slug}/` : "/#notes";
+        location.href = noteHref(note);
       },
     });
   }
@@ -61,10 +62,20 @@ function commands() {
   const jumps = [
     ["全部观点", "/notes/", "归档"],
     ["关于我", "/about/", "页面"],
+    ["Telegram", "https://t.me/chaestgetrichbot", "机器人"],
     ["RSS 订阅", "/rss.xml", "订阅"],
   ];
   for (const [title, href, hint] of jumps) {
-    out.push({ group: "导航", title, hint, keys: title, run: () => { location.href = href; } });
+    out.push({
+      group: "导航",
+      title,
+      hint,
+      keys: `${title} ${href}`,
+      run: () => {
+        if (/^https?:\/\//i.test(href)) window.open(href, "_blank", "noopener");
+        else location.href = href;
+      },
+    });
   }
   for (const [theme, title] of [["liquid", "玻璃主题"], ["eye", "护眼主题"], ["ink", "墨夜主题"]]) {
     out.push({

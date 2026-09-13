@@ -10,6 +10,7 @@ import sys
 import time
 import urllib.error
 import urllib.request
+import xml.etree.ElementTree as ET
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -109,6 +110,10 @@ def main() -> int:
         assert status == 200 and "text/plain" in ctype, (status, ctype)
         assert "OAI-SearchBot" in robots and "Sitemap:" in robots
 
+        status, ctype, notes_module = fetch_text(base, "/shared/notes.mjs")
+        assert status == 200 and "application/javascript" in ctype, (status, ctype)
+        assert "export function noteHref" in notes_module
+
         status, ctype, sitemap = fetch_text(base, "/sitemap.xml")
         assert status == 200 and "xml" in ctype, (status, ctype)
         assert "https://chaestblog.pages.dev/about/" in sitemap
@@ -177,6 +182,15 @@ def main() -> int:
         assert status == 200 and saved["notes"]["items"][0]["title"] == "测试"
         assert saved["notes"]["items"][0].get("slug") == "hbm-supply"
 
+        status, _, homepage = fetch_text(base, "/")
+        assert status == 200 and 'data-id="n_test"' in homepage
+        assert 'data-id="n_cmipldxjd4"' not in homepage and 'data-id="n_hbm"' not in homepage
+        assert "<!-- hub:note-count:start -->1<!-- hub:note-count:end -->" in homepage
+
+        # 首页反映已保存的内容，手写文章的静态优先行为仍保留。
+        status, _, static_note = fetch_text(base, "/notes/hbm-supply/")
+        assert status == 200 and "High Bandwidth Memory" in static_note
+
         status, restored, _ = request(
             base,
             "/api/restore",
@@ -186,7 +200,8 @@ def main() -> int:
         )
         assert status == 200 and restored["data"]["items"][0]["title"] == "CPU和GPU将1:1", (status, restored)
 
-        # 只靠工作台发一篇长文：没有静态 HTML 也要有独立页面、进 RSS 和 sitemap
+        # 工作台中的长文和无 slug 短记：归档与订阅都能找到，只有长文有独立页面。
+        short_body = "无需文章路径也能阅读。" * 20 + "\n完整短记的结尾 & 来源保留。"
         status, published, _ = request(
             base,
             "/api/notes",
@@ -198,6 +213,11 @@ def main() -> int:
                 "body": "这条只存在于内容接口里。",
                 "article": "## 小标题\n\n正文一段，带 **粗体**。\n\n- 第一条\n- 第二条\n",
                 "createdAt": "2026-08-30T00:00:00.000Z",
+            }, {
+                "id": "n_short",
+                "title": "短记 & 固定链接",
+                "body": short_body,
+                "createdAt": "2026-09-05T00:00:00.000Z",
             }]},
             cookies=session_cookie,
         )
@@ -208,11 +228,51 @@ def main() -> int:
         assert "<strong>粗体</strong>" in dynamic and "<li>第一条</li>" in dynamic
         assert "application/ld+json" in dynamic and "article-page" in dynamic
 
+        status, _, archive_dyn = fetch_text(base, "/notes/")
+        assert status == 200 and "共 2 条" in archive_dyn
+        assert 'id="note-n_short"' in archive_dyn and 'href="/notes/#note-n_short"' in archive_dyn
+        assert "完整短记的结尾 &amp; 来源保留。" in archive_dyn
+        assert "短记 &amp; 固定链接" in archive_dyn
+        assert "/notes/dynamic-note/" in archive_dyn and "HBM 比标题先紧" not in archive_dyn
+
         status, _, rss_dyn = fetch_text(base, "/rss.xml")
         assert status == 200 and "/notes/dynamic-note/" in rss_dyn, status
+        feed_items = ET.fromstring(rss_dyn).findall("./channel/item")
+        assert len(feed_items) == 2
+        short_item = next(item for item in feed_items if item.findtext("title") == "短记 & 固定链接")
+        assert short_item.findtext("link") == "https://chaestblog.pages.dev/notes/#note-n_short"
+        assert short_item.findtext("guid") == short_item.findtext("link")
 
         status, _, sitemap_dyn = fetch_text(base, "/sitemap.xml")
         assert status == 200 and "/notes/dynamic-note/" in sitemap_dyn, status
+        sitemap_urls = [node.text for node in ET.fromstring(sitemap_dyn).iter("{http://www.sitemaps.org/schemas/sitemap/0.9}loc")]
+        assert "https://chaestblog.pages.dev/notes/" in sitemap_urls
+        assert all("#" not in url and "n_short" not in url for url in sitemap_urls)
+
+        status, _, missing_short_page = fetch_raw(base, "/notes/n_short/")
+        assert status == 404 and "这页不在了" in missing_short_page
+
+        status, _, homepage = fetch_text(base, "/")
+        assert status == 200 and 'href="/notes/#note-n_short"' in homepage
+        assert 'href="/notes/dynamic-note/"' in homepage
+        assert "<!-- hub:note-count:start -->2<!-- hub:note-count:end -->" in homepage
+        assert "HBM 比标题先紧" not in homepage and 'data-id="n_test"' not in homepage
+        with urllib.request.urlopen(urllib.request.Request(base + "/", method="HEAD"), timeout=5) as res:
+            assert res.status == 200 and res.read() == b""
+            assert "text/html" in res.headers.get("Content-Type", "")
+            assert res.headers.get("Cache-Control") == "no-store"
+
+        # 删除全部观点后，首屏不能重新出现仓库中的旧条目，归档和订阅也应为空。
+        status, _, _ = request(base, "/api/notes", "PUT", {"items": []}, cookies=session_cookie)
+        assert status == 200
+        status, _, empty_home = fetch_text(base, "/")
+        assert status == 200 and "最近没什么想写的。" in empty_home
+        assert "<!-- hub:note-count:start -->0<!-- hub:note-count:end -->" in empty_home
+        assert all(title not in empty_home for title in ["HBM 比标题先紧", "CPU和GPU将1:1", "动态渲染的观点", "短记 &amp; 固定链接"])
+        status, _, empty_archive = fetch_text(base, "/notes/")
+        assert status == 200 and "共 0 条" in empty_archive and "还没有公开的观点" in empty_archive
+        status, _, empty_rss = fetch_text(base, "/rss.xml")
+        assert status == 200 and ET.fromstring(empty_rss).findall("./channel/item") == []
 
         status, project_saved, _ = request(
             base,

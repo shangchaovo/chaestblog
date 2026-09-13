@@ -1,10 +1,12 @@
-import { esc, toast, api, formatDay, icon, appIcon, shotImg } from "./util.js";
-import { bindThemeSwitch, bindGlassLight } from "./theme.js";
-import { initAdmin } from "./admin.js";
-import { initDanmaku } from "./danmaku.js";
-import { initPalette } from "./palette.js";
+import { esc, toast, api, formatDay, icon, appIcon, shotImg } from "./util.js?v=20260905a";
+import { bindThemeSwitch, bindGlassLight } from "./theme.js?v=20260905a";
+import { initAdmin } from "./admin.js?v=20260905a";
+import { initDanmaku } from "./danmaku.js?v=20260905a";
+import { initPalette } from "./palette.js?v=20260905a";
+import { noteHref } from "../shared/notes.mjs?v=20260905a";
 
 const RESEARCH = "https://fresearch.cc.cd/";
+const TELEGRAM_URL = "https://t.me/chaestgetrichbot";
 
 const state = {
   site: null,
@@ -39,10 +41,6 @@ export function setContent({ site, notes, watchlist, now }) {
   if (now) state.now = now;
 }
 
-function noteHref(item) {
-  return item?.slug ? `/notes/${encodeURIComponent(item.slug)}/` : "#notes";
-}
-
 function liveProjects() {
   return (state.site.projects || []).filter((item) => item.status === "live" && item.live);
 }
@@ -56,6 +54,26 @@ function setSectionVisible(id, on) {
   if (section) section.hidden = !on;
 }
 
+function listedSocials() {
+  return (state.site.socials || []).flatMap((item) => {
+    if (item.id === "telegram") {
+      return [{
+        ...item,
+        href: item.href || TELEGRAM_URL,
+        handle: item.handle || "@chaestgetrichbot",
+        kind: "link",
+        label: item.label || "Telegram",
+        icon: item.icon || "telegram",
+      }];
+    }
+    return item.kind !== "soon" && item.href ? [item] : [];
+  });
+}
+
+function socialById(id) {
+  return listedSocials().find((item) => item.id === id);
+}
+
 function renderHero() {
   const profile = state.site.profile;
   const projects = liveProjects();
@@ -63,14 +81,18 @@ function renderHero() {
   document.getElementById("profileName").textContent = profile.name;
   document.getElementById("profileTitle").textContent = profile.title;
   document.getElementById("profileBio").textContent = profile.bio;
-  const github = state.site.socials.find((item) => item.id === "github");
-  const mail = state.site.socials.find((item) => item.id === "email");
-  const coffee = state.site.socials.find((item) => item.id === "bmc");
-  const twitter = state.site.socials.find((item) => item.id === "x");
+  const github = socialById("github");
+  const mail = socialById("email");
+  const coffee = socialById("bmc");
+  const twitter = socialById("x");
+  const telegram = socialById("telegram");
   document.getElementById("heroActions").innerHTML = [
-    coffee?.href ? `<a class="btn primary" href="${esc(coffee.href)}" target="_blank" rel="noopener">${appIcon("coffee", 22)} 请我喝杯咖啡</a>` : "",
+    coffee?.href
+      ? `<a class="btn primary" href="${esc(coffee.href)}" target="_blank" rel="noopener">${appIcon("coffee", 22)} 请我喝杯咖啡</a>`
+      : `<a class="btn primary" href="#sites">${icon("compass")} 看看我的作品</a>`,
     github?.href ? `<a class="btn" rel="me noopener" href="${esc(github.href)}" target="_blank">${appIcon("github", 22)} GitHub</a>` : "",
     twitter?.href ? `<a class="btn" rel="me noopener" href="${esc(twitter.href)}" target="_blank">${appIcon("x", 22)} X</a>` : "",
+    telegram?.href ? `<a class="btn" href="${esc(telegram.href)}" target="_blank" rel="noopener">${appIcon("telegram", 22)} Telegram</a>` : "",
     mail?.href ? `<a class="btn" href="${esc(mail.href)}">${appIcon("mail", 22)} 写信</a>` : "",
   ].join("");
   const nowText = state.now?.text || "";
@@ -156,9 +178,9 @@ function renderNotes() {
   document.getElementById("noteList").innerHTML = items.length ? items.map((item) => `
     <article class="note glass" data-id="${esc(item.id)}">
       <time>${icon("feather")} ${esc(formatDay(item.createdAt))}</time>
-      <h3>${item.slug ? `<a href="${esc(noteHref(item))}">${esc(item.title)}</a>` : esc(item.title)}</h3>
+      <h3><a href="${esc(noteHref(item))}">${esc(item.title)}</a></h3>
       <p>${esc(item.body)}</p>
-      ${item.slug ? `<p class="note-more"><a href="${esc(noteHref(item))}">阅读全文</a></p>` : ""}
+      <p class="note-more"><a href="${esc(noteHref(item))}">${item.slug ? "阅读全文" : "固定链接"}</a></p>
       <div class="note-actions">
         <button class="btn" type="button" data-edit-note="${esc(item.id)}">${icon("edit")} 改</button>
         <button class="btn danger" type="button" data-del-note="${esc(item.id)}">${icon("trash")} 删</button>
@@ -202,7 +224,7 @@ function renderWatch() {
 }
 
 function renderContact() {
-  const items = (state.site.socials || []).filter((item) => item.kind !== "soon" && item.href);
+  const items = listedSocials();
   if (!items.some((item) => item.id === "rss")) {
     items.push({ id: "rss", icon: "rss", label: "RSS 订阅", handle: "关注最新博文", href: "/rss/" });
   }
@@ -282,7 +304,7 @@ async function loadHealth() {
   applyHealth();
 }
 
-async function boot() {
+async function initialize() {
   bindThemeSwitch();
   bindGlassLight();
   await loadContent();
@@ -301,4 +323,9 @@ async function boot() {
   countVisit().catch(() => {});
 }
 
-boot().catch((error) => toast(error.message || "页面启动失败"));
+// 只有 main.js 发起启动。业务模块可以引用这里的状态，不会触发另一轮初始化。
+let bootPromise;
+export function boot() {
+  if (!bootPromise) bootPromise = initialize();
+  return bootPromise;
+}

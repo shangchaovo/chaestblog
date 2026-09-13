@@ -1,11 +1,13 @@
 // 服务端渲染用的模板与工具：server.js（本地）和 functions/（线上）共用同一份，
 // 保证本地看到的观点页 / RSS / sitemap 和线上一模一样。
+import { publicNotes, noteAnchor, noteHref } from "./notes.mjs";
+
 export const ORIGIN = "https://chaestblog.pages.dev";
 export const SITE_NAME = "chaestblog";
 export const AUTHOR = "Chase Xie";
 export const TWITTER = "@johny_xie";
 // CSS / JS 的防缓存版本号。改了样式或脚本就 bump 这里和 index.html 里的 ?v=。
-export const ASSET_V = "20260830a";
+export const ASSET_V = "20260905a";
 
 export function escapeHtml(value) {
   return String(value ?? "").replace(/[&<>"']/g, (char) => ({
@@ -147,11 +149,40 @@ export function formatDay(iso) {
 }
 
 function noteUrl(note) {
-  return `${ORIGIN}/notes/${note.slug}/`;
+  return `${ORIGIN}${noteHref(note)}`;
 }
 
 export function publishedNotes(notes) {
-  return (notes?.items || []).filter((item) => item && item.slug);
+  return publicNotes(notes).filter((item) => item.slug);
+}
+
+export function homeNotesHtml(notes) {
+  const items = publicNotes(notes);
+  if (!items.length) return '<div class="empty glass"><span>最近没什么想写的。</span></div>';
+  return items.map((note) => `
+            <article class="note glass" data-id="${escapeHtml(note.id)}">
+              <time datetime="${escapeHtml(note.createdAt)}">${escapeHtml(formatDay(note.createdAt))}</time>
+              <h3><a href="${escapeHtml(noteHref(note))}">${escapeHtml(note.title)}</a></h3>
+              <p>${escapeHtml(note.body)}</p>
+              <p class="note-more"><a href="${escapeHtml(noteHref(note))}">${note.slug ? "阅读全文" : "固定链接"}</a></p>
+            </article>`).join("");
+}
+
+// 只替换首页约定的内容区，布局仍由 index.html 维护；KV 与无 JS 首屏使用相同观点。
+export function homePage(html, notes) {
+  const replacements = {
+    notes: homeNotesHtml(notes),
+    "note-count": String(publicNotes(notes).length),
+  };
+  for (const [name, content] of Object.entries(replacements)) {
+    const start = `<!-- hub:${name}:start -->`;
+    const end = `<!-- hub:${name}:end -->`;
+    const from = html.indexOf(start);
+    const to = html.indexOf(end, from + start.length);
+    if (from < 0 || to < 0) throw new Error(`首页缺少 ${name} 内容标记`);
+    html = `${html.slice(0, from + start.length)}${content}${html.slice(to)}`;
+  }
+  return html;
 }
 
 const THEME_BOOT = `(function(){try{var t=localStorage.getItem("hubTheme");if(t==="liquid"||t==="eye"||t==="ink"){document.documentElement.dataset.theme=t;return;}if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches){document.documentElement.dataset.theme="ink";}}catch(e){}})();`;
@@ -202,10 +233,18 @@ function chrome() {
         <a href="/about/">关于</a>
         <a href="/#contact">联系</a>
       </nav>
+      <div class="nav-tools">
+        <details class="nav-more">
+          <summary>更多</summary>
+          <div class="nav-more-panel">
+            <span class="nav-menu-label">显示主题</span>
       <div class="theme-switch" role="radiogroup" aria-label="主题">
         <button class="theme-btn" type="button" data-theme="liquid" aria-pressed="true" title="Liquid Glass"><i class="orb orb-liquid" aria-hidden="true"></i><span>玻璃</span></button>
         <button class="theme-btn" type="button" data-theme="eye" aria-pressed="false" title="护眼"><i class="orb orb-eye" aria-hidden="true"></i><span>护眼</span></button>
         <button class="theme-btn" type="button" data-theme="ink" aria-pressed="false" title="墨夜"><i class="orb orb-ink" aria-hidden="true"></i><span>墨夜</span></button>
+      </div>
+          </div>
+        </details>
       </div>
     </header>`;
 }
@@ -280,7 +319,7 @@ ${body}
 }
 
 export function archivePage(notes) {
-  const items = publishedNotes(notes);
+  const items = publicNotes(notes);
   const canonical = `${ORIGIN}/notes/`;
   const jsonLd = `    <script type="application/ld+json">
 ${JSON.stringify({
@@ -301,18 +340,24 @@ ${JSON.stringify({
 `;
   const list = items.length
     ? `<div class="archive-list">
-${items.map((note) => `        <a class="archive-item glass" href="/notes/${escapeHtml(note.slug)}/">
+${items.map((note) => note.slug ? `        <a class="archive-item glass" href="${escapeHtml(noteHref(note))}">
           <time>${escapeHtml(formatDay(note.createdAt))}</time>
           <strong>${escapeHtml(note.title)}</strong>
           <small>${escapeHtml(plainText(note.body || note.article, 110))}</small>
-        </a>`).join("\n")}
+        </a>` : `        <article class="archive-item archive-note glass" id="${escapeHtml(noteAnchor(note))}">
+          <time datetime="${escapeHtml(note.createdAt)}">${escapeHtml(formatDay(note.createdAt))} · 短记</time>
+          <h2><a href="${escapeHtml(noteHref(note))}">${escapeHtml(note.title)}</a></h2>
+          <p class="archive-note-body">${escapeHtml(note.body)}</p>
+          ${note.article ? `<div class="prose">${renderMarkdown(note.article)}</div>` : ""}
+          <a class="archive-permalink" href="${escapeHtml(noteHref(note))}">固定链接</a>
+        </article>`).join("\n")}
       </div>`
-    : `<p class="lede">还没有公开的长文，观点先记在<a href="/#notes">首页</a>。</p>`;
+    : `<p class="lede">还没有公开的观点，之后写下的长文和短记都会留在这里。</p>`;
   const main = `    <main class="page-doc archive-doc">
       <p class="crumbs"><a href="/">${SITE_NAME}</a> / 观点</p>
       <p class="kicker">Notes</p>
       <h1>观点</h1>
-      <p class="lede">写过的判断都留在这里。数字会变，判断按日期读。共 ${items.length} 篇。</p>
+      <p class="lede">长文和短记都留在这里。数字会变，判断按日期读。共 ${items.length} 条。</p>
       ${list}
       <p class="note-nav"><a href="/rss.xml">RSS 订阅</a> · <a href="/">回首页</a></p>
     </main>`;
@@ -320,7 +365,7 @@ ${items.map((note) => `        <a class="archive-item glass" href="/notes/${esca
     bodyClass: "page archive-page",
     headHtml: head({
       title: `观点 · ${AUTHOR}`,
-      description: `${AUTHOR} 写过的判断与长文：AI 算力、HBM、预测市场与独立开发。共 ${items.length} 篇。`,
+      description: `${AUTHOR} 写过的判断、长文与短记：AI 算力、预测市场与独立开发。共 ${items.length} 条。`,
       canonical,
       jsonLd,
     }),
@@ -350,7 +395,7 @@ export function notFoundPage() {
 }
 
 export function rssXml(notes) {
-  const items = publishedNotes(notes).slice(0, 30);
+  const items = publicNotes(notes).slice(0, 30);
   const latest = items[0]?.updatedAt || items[0]?.createdAt || new Date().toISOString();
   return `<?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="/rss.xsl"?>

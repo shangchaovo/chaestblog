@@ -43,9 +43,9 @@
       "id": "telegram",
       "icon": "telegram",
       "label": "Telegram",
-      "handle": "",
-      "href": "",
-      "kind": "soon"
+      "handle": "@chaestgetrichbot",
+      "href": "https://t.me/chaestgetrichbot",
+      "kind": "link"
     }
   ],
   "canonical": "https://chaestblog.pages.dev/",

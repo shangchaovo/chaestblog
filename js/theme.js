@@ -1,4 +1,4 @@
-import { THEMES } from "./util.js";
+import { THEMES } from "./util.js?v=20260905a";
 
 export function applyTheme(theme, persist) {
   const next = THEMES.includes(theme) ? theme : "liquid";
@@ -17,6 +17,19 @@ export function bindThemeSwitch() {
     const button = event.target.closest(".theme-btn");
     if (!button) return;
     applyTheme(button.dataset.theme, true);
+  });
+  const menu = document.querySelector(".nav-more");
+  if (!menu) return;
+  document.addEventListener("click", (event) => {
+    if (!menu.contains(event.target) || event.target.closest(".theme-btn, .admin-entry")) {
+      menu.open = false;
+    }
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && menu.open) {
+      menu.open = false;
+      menu.querySelector("summary").focus();
+    }
   });
 }
 

@@ -23,8 +23,8 @@
     <meta name="twitter:description" content="独立开发者。把已上线的市场工具和学习产品放在一页，并写下最近在盯的 AI 算力与 HBM。" />
     <meta name="twitter:image" content="https://chaestblog.pages.dev/assets/og.jpg" />
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
-    <link rel="stylesheet" href="/css/themes.css?v=20260830a" />
-    <link rel="stylesheet" href="/css/styles.css?v=20260830a" />
+    <link rel="stylesheet" href="/css/themes.css?v=20260905a" />
+    <link rel="stylesheet" href="/css/styles.css?v=20260905a" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -50,6 +50,7 @@
             "sameAs": [
               "https://github.com/shangchaovo",
               "https://x.com/johny_xie",
+              "https://t.me/chaestgetrichbot",
               "https://buymeacoffee.com/chasetse"
             ]
           }
@@ -124,22 +125,30 @@
         <a href="/about/"><svg class="ic"><use href="#i-user"></use></svg>关于</a>
         <a href="#contact"><svg class="ic"><use href="#i-chat"></use></svg>联系</a>
       </nav>
-      <button class="palette-entry" id="openPaletteBtn" type="button" aria-controls="paletteDialog" hidden>
-        <svg class="ic"><use href="#i-search"></use></svg><span>搜索</span><kbd class="palette-key">⌘K</kbd>
-      </button>
-      <button class="admin-entry" id="openAdminBtn" type="button" aria-controls="adminDialog">
-        <svg class="ic"><use href="#i-lock"></use></svg><span>管理</span>
-      </button>
-      <div class="theme-switch" role="radiogroup" aria-label="主题">
-        <button class="theme-btn" type="button" data-theme="liquid" aria-pressed="true" title="Liquid Glass">
-          <i class="orb orb-liquid" aria-hidden="true"></i><span>玻璃</span>
+      <div class="nav-tools">
+        <button class="palette-entry" id="openPaletteBtn" type="button" aria-controls="paletteDialog" hidden>
+          <svg class="ic"><use href="#i-search"></use></svg><span>搜索</span><kbd class="palette-key">⌘K</kbd>
         </button>
-        <button class="theme-btn" type="button" data-theme="eye" aria-pressed="false" title="护眼">
-          <i class="orb orb-eye" aria-hidden="true"></i><span>护眼</span>
-        </button>
-        <button class="theme-btn" type="button" data-theme="ink" aria-pressed="false" title="墨夜">
-          <i class="orb orb-ink" aria-hidden="true"></i><span>墨夜</span>
-        </button>
+        <details class="nav-more">
+          <summary>更多</summary>
+          <div class="nav-more-panel">
+            <span class="nav-menu-label">显示主题</span>
+            <div class="theme-switch" role="radiogroup" aria-label="主题">
+              <button class="theme-btn" type="button" data-theme="liquid" aria-pressed="true" title="Liquid Glass">
+                <i class="orb orb-liquid" aria-hidden="true"></i><span>玻璃</span>
+              </button>
+              <button class="theme-btn" type="button" data-theme="eye" aria-pressed="false" title="护眼">
+                <i class="orb orb-eye" aria-hidden="true"></i><span>护眼</span>
+              </button>
+              <button class="theme-btn" type="button" data-theme="ink" aria-pressed="false" title="墨夜">
+                <i class="orb orb-ink" aria-hidden="true"></i><span>墨夜</span>
+              </button>
+            </div>
+            <button class="admin-entry" id="openAdminBtn" type="button" aria-controls="adminDialog">
+              <svg class="ic"><use href="#i-lock"></use></svg><span>管理</span>
+            </button>
+          </div>
+        </details>
       </div>
     </header>
 
@@ -166,11 +175,12 @@
             <a class="btn primary" href="https://buymeacoffee.com/chasetse" target="_blank" rel="noopener">请我喝杯咖啡</a>
             <a class="btn" rel="me noopener" href="https://github.com/shangchaovo" target="_blank">GitHub</a>
             <a class="btn" rel="me noopener" href="https://x.com/johny_xie" target="_blank">X</a>
+            <a class="btn" href="https://t.me/chaestgetrichbot" target="_blank" rel="noopener">Telegram</a>
             <a class="btn" href="mailto:shangchaoxie888@gmail.com">写信</a>
           </div>
           <div class="stat-row" id="statRow">
             <div class="stat"><b>7</b><span>在线站点</span></div>
-            <div class="stat"><b>2</b><span>条观点</span></div>
+            <div class="stat"><b><!-- hub:note-count:start -->2<!-- hub:note-count:end --></b><span>条观点</span></div>
             <div class="stat"><b>6</b><span>只在盯</span></div>
           </div>
         </article>
@@ -315,6 +325,7 @@
             <button class="btn primary" id="addNoteBtn" type="button"><svg class="ic"><use href="#i-plus"></use></svg>写一条</button>
           </div>
           <div class="notes" id="noteList">
+            <!-- hub:notes:start -->
             <article class="note glass" data-id="n_cmipldxjd4">
               <time>2026年8月25日</time>
               <h3>CPU和GPU将1:1</h3>
@@ -326,6 +337,7 @@
               <p>HBM 和先进封装是当前 AI 开支里比 GPU 标题更硬的约束。供给爬坡比叙事重要。数字会变，判断留在独立页面。</p>
               <p class="note-more"><a href="/notes/hbm-supply/">阅读全文</a></p>
             </article>
+            <!-- hub:notes:end -->
           </div>
         </section>
 
@@ -389,7 +401,7 @@
             <p class="kicker"><svg class="ic"><use href="#i-chat"></use></svg> 04 · Contact</p>
             <h2>联系与支持</h2>
           </div>
-          <p class="hint">GitHub、X，或者请我喝杯咖啡</p>
+          <p class="hint">GitHub、X、Telegram，或者请我喝杯咖啡</p>
         </div>
         <div class="contact-grid" id="contactGrid">
           <a class="contact glass" rel="me noopener" href="https://github.com/shangchaovo" target="_blank">
@@ -411,6 +423,11 @@
             <span class="well app"><img class="app-icon" src="/assets/icons/x.svg" alt="" width="56" height="56"></span>
             <small>X</small>
             <strong>@johny_xie</strong>
+          </a>
+          <a class="contact glass" href="https://t.me/chaestgetrichbot" target="_blank" rel="noopener">
+            <span class="well app"><img class="app-icon" src="/assets/icons/telegram.svg" alt="" width="56" height="56"></span>
+            <small>Telegram</small>
+            <strong>@chaestgetrichbot</strong>
           </a>
           <a class="contact glass" href="/rss/">
             <span class="well app"><img class="app-icon" src="/assets/icons/rss.svg" alt="" width="56" height="56"></span>
@@ -511,7 +528,7 @@
     </dialog>
 
     <div class="toast-host" id="toastHost" aria-live="polite"></div>
-    <script src="/js/app.js?v=20260830a" type="module"></script>
+    <script src="/js/main.js?v=20260905a" type="module"></script>
     <noscript>
       Chase Xie 是独立开发者。站点、观点和盯盘不需要 JavaScript 也能读。
       关于：/about/ · HBM 笔记：/notes/hbm-supply/
