@@ -1,4 +1,4 @@
-import { THEMES } from "./util.js?v=20260905a";
+import { THEMES } from "./util.js?v=20260922b";
 
 export function applyTheme(theme, persist) {
   const next = THEMES.includes(theme) ? theme : "liquid";
@@ -35,10 +35,51 @@ export function bindThemeSwitch() {
 
 export function bindGlassLight() {
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const root = document.documentElement;
+  let targetX = 28;
+  let targetY = 16;
+  let x = 28;
+  let y = 16;
+  let frame = 0;
+  let lit = null;
+
+  const paint = () => {
+    x += (targetX - x) * 0.06;
+    y += (targetY - y) * 0.06;
+    root.style.setProperty("--glass-x", `${x.toFixed(1)}%`);
+    root.style.setProperty("--glass-y", `${y.toFixed(1)}%`);
+    const angle = Math.atan2(x - 50, 50 - y) * (180 / Math.PI);
+    root.style.setProperty("--glass-angle", `${angle.toFixed(1)}deg`);
+    frame = Math.hypot(targetX - x, targetY - y) > 0.15 ? requestAnimationFrame(paint) : 0;
+  };
+
   window.addEventListener("pointermove", (event) => {
-    const x = Math.round((event.clientX / window.innerWidth) * 100);
-    const y = Math.round((event.clientY / window.innerHeight) * 100);
-    document.documentElement.style.setProperty("--glass-x", `${x}%`);
-    document.documentElement.style.setProperty("--glass-y", `${y}%`);
+    targetX = (event.clientX / window.innerWidth) * 100;
+    targetY = (event.clientY / window.innerHeight) * 100;
+    const next = event.target?.closest?.(".glass") || null;
+    if (lit && lit !== next) {
+      lit.style.removeProperty("--spot-x");
+      lit.style.removeProperty("--spot-y");
+    }
+    if (next) {
+      const rect = next.getBoundingClientRect();
+      const spotX = rect.width ? ((event.clientX - rect.left) / rect.width) * 100 : 50;
+      const spotY = rect.height ? ((event.clientY - rect.top) / rect.height) * 100 : 50;
+      next.style.setProperty("--spot-x", `${Math.min(100, Math.max(0, spotX)).toFixed(1)}%`);
+      next.style.setProperty("--spot-y", `${Math.min(100, Math.max(0, spotY)).toFixed(1)}%`);
+    }
+    lit = next;
+    if (!frame) frame = requestAnimationFrame(paint);
   }, { passive: true });
+
+  window.addEventListener("pointerleave", () => {
+    targetX = 28;
+    targetY = 16;
+    if (lit) {
+      lit.style.removeProperty("--spot-x");
+      lit.style.removeProperty("--spot-y");
+      lit = null;
+    }
+    if (!frame) frame = requestAnimationFrame(paint);
+  });
 }

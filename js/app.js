@@ -1,9 +1,9 @@
-import { esc, toast, api, formatDay, icon, appIcon, shotImg } from "./util.js?v=20260905a";
-import { bindThemeSwitch, bindGlassLight } from "./theme.js?v=20260905a";
-import { initAdmin } from "./admin.js?v=20260905a";
-import { initDanmaku } from "./danmaku.js?v=20260905a";
-import { initPalette } from "./palette.js?v=20260905a";
-import { noteHref } from "../shared/notes.mjs?v=20260905a";
+import { esc, toast, api, formatDay, icon, appIcon, shotImg } from "./util.js?v=20260922b";
+import { bindThemeSwitch, bindGlassLight } from "./theme.js?v=20260922b";
+import { initAdmin } from "./admin.js?v=20260922b";
+import { initDanmaku } from "./danmaku.js?v=20260922b";
+import { initPalette } from "./palette.js?v=20260922b";
+import { noteHref } from "../shared/notes.mjs?v=20260922b";
 
 const RESEARCH = "https://fresearch.cc.cd/";
 const TELEGRAM_URL = "https://t.me/chaestgetrichbot";

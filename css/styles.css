@@ -63,7 +63,9 @@ body {
   box-shadow: var(--glass-shadow);
   -webkit-backdrop-filter: blur(30px) saturate(1.28);
   backdrop-filter: blur(30px) saturate(1.28);
-  transition: border-color .25s ease, box-shadow .25s ease, transform .25s ease;
+  transition-property: border-color, box-shadow, transform, background-color;
+  transition-duration: 0.4s, 0.62s, 0.62s, 0.4s;
+  transition-timing-function: ease, var(--spring), var(--spring), ease;
 }
 
 .glass::before {
@@ -76,15 +78,10 @@ body {
     linear-gradient(135deg, rgba(255, 255, 255, 0.52), transparent 33% 68%, rgba(192, 220, 255, 0.2));
 }
 
-:root[data-theme="ink"] .glass::before {
-  background:
-    radial-gradient(circle at var(--glass-x) var(--glass-y), rgba(180, 210, 255, 0.14), transparent 36%),
-    linear-gradient(145deg, rgba(255, 255, 255, 0.08), transparent 42%);
-}
-
 .glass::after {
   content: "";
   position: absolute;
+  z-index: 2;
   inset: 0;
   pointer-events: none;
   border-radius: inherit;
@@ -98,6 +95,90 @@ body {
 }
 
 .glass > * { position: relative; z-index: 1; }
+
+:is(:root[data-theme="liquid"], :root[data-theme="ink"]) .glass {
+  border-color: color-mix(in srgb, var(--glass-rim) 55%, transparent);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
+  corner-shape: squircle;
+}
+
+:is(:root[data-theme="liquid"], :root[data-theme="ink"]) .glass::before,
+:is(:root[data-theme="liquid"], :root[data-theme="ink"]) .glass::after {
+  border-radius: inherit;
+  corner-shape: squircle;
+}
+
+:is(:root[data-theme="liquid"], :root[data-theme="ink"]) .glass::before {
+  background:
+    radial-gradient(ellipse 24% 14% at var(--spot-x, var(--glass-x)) var(--spot-y, var(--glass-y)), var(--glass-spot), transparent 72%),
+    linear-gradient(180deg, var(--glass-sheen), transparent 8%),
+    linear-gradient(0deg, var(--glass-foot, transparent), transparent 12%);
+}
+
+:is(:root[data-theme="liquid"], :root[data-theme="ink"]) .glass::after {
+  padding: 1.5px;
+  opacity: 0.95;
+  background: conic-gradient(from var(--glass-angle), var(--glass-rim), color-mix(in srgb, var(--glass-rim) 16%, transparent) 28%, color-mix(in srgb, var(--glass-rim) 6%, transparent) 54%, color-mix(in srgb, var(--glass-rim) 30%, transparent) 78%, var(--glass-rim));
+}
+
+:root[data-theme="liquid"] body::after { opacity: 0; }
+
+:root[data-theme="liquid"] .glass {
+  border-color: transparent;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0.28) 36px, rgba(255, 255, 255, 0) 88px),
+    linear-gradient(0deg, rgba(22, 28, 36, 0.045), transparent 22%),
+    rgba(255, 255, 255, 0.38);
+  box-shadow:
+    inset 0 1.5px 0 #fff,
+    inset 1px 0 0 rgba(255, 255, 255, 0.85),
+    inset -1px 0 0 rgba(22, 28, 36, 0.08),
+    inset 0 -1.5px 0 rgba(22, 28, 36, 0.12),
+    inset 0 -20px 28px rgba(22, 28, 36, 0.045),
+    0 1px 1px rgba(22, 28, 36, 0.04),
+    0 16px 40px rgba(22, 28, 36, 0.08);
+}
+
+:root[data-theme="liquid"] .glass::before {
+  background:
+    radial-gradient(160px 90px at var(--spot-x, var(--glass-x)) var(--spot-y, var(--glass-y)), rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.35) 42%, transparent 72%);
+}
+
+:root[data-theme="liquid"] .glass::after {
+  padding: 2px;
+  opacity: 1;
+  background: conic-gradient(from var(--glass-angle), #fff 0deg, rgba(255, 255, 255, 0.15) 70deg, rgba(22, 28, 36, 0.28) 160deg, rgba(22, 28, 36, 0.1) 230deg, #fff 330deg, #fff 360deg);
+}
+
+:root[data-theme="liquid"] .nav,
+:root[data-theme="liquid"] .dock {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.24));
+  -webkit-backdrop-filter: blur(40px) saturate(1.95);
+  backdrop-filter: blur(40px) saturate(1.95);
+}
+
+:root[data-theme="ink"] .nav,
+:root[data-theme="ink"] .dock {
+  -webkit-backdrop-filter: blur(40px) saturate(1.7);
+  backdrop-filter: blur(40px) saturate(1.7);
+}
+
+:root[data-theme="liquid"] .shot,
+:root[data-theme="ink"] .shot { position: relative; }
+
+:root[data-theme="liquid"] .shot::after,
+:root[data-theme="ink"] .shot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(115deg, rgba(255, 255, 255, 0.28), transparent 24% 70%, rgba(255, 255, 255, 0.06));
+}
+
+:root[data-theme="ink"] .shot::after {
+  background: linear-gradient(115deg, rgba(255, 255, 255, 0.12), transparent 28%);
+}
 
 .nav {
   position: sticky;
@@ -176,12 +257,34 @@ body {
   font-size: 13.5px;
   font-weight: 620;
   white-space: nowrap;
+  transition-property: color, background-color, transform, box-shadow;
+  transition-duration: 0.48s;
+  transition-timing-function: var(--spring);
 }
 
 .nav-links a:hover,
 .nav-links a:focus-visible {
   color: var(--ink);
   background: var(--chip);
+}
+
+:root[data-theme="liquid"] .nav-links a:hover,
+:root[data-theme="liquid"] .nav-links a:focus-visible {
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
+  transform: scale(1.04);
+}
+
+:root[data-theme="ink"] .nav-links a:hover,
+:root[data-theme="ink"] .nav-links a:focus-visible {
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  transform: scale(1.04);
+}
+
+:is(:root[data-theme="liquid"], :root[data-theme="ink"]) .nav-links a:active {
+  transform: scale(0.96);
+  transition-duration: 0.16s;
 }
 
 .nav-tools {
@@ -258,17 +361,42 @@ body {
 .admin-entry.is-active { color: var(--good); border-color: color-mix(in srgb, var(--good) 34%, var(--line)); }
 
 .theme-switch {
-  display: flex;
-  gap: 3px;
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
   padding: 4px;
   border: 1px solid var(--line);
   border-radius: 999px;
   background: var(--chip);
 }
 
+.theme-switch::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  width: calc((100% - 8px) / 3);
+  border-radius: inherit;
+  background: var(--glass-thick);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72), 0 1px 2px rgba(40, 56, 78, 0.08);
+  transform: translateX(0);
+  transition: transform 0.55s var(--spring);
+  pointer-events: none;
+}
+
+:root[data-theme="eye"] .theme-switch::before { transform: translateX(100%); }
+:root[data-theme="ink"] .theme-switch::before { transform: translateX(200%); }
+
 .theme-btn {
+  position: relative;
+  z-index: 1;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
   min-height: 34px;
   padding: 0 11px;
@@ -283,8 +411,8 @@ body {
 
 .theme-btn[aria-pressed="true"] {
   color: var(--ink);
-  background: var(--glass-thick);
-  box-shadow: var(--glass-shadow);
+  background: transparent;
+  box-shadow: none;
 }
 
 .orb {
@@ -491,17 +619,39 @@ body {
   cursor: pointer;
   font-size: 13.5px;
   font-weight: 650;
+  transition-property: transform, background-color, box-shadow, border-color, color;
+  transition-duration: 0.48s;
+  transition-timing-function: var(--spring);
 }
 
 .btn.primary {
   border-color: transparent;
   color: var(--accent-ink);
   background: var(--accent);
-  box-shadow: 0 10px 24px color-mix(in srgb, var(--accent) 28%, transparent);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 10px 24px color-mix(in srgb, var(--accent) 28%, transparent);
 }
 
 .btn.ghost { background: transparent; }
 .btn:hover { transform: translateY(-1px); }
+
+:root[data-theme="liquid"] .btn:not(.primary):not(.ghost):not(.danger) {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.68), rgba(255, 255, 255, 0.32));
+  border-color: rgba(255, 255, 255, 0.72);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 8px 18px rgba(56, 83, 123, 0.08);
+  -webkit-backdrop-filter: blur(18px) saturate(1.65);
+  backdrop-filter: blur(18px) saturate(1.65);
+}
+
+:root[data-theme="ink"] .btn:not(.primary):not(.ghost):not(.danger) {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04));
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 8px 20px rgba(0, 0, 0, 0.25);
+  -webkit-backdrop-filter: blur(18px) saturate(1.5);
+  backdrop-filter: blur(18px) saturate(1.5);
+}
+
+:is(:root[data-theme="liquid"], :root[data-theme="ink"]) .btn:hover { transform: scale(1.035); }
+:is(:root[data-theme="liquid"], :root[data-theme="ink"]) .btn:active { transform: scale(0.96); transition-duration: 0.16s; }
 .btn.danger { color: var(--danger); }
 
 .section { margin-top: 42px; scroll-margin-top: 110px; }
@@ -564,7 +714,7 @@ body {
   height: 100%;
   object-fit: cover;
   object-position: top center;
-  transition: transform .45s ease;
+  transition: transform 0.7s var(--spring);
 }
 .jump:hover .shot img,
 .card:hover .shot img { transform: scale(1.035); }
@@ -980,6 +1130,36 @@ dialog {
 
 dialog::backdrop { background: rgba(16, 22, 32, 0.42); }
 
+:root[data-theme="liquid"] dialog::backdrop {
+  background: rgba(226, 236, 248, 0.38);
+  -webkit-backdrop-filter: blur(10px) saturate(1.4);
+  backdrop-filter: blur(10px) saturate(1.4);
+}
+
+:root[data-theme="ink"] dialog::backdrop {
+  background: rgba(6, 10, 16, 0.46);
+  -webkit-backdrop-filter: blur(12px) saturate(1.3);
+  backdrop-filter: blur(12px) saturate(1.3);
+}
+
+dialog[open] { animation: glass-pop 0.58s var(--spring); }
+dialog[open]::backdrop { animation: glass-dim 0.4s ease; }
+
+@keyframes glass-pop {
+  from { opacity: 0; transform: translateY(12px) scale(0.94); }
+}
+
+@keyframes glass-dim {
+  from { opacity: 0; }
+}
+
+.nav-more-panel { transform-origin: 100% 0; }
+.nav-more[open] .nav-more-panel { animation: glass-menu 0.5s var(--spring); }
+
+@keyframes glass-menu {
+  from { opacity: 0; transform: translateY(-6px) scale(0.96); }
+}
+
 .modal { padding: 24px; border-radius: 26px; }
 .modal h3 { margin: 0 0 8px; font-family: var(--font-display); font-size: 26px; }
 .modal p { margin: 0 0 14px; color: var(--sub); line-height: 1.6; }
@@ -1094,12 +1274,31 @@ dialog::backdrop { background: rgba(16, 22, 32, 0.42); }
   border-radius: 24px;
 }
 
+@media (hover: hover) {
+  :is(:root[data-theme="liquid"], :root[data-theme="ink"]) :is(.card, .jump, .note, .sector, .contact, .rss-entry, .archive-item:not(.archive-note)):hover,
+  :is(:root[data-theme="liquid"], :root[data-theme="ink"]) :is(.card, .jump, .note, .sector, .contact, .rss-entry, .archive-item:not(.archive-note)):focus-within {
+    transform: translateY(-6px) scale(1.012);
+    box-shadow: var(--glass-shadow), 0 18px 40px color-mix(in srgb, var(--tint, var(--accent)) 16%, transparent);
+  }
+}
+
+:is(:root[data-theme="liquid"], :root[data-theme="ink"]) :is(.jump, .contact, .rss-entry, .archive-item:not(.archive-note)):active {
+  transform: translateY(-1px) scale(0.98);
+  transition-duration: 0.18s;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .jump:hover, .btn:hover { transform: none; }
+  .jump:hover, .btn:hover, .card:hover, .note:hover, .sector:hover, .contact:hover,
+  .archive-item:hover, .rss-entry:hover, .nav-links a:hover, .nav-links a:active, .btn:active { transform: none; }
   .jump:hover .shot img,
   .card:hover .shot img { transform: none; }
-  .danmaku-item { animation: none; left: 12%; }
+  .danmaku-item,
+  dialog[open],
+  dialog[open]::backdrop,
+  .nav-more[open] .nav-more-panel { animation: none; }
+  .danmaku-item { left: 12%; }
+  .theme-switch::before { transition: none; }
 }
 
 @media (max-width: 980px) {
@@ -1554,7 +1753,7 @@ body.page .nav {
 
 body.marquee-on .board-marquee {
   overflow: hidden;
-  padding-block: 10px; /* 给 hover 上移/阴影留点纵向空间,避免被裁掉 */
+  padding-block: 16px; /* 给弹簧上移和阴影留纵向空间,避免被裁掉 */
   /* 两侧渐隐,提示“后面还有” */
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
   mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
@@ -1730,7 +1929,9 @@ body.marquee-on .board-marquee:focus-within .project-board {
   border-radius: var(--radius-sm);
   color: inherit;
   text-decoration: none;
-  transition: transform .2s ease;
+  transition-property: transform, box-shadow, border-color;
+  transition-duration: 0.62s;
+  transition-timing-function: var(--spring);
 }
 
 .archive-item:hover { transform: translateY(-2px); }

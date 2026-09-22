@@ -1,7 +1,7 @@
-import { esc } from "./util.js?v=20260905a";
-import { getState } from "./app.js?v=20260905a";
-import { applyTheme } from "./theme.js?v=20260905a";
-import { noteHref } from "../shared/notes.mjs?v=20260905a";
+import { esc } from "./util.js?v=20260922b";
+import { getState } from "./app.js?v=20260922b";
+import { applyTheme } from "./theme.js?v=20260922b";
+import { noteHref } from "../shared/notes.mjs?v=20260922b";
 
 const MAX_RESULTS = 12;
 

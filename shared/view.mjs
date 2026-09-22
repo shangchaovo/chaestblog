@@ -7,7 +7,7 @@ export const SITE_NAME = "chaestblog";
 export const AUTHOR = "Chase Xie";
 export const TWITTER = "@johny_xie";
 // CSS / JS 的防缓存版本号。改了样式或脚本就 bump 这里和 index.html 里的 ?v=。
-export const ASSET_V = "20260905a";
+export const ASSET_V = "20260922b";
 
 export function escapeHtml(value) {
   return String(value ?? "").replace(/[&<>"']/g, (char) => ({

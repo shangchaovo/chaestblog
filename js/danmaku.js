@@ -1,4 +1,4 @@
-import { api, toast } from "./util.js?v=20260905a";
+import { api, toast } from "./util.js?v=20260922b";
 
 const seen = new Set();
 let danmakuVisible = false;
