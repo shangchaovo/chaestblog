@@ -1,12 +1,12 @@
-import { esc, toast, api, formatDay, icon, appIcon, shotImg } from "./util.js?v=2026102001";
-import { initMotion, refreshMotion } from "./motion.js?v=2026102001";
-import { bindThemeSwitch } from "./theme.js?v=2026102001";
-import { initAdmin } from "./admin.js?v=2026102001";
-import { initDanmaku } from "./danmaku.js?v=2026102001";
-import { initPalette } from "./palette.js?v=2026102001";
-import { noteHref } from "../shared/notes.mjs?v=2026102001";
-import { renderHeroTitle } from "./hero.js?v=2026102001";
-import { initMarquee, refreshMarquee } from "./marquee.js?v=2026102001";
+import { esc, toast, api, formatDay, icon, appIcon, shotImg } from "./util.js?v=2026102002";
+import { initMotion, refreshMotion } from "./motion.js?v=2026102002";
+import { bindThemeSwitch } from "./theme.js?v=2026102002";
+import { initAdmin } from "./admin.js?v=2026102002";
+import { initDanmaku } from "./danmaku.js?v=2026102002";
+import { initPalette } from "./palette.js?v=2026102002";
+import { noteHref } from "../shared/notes.mjs?v=2026102002";
+import { renderHeroTitle } from "./hero.js?v=2026102002";
+import { initMarquee, refreshMarquee } from "./marquee.js?v=2026102002";
 
 const RESEARCH = "https://fresearch.cc.cd/";
 const TELEGRAM_URL = "https://t.me/chaestgetrichbot";

@@ -1502,8 +1502,7 @@ body.marquee-on .project-board .card[data-id="predict-pulse"] h3 { margin-top: 0
 body.marquee-on .project-board .card[data-id="predict-pulse"] > p { align-self: auto; font-size: 14px; }
 body.marquee-on .project-board .card[data-id="predict-pulse"] .card-links { align-self: auto; margin-bottom: 0; }
 
-/* 悬停 / 键盘聚焦时暂停,方便看清和点开 */
-body.marquee-on .board-marquee:hover .project-board,
+/* 键盘聚焦暂停；鼠标悬停保持自然流动，静止阅读可用「暂停流动」。 */
 body.marquee-on .board-marquee:focus-within .project-board {
   animation-play-state: paused;
 }

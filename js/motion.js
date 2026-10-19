@@ -1,4 +1,4 @@
-import { initHeroMotion } from "./hero.js?v=2026102001";
+import { initHeroMotion } from "./hero.js?v=2026102002";
 
 // A shared, event-driven spring loop. Idle pages use CSS/WAAPI, not a JS ticker.
 let started = false;
