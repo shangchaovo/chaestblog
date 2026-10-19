@@ -57,6 +57,10 @@ bash scripts/deploy-pages.sh    # 手动发生产(需 env:CLOUDFLARE_API_TOKEN +
 - `loadContent()` **先打 `/api/content`**,只有失败才回落去取 `data/*.json` 种子稿——不要改回无条件先拉静态那份。
 - 首屏之后有两个装饰性的补充请求,失败都静默:`/api/health`(把卡片状态换成真实探活)和 `/api/hit`(一次会话只上报一笔)。
 
+## 公开仓库展示
+
+`site.projects` 同时存放线上站点和只有公开源码的项目；`status: "live"` 表示公开展示。填写 `live` 的项目进入站点跑马灯；只有 `github` 且 `githubPublic !== false` 的项目进入 `#opensource` 的 `#repoGrid`。公开仓库数量覆盖两区，已整合项目、Profile 和 Fork 用标签及摘要说明，不冒充独立上线产品。命令面板同时检索站点和源码；编辑器允许线上地址留空。同步公开仓库时先核验 GitHub 实际可见性，保留现有介绍、顺序和 KV 其他内容；静态种子和 HTML 兜底也要一起更新。
+
 ## 探活与访问计数
 
 - `GET /api/health` 拿 KV 里 10 分钟内的探活结果;过期就**先返回旧结果**、用 `waitUntil` 后台重探(别让访客等 6 秒超时)。结果只在 KV 键 `health`。

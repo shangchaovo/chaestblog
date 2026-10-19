@@ -175,7 +175,7 @@ export function refreshMotion() {
   if (!started) return;
   // Retire detached admin/content renders without keeping old nodes alive.
   for (const item of moving) if (!item.element.isConnected) moving.delete(item);
-  document.querySelectorAll(".section-head, .board-marquee, .note, .sector, .contact, .archive-note, .rss-entry").forEach((node) => {
+  document.querySelectorAll(".section-head, .board-marquee, .repo-card, .note, .sector, .contact, .archive-note, .rss-entry").forEach((node) => {
     if (!observed.has(node)) {
       observed.add(node);
       revealObserver.observe(node);

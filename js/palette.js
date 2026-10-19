@@ -1,7 +1,7 @@
-import { esc } from "./util.js?v=2026101907";
-import { getState } from "./app.js?v=2026101907";
-import { applyTheme } from "./theme.js?v=2026101907";
-import { noteHref } from "../shared/notes.mjs?v=2026101907";
+import { esc } from "./util.js?v=2026101908";
+import { getState } from "./app.js?v=2026101908";
+import { applyTheme } from "./theme.js?v=2026101908";
+import { noteHref } from "../shared/notes.mjs?v=2026101908";
 
 const MAX_RESULTS = 12;
 
@@ -28,13 +28,15 @@ function commands() {
   const state = getState();
   const out = [];
   for (const project of state.site?.projects || []) {
-    if (project.status !== "live" || !project.live) continue;
+    const github = project.githubPublic !== false ? project.github : "";
+    const href = project.live || github;
+    if (project.status !== "live" || !href) continue;
     out.push({
-      group: "站点",
+      group: project.live ? "站点" : "源码",
       title: project.name,
       hint: project.tag,
-      keys: `${project.name} ${project.tag} ${project.summary}`,
-      run: () => window.open(project.live, "_blank", "noopener"),
+      keys: `${project.name} ${project.tag} ${project.summary} ${github || ""}`,
+      run: () => window.open(href, "_blank", "noopener"),
     });
   }
   for (const note of state.notes?.items || []) {

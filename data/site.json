@@ -43,9 +43,9 @@
       "id": "telegram",
       "icon": "telegram",
       "label": "Telegram",
-      "handle": "@chaestgetrichbot",
-      "href": "https://t.me/chaestgetrichbot",
-      "kind": "link"
+      "handle": "",
+      "href": "",
+      "kind": "soon"
     }
   ],
   "canonical": "https://chaestblog.pages.dev/",
@@ -62,17 +62,6 @@
       "status": "live"
     },
     {
-      "id": "signal-harbor",
-      "icon": "chart",
-      "tint": "cyan",
-      "name": "Signal Harbor",
-      "tag": "美股研究",
-      "summary": "聚合美股 AI、半导体与云计算的新闻情绪、分析师观点和 OCC 官方期权持仓，集中查看 Put/Call Wall、Max Pain 与可核验来源。",
-      "live": "https://signal-harbor-terminal.signal-harbor.workers.dev/#overview",
-      "shot": "assets/shots/signal-harbor.jpg",
-      "status": "live"
-    },
-    {
       "id": "wordpaper",
       "icon": "book",
       "tint": "violet",
@@ -85,6 +74,17 @@
       "status": "live"
     },
     {
+      "id": "signal-harbor",
+      "icon": "chart",
+      "tint": "cyan",
+      "name": "Signal Harbor",
+      "tag": "美股研究",
+      "summary": "聚合美股 AI、半导体与云计算的新闻情绪、分析师观点和 OCC 官方期权持仓，集中查看 Put/Call Wall、Max Pain 与可核验来源。",
+      "live": "https://signal-harbor-terminal.signal-harbor.workers.dev/#overview",
+      "shot": "assets/shots/signal-harbor.jpg",
+      "status": "live"
+    },
+    {
       "id": "terminal",
       "icon": "terminal",
       "tint": "cyan",
@@ -93,7 +93,6 @@
       "summary": "跨所资金费率套利、Meme 异动、清算热图与期权 Wall，统一在一个深色终端里。",
       "live": "https://crypto-funding-arbitrage.pages.dev/",
       "github": "https://github.com/shangchaovo/crypto-funding-arbitrage",
-      "githubPublic": true,
       "shot": "assets/shots/terminal.jpg",
       "status": "live"
     },
@@ -131,6 +130,111 @@
       "github": "https://github.com/shangchaovo/resume-site",
       "shot": "assets/shots/resume.jpg",
       "status": "live"
+    },
+    {
+      "id": "rail-ticket-assistant",
+      "icon": "train",
+      "tint": "blue",
+      "name": "同车余票 · 铁路助手",
+      "tag": "出行",
+      "summary": "比较直达、同车分段与一次换车中转的余票、价格和总用时，支持 AI 查票与 Chrome / Edge 侧边栏扩展。",
+      "live": "https://rail-same-train-pages.pages.dev/",
+      "github": "https://github.com/shangchaovo/rail-ticket-assistant",
+      "shot": "assets/shots/rail-ticket-assistant.jpg",
+      "status": "live",
+      "updatedAt": "2026-10-19T11:05:42Z"
+    },
+    {
+      "id": "chartbridge",
+      "icon": "chart",
+      "tint": "cyan",
+      "name": "ChartBridge · 图桥",
+      "tag": "本地研究工具",
+      "summary": "本地运行的交易研究工作台，把行情、K 线、绘图、仓位计划和基础回测放在同一工作区，并通过 MCP 与 AI Agent 共享图表上下文。",
+      "live": "",
+      "github": "https://github.com/shangchaovo/chartbridge",
+      "shot": "",
+      "status": "live",
+      "updatedAt": "2026-10-18T08:12:03Z"
+    },
+    {
+      "id": "eastmoney-mac-import",
+      "icon": "file",
+      "tint": "amber",
+      "name": "东方财富 Mac 导入助手",
+      "tag": "Mac 工具",
+      "summary": "将 A 股代码清单导入自己的东方财富自选列表，提供代码整理与导入辅助；在个人 Mac 上运行。",
+      "live": "",
+      "github": "https://github.com/shangchaovo/eastmoney-mac-import",
+      "shot": "",
+      "status": "live",
+      "updatedAt": "2026-09-14T11:46:41Z"
+    },
+    {
+      "id": "crypto-options-analyzer",
+      "icon": "chart",
+      "tint": "cyan",
+      "name": "加密期权分析器",
+      "tag": "期权 · 已整合",
+      "summary": "BTC / ETH 期权持仓墙、Max Pain、PCR 与偏度分析。支持本机运行，线上能力已整合到加密终端的期权 Wall。",
+      "live": "",
+      "github": "https://github.com/shangchaovo/crypto-options-analyzer",
+      "shot": "",
+      "status": "live",
+      "updatedAt": "2026-09-07T13:43:16Z"
+    },
+    {
+      "id": "funding-dashboard",
+      "icon": "candles",
+      "tint": "gold",
+      "name": "资金费率看板 · 初版",
+      "tag": "历史 · 已整合",
+      "summary": "跨所资金费率套利看板的早期仓库。原应用文件已清空，功能与后续维护已迁移至统一的加密终端。",
+      "live": "",
+      "github": "https://github.com/shangchaovo/funding-dashboard",
+      "shot": "",
+      "status": "live",
+      "updatedAt": "2026-09-07T13:43:13Z"
+    },
+    {
+      "id": "chaestblog",
+      "icon": "book",
+      "tint": "blue",
+      "name": "chaestblog · 本站源码",
+      "tag": "个人博客",
+      "summary": "这张个人导航的源码：Liquid Glass 界面、项目展示、观点与 RSS、内容工作台，以及 Cloudflare Pages Functions。",
+      "live": "",
+      "github": "https://github.com/shangchaovo/chaestblog",
+      "shot": "",
+      "status": "live",
+      "updatedAt": "2026-10-19T15:01:50Z"
+    },
+    {
+      "id": "shangchaovo",
+      "icon": "github",
+      "tint": "blue",
+      "name": "GitHub 个人主页",
+      "tag": "Profile",
+      "summary": "GitHub 个人资料页的 README，集中介绍公开项目、线上入口、研究方向与联系方式。",
+      "live": "",
+      "github": "https://github.com/shangchaovo/shangchaovo",
+      "shot": "",
+      "status": "live",
+      "updatedAt": "2026-10-11T09:27:49Z"
+    },
+    {
+      "id": "register",
+      "icon": "file",
+      "tint": "violet",
+      "name": "is-a.dev 注册",
+      "tag": "Fork · 域名",
+      "summary": "is-a.dev 域名注册仓库的个人 Fork，用于提交和维护 .is-a.dev 子域名配置；上游项目由 is-a.dev 社区维护。",
+      "live": "",
+      "github": "https://github.com/shangchaovo/register",
+      "shot": "",
+      "status": "live",
+      "updatedAt": "2026-08-17T14:26:26Z"
     }
-  ]
+  ],
+  "updatedAt": "2026-10-19T17:04:22.975Z"
 }

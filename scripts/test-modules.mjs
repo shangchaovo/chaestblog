@@ -154,4 +154,28 @@ assert.deepEqual(requests, before, "Repeated boot must not reload content or cou
 const marker = { text: "Shared state regression check" };
 app.namespace.setContent({ now: marker });
 assert.equal(app.namespace.getState().now, marker, "State updates use the same application instance");
+// Repository-only projects must be discoverable without being counted/probed as hosted sites.
+const originalSite = app.namespace.getState().site;
+const sourceOnly = originalSite.projects.filter((item) => item.status === "live" && !item.live && item.github && item.githubPublic !== false);
+assert.ok(sourceOnly.length, "Fixture includes repositories without hosted sites");
+for (const item of sourceOnly) {
+  assert.ok(node("#repoGrid").innerHTML.includes(`data-id="${item.id}"`), `Display source-only project ${item.id}`);
+  assert.ok(!node("#siteGrid").innerHTML.includes(`data-id="${item.id}"`), "Source-only projects stay out of the live carousel");
+}
+assert.ok(!node("#repoGrid").innerHTML.includes("data-health="), "Source-only projects do not claim live health");
+const privateRepo = { ...sourceOnly[0], id: "private-source-test", githubPublic: false };
+const hiddenRepo = { ...sourceOnly[0], id: "hidden-source-test", status: "hidden" };
+app.namespace.setContent({ site: { ...originalSite, projects: [...originalSite.projects, privateRepo, hiddenRepo] } });
+app.namespace.render();
+assert.ok(!node("#repoGrid").innerHTML.includes(privateRepo.id), "Do not expose a private source entry");
+assert.ok(!node("#repoGrid").innerHTML.includes(hiddenRepo.id), "Do not expose hidden entries");
+node("#paletteInput").value = "chartbridge";
+listeners.get("#paletteInput:input")[0]();
+assert.ok(node("#paletteList").innerHTML.includes("ChartBridge"), "Search includes repositories by their GitHub name");
+assert.ok(node("#paletteList").innerHTML.includes("源码"), "Search identifies repository results");
+app.namespace.setAdmin(true);
+assert.equal(node("#repoGrid").innerHTML, "", "Admin editors have no duplicate repository cards");
+assert.ok(node("#siteGrid").innerHTML.includes(`data-id="${sourceOnly[0].id}"`), "Source entries remain editable");
+app.namespace.setContent({ site: originalSite });
+app.namespace.setAdmin(false);
 console.log(`Module startup passed: ${modules.size} unique module URLs, 4 mocked requests, one set of event bindings.`);

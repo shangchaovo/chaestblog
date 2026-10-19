@@ -1,5 +1,5 @@
-import { api, toast, uid, esc } from "./util.js?v=2026101907";
-import { getState, setAdmin, setContent, render } from "./app.js?v=2026101907";
+import { api, toast, uid, esc } from "./util.js?v=2026101908";
+import { getState, setAdmin, setContent, render } from "./app.js?v=2026101908";
 
 function dialog(id) {
   return document.getElementById(id);
@@ -235,16 +235,18 @@ function editProject(existing) {
       field("分类标签", "tag", existing?.tag, "text", "maxlength=24 required") +
       `</div>` +
       field("项目介绍", "summary", existing?.summary, "textarea", "maxlength=500 required") +
-      field("线上地址", "live", existing?.live, "url", "required") +
+      field("线上地址（可留空）", "live", existing?.live, "url") +
+      `<p class="field-note">只有公开 GitHub 仓库也可展示；没有线上地址时会进入「更多公开仓库」。</p>` +
       field("GitHub（可留空）", "github", existing?.github, "url") +
       `<div class="field-grid">` +
-      selectField("图标", "icon", existing?.icon || "chart", [["chart", "图表"], ["pulse", "脉冲"], ["book", "书本"], ["terminal", "终端"], ["candles", "交易"], ["file", "文件"]]) +
+      selectField("图标", "icon", existing?.icon || "chart", [["github", "GitHub"], ["train", "铁路"], ["chart", "图表"], ["pulse", "脉冲"], ["book", "书本"], ["terminal", "终端"], ["candles", "交易"], ["file", "文件"]]) +
       selectField("色彩", "tint", existing?.tint || "blue", [["blue", "蓝色"], ["green", "绿色"], ["cyan", "青色"], ["violet", "紫色"], ["amber", "琥珀"], ["gold", "金色"], ["rose", "玫红"]]) +
-      selectField("状态", "status", existing?.status || "live", [["live", "公开上线"], ["hidden", "暂时隐藏"]]) +
+      selectField("状态", "status", existing?.status || "live", [["live", "公开展示"], ["hidden", "暂时隐藏"]]) +
       `</div>` +
       field("现有截图路径", "shot", existing?.shot, "text", "placeholder=assets/shots/example.jpg") +
       `<label class="field upload-field"><span>上传新截图（JPG / PNG / WebP，不超过 2 MB）</span><input type="file" name="shotFile" accept="image/jpeg,image/png,image/webp"></label>`,
     onSubmit: async (data) => {
+      if (!data.live && !data.github) throw new Error("至少填一个线上地址或公开 GitHub 地址");
       let shot = data.shot;
       if (data.shotFile instanceof File && data.shotFile.size) shot = await uploadProjectShot(projectId, data.shotFile);
       const projects = structuredClone(getState().site.projects || []);

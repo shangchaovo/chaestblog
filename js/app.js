@@ -1,10 +1,10 @@
-import { esc, toast, api, formatDay, icon, appIcon, shotImg } from "./util.js?v=2026101907";
-import { initMotion, refreshMotion } from "./motion.js?v=2026101907";
-import { bindThemeSwitch } from "./theme.js?v=2026101907";
-import { initAdmin } from "./admin.js?v=2026101907";
-import { initDanmaku } from "./danmaku.js?v=2026101907";
-import { initPalette } from "./palette.js?v=2026101907";
-import { noteHref } from "../shared/notes.mjs?v=2026101907";
+import { esc, toast, api, formatDay, icon, appIcon, shotImg } from "./util.js?v=2026101908";
+import { initMotion, refreshMotion } from "./motion.js?v=2026101908";
+import { bindThemeSwitch } from "./theme.js?v=2026101908";
+import { initAdmin } from "./admin.js?v=2026101908";
+import { initDanmaku } from "./danmaku.js?v=2026101908";
+import { initPalette } from "./palette.js?v=2026101908";
+import { noteHref } from "../shared/notes.mjs?v=2026101908";
 
 const RESEARCH = "https://fresearch.cc.cd/";
 const TELEGRAM_URL = "https://t.me/chaestgetrichbot";
@@ -129,17 +129,19 @@ function siteCardHtml(item, clone) {
   // clone=true 的是跑马灯里用于无缝拼接的副本:对读屏隐藏、不进 Tab 序
   const tab = clone ? ' tabindex="-1"' : "";
   const hidden = clone ? ' aria-hidden="true"' : "";
+  const repositoryOnly = !item.live && item.github && item.githubPublic !== false;
+  const online = item.status === "live" && Boolean(item.live);
   const github = item.github && item.githubPublic !== false
-    ? `<a class="btn" href="${esc(item.github)}" target="_blank" rel="noopener"${tab}>${appIcon("github", 18)} GitHub</a>`
+    ? `<a class="btn${repositoryOnly ? " primary" : ""}" href="${esc(item.github)}" target="_blank" rel="noopener"${tab}>${appIcon("github", 18)} GitHub</a>`
     : "";
   return `
-    <article class="card glass" data-id="${esc(item.id)}" data-tint="${esc(item.tint || "blue")}"${hidden}>
+    <article class="card glass${repositoryOnly ? " repo-card" : ""}" data-id="${esc(item.id)}" data-tint="${esc(item.tint || "blue")}"${hidden}>
       ${item.shot && item.live ? `<a class="shot" href="${esc(item.live)}" target="_blank" rel="noopener"${tab}>${shotImg(item.shot, `${item.name} 页面截图`)}</a>` : ""}
       <div class="card-top">
         <span class="well app">${appIcon(item.icon || "book", 46)}</span>
-        <span class="pill ${item.status === "live" ? "live" : "degraded"}"${item.status === "live" ? ` data-health="${esc(item.id)}"` : ""}>
+        <span class="pill ${online ? "live" : item.status === "hidden" ? "degraded" : ""}"${online ? ` data-health="${esc(item.id)}"` : ""}>
           <i class="live-dot" aria-hidden="true"></i>
-          <span class="pill-label">${item.status === "live" ? "在线" : "已隐藏"}</span>
+          <span class="pill-label">${item.status === "hidden" ? "已隐藏" : online ? "在线" : "公开源码"}</span>
         </span>
       </div>
       <div>
@@ -178,6 +180,17 @@ function renderSites() {
       track.style.setProperty("--board-dur", `${Math.min(110, Math.max(28, half / 48))}s`);
     });
   } else track.style.removeProperty("--board-dur");
+}
+
+function renderRepositories() {
+  const publicProjects = (state.site.projects || []).filter((item) =>
+    item.status === "live" && item.github && item.githubPublic !== false);
+  const items = state.admin ? [] : publicProjects.filter((item) => !item.live);
+  setSectionVisible("repoGrid", items.length > 0);
+  const grid = document.getElementById("repoGrid");
+  if (grid) grid.innerHTML = items.map((item) => siteCardHtml(item, false)).join("");
+  const count = document.getElementById("repositoryCount");
+  if (count) count.textContent = `${publicProjects.length} 个公开仓库 · ${publicProjects.filter((item) => item.live).length} 个已在上方站点展示`;
 }
 
 function syncMarqueeButton(canMarquee = !state.admin && !reducedMotion.matches && visibleProjects().length >= 4) {
@@ -278,6 +291,7 @@ export function render() {
   renderHero();
   renderScene();
   renderSites();
+  renderRepositories();
   renderNotes();
   renderWatch();
   renderContact();
@@ -345,6 +359,10 @@ async function initialize() {
     renderSites();
     refreshMotion();
   });
+  // The live carousel changes the fallback grid's height; restore this section's deep link after rendering.
+  if (location.hash === "#opensource") {
+    requestAnimationFrame(() => document.getElementById("opensource")?.scrollIntoView({ block: "start", behavior: "instant" }));
+  }
   // 这两个都是装饰性的，失败就安静地保持静态兜底
   loadHealth().catch(() => {});
   countVisit().catch(() => {});

@@ -16,6 +16,8 @@
 - **[Signal Harbor](https://signal-harbor-terminal.signal-harbor.workers.dev/#overview)** — 美股 AI / 半导体新闻、分析师观点、OCC 官方期权持仓墙。
 - **[交易每日报告](https://dailytrade.cc.cd/)** — 开盘前把 A 股扫描、外资研报、美股监控和宏观拼成一张日报。
 
+首页也收录全部 12 个公开 GitHub 仓库：有线上地址的项目附源码入口，其余放在「更多公开仓库」。ChartBridge 和东方财富 Mac 导入助手为本地工具；历史仓库、GitHub Profile 与 Fork 会明确标注。铁路助手可直接在线体验。
+
 ## 站点上还有什么
 
 - **在线站点**：就是上面这些。探活失败会从「在线」变成挂掉。
