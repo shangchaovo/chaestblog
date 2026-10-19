@@ -1,10 +1,12 @@
-import { esc, toast, api, formatDay, icon, appIcon, shotImg } from "./util.js?v=2026101908";
-import { initMotion, refreshMotion } from "./motion.js?v=2026101908";
-import { bindThemeSwitch } from "./theme.js?v=2026101908";
-import { initAdmin } from "./admin.js?v=2026101908";
-import { initDanmaku } from "./danmaku.js?v=2026101908";
-import { initPalette } from "./palette.js?v=2026101908";
-import { noteHref } from "../shared/notes.mjs?v=2026101908";
+import { esc, toast, api, formatDay, icon, appIcon, shotImg } from "./util.js?v=2026102001";
+import { initMotion, refreshMotion } from "./motion.js?v=2026102001";
+import { bindThemeSwitch } from "./theme.js?v=2026102001";
+import { initAdmin } from "./admin.js?v=2026102001";
+import { initDanmaku } from "./danmaku.js?v=2026102001";
+import { initPalette } from "./palette.js?v=2026102001";
+import { noteHref } from "../shared/notes.mjs?v=2026102001";
+import { renderHeroTitle } from "./hero.js?v=2026102001";
+import { initMarquee, refreshMarquee } from "./marquee.js?v=2026102001";
 
 const RESEARCH = "https://fresearch.cc.cd/";
 const TELEGRAM_URL = "https://t.me/chaestgetrichbot";
@@ -84,7 +86,7 @@ function renderHero() {
   const projects = liveProjects();
   document.getElementById("profileKicker").textContent = profile.kicker;
   document.getElementById("profileName").innerHTML = `${esc(profile.name)}<span class="name-dot" aria-hidden="true">.</span>`;
-  document.getElementById("profileTitle").textContent = profile.title;
+  renderHeroTitle(profile.title);
   document.getElementById("profileBio").textContent = profile.bio;
   const github = socialById("github");
   document.getElementById("heroActions").innerHTML = [
@@ -177,9 +179,11 @@ function renderSites() {
   if (canMarquee) {
     requestAnimationFrame(() => {
       const half = track.scrollWidth / 2;
-      track.style.setProperty("--board-dur", `${Math.min(110, Math.max(28, half / 48))}s`);
+      track.style.setProperty("--board-dur", `${Math.max(28, half / 48)}s`);
+      refreshMarquee();
     });
   } else track.style.removeProperty("--board-dur");
+  refreshMarquee();
 }
 
 function renderRepositories() {
@@ -342,6 +346,7 @@ async function initialize() {
   await loadContent();
   render();
   initMotion();
+  initMarquee();
   try {
     const session = await api("/api/session");
     setAdmin(Boolean(session.admin));

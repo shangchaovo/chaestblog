@@ -9,12 +9,15 @@ Chase Xie 个人导航/枢纽站(chaestblog)。**无构建、无框架、无第�
 ```bash
 node server.js                  # 本地 http://127.0.0.1:8777(端口被占用会直接退出,不自动换)
 python3 scripts/test-api.py     # API + 页面冒烟:自起临时端口跑 server.js,测完恢复 data/*.json
+node --experimental-vm-modules scripts/test-modules.mjs  # ESM 启动、缓存版本与内容渲染
+node --experimental-vm-modules scripts/test-marquee.mjs  # 调速、释放、编辑隔离与空闲停帧
+node scripts/test-home-function.mjs  # 首页 KV 内容与安全响应头
 python3 scripts/make-webp.py    # assets/shots/ 的 JPG → 同名 WebP(加了新截图就重跑)
 node scripts/build-static.mjs   # 从 shared/view.mjs 重新生成 404.html
 bash scripts/deploy-pages.sh    # 手动发生产(需 env:CLOUDFLARE_API_TOKEN + CLOUDFLARE_ACCOUNT_ID)
 ```
 
-没有 lint / 单元测试框架;`scripts/test-api.py` 是唯一的自动化检查。
+没有 lint / 单元测试框架；上面的脚本直接检查实际 API、原生模块及首页 Function，不需要额外依赖。
 
 ## 内容从哪来(最重要,先看这个)
 
@@ -69,7 +72,9 @@ bash scripts/deploy-pages.sh    # 手动发生产(需 env:CLOUDFLARE_API_TOKEN +
 
 ## 站点区跑马灯
 
-「在线站点」默认自动横向无缝流动:`#siteGrid` 外套 `.board-marquee`;`renderSites` 在「非管理态 + 非减少动态 + 项目数 ≥ 4」时把卡片渲染两份(副本 `aria-hidden` + `tabindex=-1`),给 body 加 `.marquee-on`。CSS 用 `translateX(-50%)` 循环、悬停/聚焦暂停、两侧渐隐,速度约 48px/s。「暂停流动」只切换 `.marquee-paused`，保留原 DOM 和时间线，继续时从当前位置衔接。无 JS / 减少动态 / 管理态回退普通 grid。卡片结构要同步修改 `siteCardHtml()` 和 HTML 静态兜底。
+「在线站点」默认自动横向无缝流动:`#siteGrid` 外套 `.board-marquee`;`renderSites` 在「非管理态 + 非减少动态 + 项目数 ≥ 4」时把卡片渲染两份(副本 `aria-hidden` + `tabindex=-1`),给 body 加 `.marquee-on`。CSS 用 `translateX(-50%)` 循环、悬停/聚焦暂停、两侧渐隐,速度约 48px/s。「暂停流动」只切换 `.marquee-paused`，保留原 DOM 和时间线，继续时从当前位置衔接。`js/marquee.js` 在该区可见时接管未占用的 ← / →：按住分别平滑到 0.25× / 3×，松开恢复 1×；触屏也可按住屏幕上的箭头。调速使用现有 CSS Animation 的 `updatePlaybackRate()`，不修改 `currentTime`、不重建卡片。手动暂停优先，输入框、编辑器、命令面板和系统组合键不接管；失焦、离屏或切后台释放按键，速度收敛即停止 rAF。无 JS / 减少动态 / 管理态回退普通 grid。卡片结构要同步修改 `siteCardHtml()` 和 HTML 静态兜底。
+
+首屏打字在 `js/hero.js`：第一句来自 KV 的 `profile.title`，无障碍文本始终保留原句；隐藏的完整句子预留高度，避免轮换时页面跳动。内容或计数更新不重启轮换，离屏/后台暂停，管理态和减少动态时静态显示原句。新增站点要核验实际公网内容并使用真实截图，重定向别名只保留主入口，不把欢迎页或同站历史入口当成新产品。
 
 用户最不想要的是彩色光晕：背景、玻璃材质和装饰阴影保持中性黑白灰，不能添加彩色环境光或按项目染色的光晕。按钮强调色、状态色以及头像、图标和截图的本色可保留，不要把整个站点灰度化。现有悬浮、跟手、入场等动效保留。
 

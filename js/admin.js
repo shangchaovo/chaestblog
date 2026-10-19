@@ -1,5 +1,5 @@
-import { api, toast, uid, esc } from "./util.js?v=2026101908";
-import { getState, setAdmin, setContent, render } from "./app.js?v=2026101908";
+import { api, toast, uid, esc } from "./util.js?v=2026102001";
+import { getState, setAdmin, setContent, render } from "./app.js?v=2026102001";
 
 function dialog(id) {
   return document.getElementById(id);

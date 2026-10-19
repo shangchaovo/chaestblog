@@ -234,7 +234,84 @@
       "shot": "",
       "status": "live",
       "updatedAt": "2026-08-17T14:26:26Z"
+    },
+    {
+      "id": "axios-dashboard",
+      "icon": "notes",
+      "tint": "blue",
+      "name": "简报看板 · Axios + 财经",
+      "tag": "资讯",
+      "summary": "把 Axios 简报与财经要闻放进同一张中文阅读看板，按日期浏览摘要，切换简报、财经或全部内容。",
+      "live": "https://axios-dashboard.pages.dev/",
+      "shot": "assets/shots/axios-dashboard.jpg",
+      "status": "live"
+    },
+    {
+      "id": "quantse",
+      "icon": "candles",
+      "tint": "cyan",
+      "name": "Quantse · ETH 模拟盘",
+      "tag": "模拟盘",
+      "summary": "只读查看 ETH v3 模拟策略的权益、仓位、胜率与历史成交；页面每 15 秒刷新，用于记录与复盘。",
+      "live": "https://quantse.pages.dev/",
+      "shot": "assets/shots/quantse.jpg",
+      "status": "live"
+    },
+    {
+      "id": "xuetang-hub",
+      "icon": "book",
+      "tint": "violet",
+      "name": "入门学堂 · 课程目录",
+      "tag": "课程导航",
+      "summary": "把德州扑克、炸金花、麻将与国际象棋四门独立课程收在一个目录里，按兴趣进入对应的规则与互动练习。",
+      "live": "https://xuetang-hub.pages.dev/",
+      "shot": "assets/shots/xuetang-hub.jpg",
+      "status": "live"
+    },
+    {
+      "id": "xuetang-texas",
+      "icon": "book",
+      "tint": "blue",
+      "name": "德州入门学堂",
+      "tag": "扑克教学",
+      "summary": "从规则、牌型、位置到起手牌，用中文讲清德州扑克的基础知识，配合可动手练的牌力测验。",
+      "live": "https://xuetang-texas.pages.dev/",
+      "shot": "assets/shots/xuetang-texas.jpg",
+      "status": "live"
+    },
+    {
+      "id": "xuetang-jinhua",
+      "icon": "book",
+      "tint": "amber",
+      "name": "炸金花入门学堂",
+      "tag": "扑克教学",
+      "summary": "学习看牌、跟注、比牌和三张牌的牌型顺序，通过规则说明与互动小题练习判断。",
+      "live": "https://xuetang-jinhua.pages.dev/",
+      "shot": "assets/shots/xuetang-jinhua.jpg",
+      "status": "live"
+    },
+    {
+      "id": "xuetang-mahjong",
+      "icon": "book",
+      "tint": "green",
+      "name": "麻将入门学堂",
+      "tag": "规则教学",
+      "summary": "从认牌、坐庄与和牌判断开始，了解常见番种和牌型，用入门练习巩固基础规则。",
+      "live": "https://xuetang-mahjong.pages.dev/",
+      "shot": "assets/shots/xuetang-mahjong.jpg",
+      "status": "live"
+    },
+    {
+      "id": "xuetang-chess",
+      "icon": "book",
+      "tint": "blue",
+      "name": "国际象棋入门学堂",
+      "tag": "棋类教学",
+      "summary": "学习六种棋子的走法、将军与将死，认识牵制和双重攻击，并通过残局小问练习基础战术。",
+      "live": "https://xuetang-chess.pages.dev/",
+      "shot": "assets/shots/xuetang-chess.jpg",
+      "status": "live"
     }
   ],
-  "updatedAt": "2026-10-19T17:04:22.975Z"
+  "updatedAt": "2026-10-19T17:40:25.694Z"
 }

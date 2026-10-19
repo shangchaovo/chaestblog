@@ -68,6 +68,7 @@ const context = vm.createContext({
   URL, URLSearchParams, CSS: { escape: (value) => value },
   requestAnimationFrame: (callback) => callback(),
   setTimeout: (callback) => { timers.push(callback); },
+  clearTimeout() {},
   setInterval: (callback) => { timers.push(callback); },
   fetch: async (path, options = {}) => {
     const method = options.method || "GET";

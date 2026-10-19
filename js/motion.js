@@ -1,3 +1,5 @@
+import { initHeroMotion } from "./hero.js?v=2026102001";
+
 // A shared, event-driven spring loop. Idle pages use CSS/WAAPI, not a JS ticker.
 let started = false;
 let revealObserver;
@@ -206,6 +208,7 @@ export function initMotion() {
   // Content stays fully usable when enhancement APIs are unavailable.
   if (started || typeof IntersectionObserver === "undefined" || typeof Element === "undefined" || !Element.prototype.animate) return;
   started = true;
+  initHeroMotion();
   reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
   fine = window.matchMedia("(hover: hover) and (pointer: fine)");
   revealObserver = new IntersectionObserver(reveal, { threshold: .08 });

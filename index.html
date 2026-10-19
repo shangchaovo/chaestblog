@@ -23,9 +23,9 @@
     <meta name="twitter:description" content="独立开发者。把已上线的市场工具和学习产品放在一页，并写下最近在盯的 AI 算力与 HBM。" />
     <meta name="twitter:image" content="https://chaestblog.pages.dev/assets/og.jpg" />
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
-    <link rel="stylesheet" href="/css/themes.css?v=2026101908" />
-    <link rel="stylesheet" href="/css/styles.css?v=2026101908" />
-    <link rel="stylesheet" href="/css/liquid.css?v=2026101908" />
+    <link rel="stylesheet" href="/css/themes.css?v=2026102001" />
+    <link rel="stylesheet" href="/css/styles.css?v=2026102001" />
+    <link rel="stylesheet" href="/css/liquid.css?v=2026102001" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -191,7 +191,7 @@
           </div>
           <div class="hero-bottom">
             <div class="stat-row" id="statRow">
-              <div class="stat"><b>8</b><span>在线站点</span></div>
+              <div class="stat"><b>15</b><span>在线站点</span></div>
               <div class="stat"><b><!-- hub:note-count:start -->2<!-- hub:note-count:end --></b><span>条观点</span></div>
               <div class="stat"><b>6</b><span>只在盯</span></div>
             </div>
@@ -214,6 +214,14 @@
             <p class="hint">点开就是正在跑的站点</p>
             <button class="marquee-toggle" id="toggleMarqueeBtn" type="button" aria-pressed="false" hidden><span aria-hidden="true">Ⅱ</span><span>暂停流动</span></button>
           </div>
+        </div>
+        <div class="marquee-controls" id="marqueeControls" aria-label="传送带调速" hidden>
+          <span class="marquee-key-hint">按住方向键</span>
+          <button class="speed-key" type="button" data-marquee-key="ArrowLeft" aria-label="按住向左键减速" title="按住 ← 减速">←</button>
+          <span class="marquee-speed" id="marqueeSpeedValue" aria-label="当前速度" aria-live="off">1.00×</span>
+          <button class="speed-key" type="button" data-marquee-key="ArrowRight" aria-label="按住向右键加速" title="按住 → 加速">→</button>
+          <span class="marquee-key-hint">松开，回到自然速度</span>
+          <span class="speed-meter" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
         </div>
         <div class="admin-only editor-bar">
           <button class="btn primary" id="addProjectBtn" type="button"><svg class="ic"><use href="#i-plus"></use></svg>添加项目</button>
@@ -276,6 +284,55 @@
             <div><span class="pill">出行</span><h3>同车余票 · 铁路助手</h3></div>
             <p>比较直达、同车分段与一次换车中转的余票、价格和总用时，支持 AI 查票与 Chrome / Edge 侧边栏扩展。</p>
             <div class="card-links"><a class="btn primary" href="https://rail-same-train-pages.pages.dev/" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-arrow"></use></svg> 打开</a><a class="btn" href="https://github.com/shangchaovo/rail-ticket-assistant" target="_blank" rel="noopener"><img class="app-icon" src="/assets/icons/github.svg" alt="" width="18" height="18"> GitHub</a></div>
+          </article>
+          <article class="card glass" data-id="axios-dashboard" data-tint="blue">
+            <a class="shot" href="https://axios-dashboard.pages.dev/" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/shots/axios-dashboard.webp"><img src="/assets/shots/axios-dashboard.jpg" alt="简报看板 · Axios + 财经 页面截图" width="1280" height="800" loading="lazy" decoding="async"></picture></a>
+            <div class="card-top"><span class="well app"><img class="app-icon" src="/assets/icons/notes.svg" alt="" width="46" height="46"></span><span class="pill live" data-health="axios-dashboard"><i class="live-dot" aria-hidden="true"></i><span class="pill-label">在线</span></span></div>
+            <div><span class="pill">资讯</span><h3>简报看板 · Axios + 财经</h3></div>
+            <p>把 Axios 简报与财经要闻放进同一张中文阅读看板，按日期浏览摘要，切换简报、财经或全部内容。</p>
+            <div class="card-links"><a class="btn primary" href="https://axios-dashboard.pages.dev/" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-arrow"></use></svg> 打开</a></div>
+          </article>
+          <article class="card glass" data-id="quantse" data-tint="cyan">
+            <a class="shot" href="https://quantse.pages.dev/" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/shots/quantse.webp"><img src="/assets/shots/quantse.jpg" alt="Quantse · ETH 模拟盘 页面截图" width="1280" height="800" loading="lazy" decoding="async"></picture></a>
+            <div class="card-top"><span class="well app"><img class="app-icon" src="/assets/icons/candles.svg" alt="" width="46" height="46"></span><span class="pill live" data-health="quantse"><i class="live-dot" aria-hidden="true"></i><span class="pill-label">在线</span></span></div>
+            <div><span class="pill">模拟盘</span><h3>Quantse · ETH 模拟盘</h3></div>
+            <p>只读查看 ETH v3 模拟策略的权益、仓位、胜率与历史成交；页面每 15 秒刷新，用于记录与复盘。</p>
+            <div class="card-links"><a class="btn primary" href="https://quantse.pages.dev/" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-arrow"></use></svg> 打开</a></div>
+          </article>
+          <article class="card glass" data-id="xuetang-hub" data-tint="violet">
+            <a class="shot" href="https://xuetang-hub.pages.dev/" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/shots/xuetang-hub.webp"><img src="/assets/shots/xuetang-hub.jpg" alt="入门学堂 · 课程目录 页面截图" width="1280" height="800" loading="lazy" decoding="async"></picture></a>
+            <div class="card-top"><span class="well app"><img class="app-icon" src="/assets/icons/book.svg" alt="" width="46" height="46"></span><span class="pill live" data-health="xuetang-hub"><i class="live-dot" aria-hidden="true"></i><span class="pill-label">在线</span></span></div>
+            <div><span class="pill">课程导航</span><h3>入门学堂 · 课程目录</h3></div>
+            <p>把德州扑克、炸金花、麻将与国际象棋四门独立课程收在一个目录里，按兴趣进入对应的规则与互动练习。</p>
+            <div class="card-links"><a class="btn primary" href="https://xuetang-hub.pages.dev/" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-arrow"></use></svg> 打开</a></div>
+          </article>
+          <article class="card glass" data-id="xuetang-texas" data-tint="blue">
+            <a class="shot" href="https://xuetang-texas.pages.dev/" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/shots/xuetang-texas.webp"><img src="/assets/shots/xuetang-texas.jpg" alt="德州入门学堂 页面截图" width="1280" height="800" loading="lazy" decoding="async"></picture></a>
+            <div class="card-top"><span class="well app"><img class="app-icon" src="/assets/icons/book.svg" alt="" width="46" height="46"></span><span class="pill live" data-health="xuetang-texas"><i class="live-dot" aria-hidden="true"></i><span class="pill-label">在线</span></span></div>
+            <div><span class="pill">扑克教学</span><h3>德州入门学堂</h3></div>
+            <p>从规则、牌型、位置到起手牌，用中文讲清德州扑克的基础知识，配合可动手练的牌力测验。</p>
+            <div class="card-links"><a class="btn primary" href="https://xuetang-texas.pages.dev/" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-arrow"></use></svg> 打开</a></div>
+          </article>
+          <article class="card glass" data-id="xuetang-jinhua" data-tint="amber">
+            <a class="shot" href="https://xuetang-jinhua.pages.dev/" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/shots/xuetang-jinhua.webp"><img src="/assets/shots/xuetang-jinhua.jpg" alt="炸金花入门学堂 页面截图" width="1280" height="800" loading="lazy" decoding="async"></picture></a>
+            <div class="card-top"><span class="well app"><img class="app-icon" src="/assets/icons/book.svg" alt="" width="46" height="46"></span><span class="pill live" data-health="xuetang-jinhua"><i class="live-dot" aria-hidden="true"></i><span class="pill-label">在线</span></span></div>
+            <div><span class="pill">扑克教学</span><h3>炸金花入门学堂</h3></div>
+            <p>学习看牌、跟注、比牌和三张牌的牌型顺序，通过规则说明与互动小题练习判断。</p>
+            <div class="card-links"><a class="btn primary" href="https://xuetang-jinhua.pages.dev/" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-arrow"></use></svg> 打开</a></div>
+          </article>
+          <article class="card glass" data-id="xuetang-mahjong" data-tint="green">
+            <a class="shot" href="https://xuetang-mahjong.pages.dev/" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/shots/xuetang-mahjong.webp"><img src="/assets/shots/xuetang-mahjong.jpg" alt="麻将入门学堂 页面截图" width="1280" height="800" loading="lazy" decoding="async"></picture></a>
+            <div class="card-top"><span class="well app"><img class="app-icon" src="/assets/icons/book.svg" alt="" width="46" height="46"></span><span class="pill live" data-health="xuetang-mahjong"><i class="live-dot" aria-hidden="true"></i><span class="pill-label">在线</span></span></div>
+            <div><span class="pill">规则教学</span><h3>麻将入门学堂</h3></div>
+            <p>从认牌、坐庄与和牌判断开始，了解常见番种和牌型，用入门练习巩固基础规则。</p>
+            <div class="card-links"><a class="btn primary" href="https://xuetang-mahjong.pages.dev/" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-arrow"></use></svg> 打开</a></div>
+          </article>
+          <article class="card glass" data-id="xuetang-chess" data-tint="blue">
+            <a class="shot" href="https://xuetang-chess.pages.dev/" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/shots/xuetang-chess.webp"><img src="/assets/shots/xuetang-chess.jpg" alt="国际象棋入门学堂 页面截图" width="1280" height="800" loading="lazy" decoding="async"></picture></a>
+            <div class="card-top"><span class="well app"><img class="app-icon" src="/assets/icons/book.svg" alt="" width="46" height="46"></span><span class="pill live" data-health="xuetang-chess"><i class="live-dot" aria-hidden="true"></i><span class="pill-label">在线</span></span></div>
+            <div><span class="pill">棋类教学</span><h3>国际象棋入门学堂</h3></div>
+            <p>学习六种棋子的走法、将军与将死，认识牵制和双重攻击，并通过残局小问练习基础战术。</p>
+            <div class="card-links"><a class="btn primary" href="https://xuetang-chess.pages.dev/" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-arrow"></use></svg> 打开</a></div>
           </article>
         </div>
         </div>
@@ -555,7 +612,7 @@
     </dialog>
 
     <div class="toast-host" id="toastHost" aria-live="polite"></div>
-    <script src="/js/main.js?v=2026101908" type="module"></script>
+    <script src="/js/main.js?v=2026102001" type="module"></script>
     <noscript>
       Chase Xie 是独立开发者。站点、观点和盯盘不需要 JavaScript 也能读。
       关于：/about/ · HBM 笔记：/notes/hbm-supply/
