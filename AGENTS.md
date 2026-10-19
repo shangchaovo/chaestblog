@@ -65,7 +65,11 @@ bash scripts/deploy-pages.sh    # 手动发生产(需 env:CLOUDFLARE_API_TOKEN +
 
 ## 站点区跑马灯
 
-「在线站点」是**自动横向无缝跑马灯**:`#siteGrid` 外套 `.board-marquee` 视口;`renderSites` 在「非管理态 + 非减少动态 + 项目数 ≥ 4」时把卡片渲染**两份**(副本 `aria-hidden` + `tabindex=-1`)并给 body 加 `.marquee-on`,CSS 用 `translateX(-50%)` 无缝循环、悬停/聚焦暂停、两侧渐隐,时长按轨道半宽/65px/s 动态算。**无 JS / 减少动态 / 管理态自动回退普通 grid**。改卡片结构时 `siteCardHtml()` 和 HTML 静态兜底要一起改。
+「在线站点」默认自动横向无缝流动:`#siteGrid` 外套 `.board-marquee`;`renderSites` 在「非管理态 + 非减少动态 + 项目数 ≥ 4」时把卡片渲染两份(副本 `aria-hidden` + `tabindex=-1`),给 body 加 `.marquee-on`。CSS 用 `translateX(-50%)` 循环、悬停/聚焦暂停、两侧渐隐,速度约 48px/s。「暂停流动」只切换 `.marquee-paused`，保留原 DOM 和时间线，继续时从当前位置衔接。无 JS / 减少动态 / 管理态回退普通 grid。卡片结构要同步修改 `siteCardHtml()` 和 HTML 静态兜底。
+
+用户最不想要的是彩色光晕：背景、玻璃材质和装饰阴影保持中性黑白灰，不能添加彩色环境光或按项目染色的光晕。按钮强调色、状态色以及头像、图标和截图的本色可保留，不要把整个站点灰度化。现有悬浮、跟手、入场等动效保留。
+
+Liquid UI 的材质与动画在 `css/liquid.css` 和 `js/motion.js`：首屏真实项目悬浮桌面、灰阶环境光、玻璃边缘/高光、分层入场、鼠标弹簧倾斜/磁吸、导航滑块、点击涟漪、主题过渡。保持原生 ESM、无第三方依赖。连续动画优先直接动画 transform/opacity；材质模糊保持静态，不逐帧改变 filter/渐变。JS 只在交互弹簧未收敛时调度 rAF，离屏和后台暂停装饰，尊重减少动态/透明度偏好。内容更新、探活和访问计数不得重播首屏动画。项目桌面也必须来自 `/api/content`，不能硬编码覆盖线上内容。
 
 ## 部署
 

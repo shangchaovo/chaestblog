@@ -107,9 +107,10 @@ assert.equal(requests.filter((item) => item === "GET /api/session").length, 1, "
 assert.equal(requests.filter((item) => item === "GET /api/health").length, 1, "Load health once");
 assert.equal(requests.filter((item) => item === "POST /api/hit").length, 1, "Count first visit once (mocked)");
 assert.equal(requests.length, 4, "Successful startup needs only four mocked requests");
-for (const key of [".theme-switch:click", "window:pointermove", "#openAdminBtn:click", "document:click"]) {
+for (const key of [".theme-switch:click", "#openAdminBtn:click", "document:click"]) {
   assert.equal(listeners.get(key)?.length, 1, `Bind ${key} once`);
 }
+assert.equal(listeners.get("window:pointermove")?.length || 0, 0, "Motion enhancements stay optional when browser animation APIs are absent");
 assert.equal(listeners.get("document:keydown")?.length, 2, "Bind menu Escape and command palette shortcuts once each");
 
 const versions = new Map();

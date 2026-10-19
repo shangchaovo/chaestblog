@@ -1,7 +1,7 @@
-import { esc } from "./util.js?v=20260922b";
-import { getState } from "./app.js?v=20260922b";
-import { applyTheme } from "./theme.js?v=20260922b";
-import { noteHref } from "../shared/notes.mjs?v=20260922b";
+import { esc } from "./util.js?v=2026101907";
+import { getState } from "./app.js?v=2026101907";
+import { applyTheme } from "./theme.js?v=2026101907";
+import { noteHref } from "../shared/notes.mjs?v=2026101907";
 
 const MAX_RESULTS = 12;
 
@@ -169,7 +169,10 @@ export function initPalette() {
   document.getElementById("openPaletteBtn")?.addEventListener("click", open);
   input?.addEventListener("input", () => paint(input.value.trim()));
   input?.addEventListener("keydown", (event) => {
-    if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      dialog.close();
+    } else if (event.key === "ArrowDown" || event.key === "ArrowUp") {
       event.preventDefault();
       if (!items.length) return;
       active = (active + (event.key === "ArrowDown" ? 1 : items.length - 1)) % items.length;

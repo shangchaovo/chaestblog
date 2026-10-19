@@ -7,7 +7,7 @@ export const SITE_NAME = "chaestblog";
 export const AUTHOR = "Chase Xie";
 export const TWITTER = "@johny_xie";
 // CSS / JS 的防缓存版本号。改了样式或脚本就 bump 这里和 index.html 里的 ?v=。
-export const ASSET_V = "20260922b";
+export const ASSET_V = "2026101907";
 
 export function escapeHtml(value) {
   return String(value ?? "").replace(/[&<>"']/g, (char) => ({
@@ -209,6 +209,7 @@ function head({ title, description, canonical, type = "website", extraMeta = "",
 ${extraMeta}    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
     <link rel="stylesheet" href="/css/themes.css?v=${ASSET_V}" />
     <link rel="stylesheet" href="/css/styles.css?v=${ASSET_V}" />
+    <link rel="stylesheet" href="/css/liquid.css?v=${ASSET_V}" />
 ${jsonLd}    <script>${THEME_BOOT}</script>`;
 }
 
@@ -389,6 +390,7 @@ export function notFoundPage() {
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
     <link rel="stylesheet" href="/css/themes.css?v=${ASSET_V}" />
     <link rel="stylesheet" href="/css/styles.css?v=${ASSET_V}" />
+    <link rel="stylesheet" href="/css/liquid.css?v=${ASSET_V}" />
     <script>${THEME_BOOT}</script>`,
     main,
   });

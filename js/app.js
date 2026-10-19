@@ -1,12 +1,15 @@
-import { esc, toast, api, formatDay, icon, appIcon, shotImg } from "./util.js?v=20260922b";
-import { bindThemeSwitch, bindGlassLight } from "./theme.js?v=20260922b";
-import { initAdmin } from "./admin.js?v=20260922b";
-import { initDanmaku } from "./danmaku.js?v=20260922b";
-import { initPalette } from "./palette.js?v=20260922b";
-import { noteHref } from "../shared/notes.mjs?v=20260922b";
+import { esc, toast, api, formatDay, icon, appIcon, shotImg } from "./util.js?v=2026101907";
+import { initMotion, refreshMotion } from "./motion.js?v=2026101907";
+import { bindThemeSwitch } from "./theme.js?v=2026101907";
+import { initAdmin } from "./admin.js?v=2026101907";
+import { initDanmaku } from "./danmaku.js?v=2026101907";
+import { initPalette } from "./palette.js?v=2026101907";
+import { noteHref } from "../shared/notes.mjs?v=2026101907";
 
 const RESEARCH = "https://fresearch.cc.cd/";
 const TELEGRAM_URL = "https://t.me/chaestgetrichbot";
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+let marqueePlaying = true;
 
 const state = {
   site: null,
@@ -23,7 +26,9 @@ export function getState() {
 }
 
 export function setAdmin(on) {
-  state.admin = Boolean(on);
+  const next = Boolean(on);
+  const changed = state.admin !== next;
+  state.admin = next;
   document.body.classList.toggle("admin", state.admin);
   const button = document.getElementById("openAdminBtn");
   if (button) {
@@ -31,7 +36,7 @@ export function setAdmin(on) {
     button.querySelector("span").textContent = state.admin ? "编辑中" : "管理";
     button.setAttribute("aria-label", state.admin ? "当前已进入编辑模式" : "打开管理入口");
   }
-  if (state.site) render();
+  if (state.site && changed) render();
 }
 
 export function setContent({ site, notes, watchlist, now }) {
@@ -77,23 +82,15 @@ function socialById(id) {
 function renderHero() {
   const profile = state.site.profile;
   const projects = liveProjects();
-  document.getElementById("profileKicker").innerHTML = `${icon("spark")} ${esc(profile.kicker)}`;
-  document.getElementById("profileName").textContent = profile.name;
+  document.getElementById("profileKicker").textContent = profile.kicker;
+  document.getElementById("profileName").innerHTML = `${esc(profile.name)}<span class="name-dot" aria-hidden="true">.</span>`;
   document.getElementById("profileTitle").textContent = profile.title;
   document.getElementById("profileBio").textContent = profile.bio;
   const github = socialById("github");
-  const mail = socialById("email");
-  const coffee = socialById("bmc");
-  const twitter = socialById("x");
-  const telegram = socialById("telegram");
   document.getElementById("heroActions").innerHTML = [
-    coffee?.href
-      ? `<a class="btn primary" href="${esc(coffee.href)}" target="_blank" rel="noopener">${appIcon("coffee", 22)} 请我喝杯咖啡</a>`
-      : `<a class="btn primary" href="#sites">${icon("compass")} 看看我的作品</a>`,
-    github?.href ? `<a class="btn" rel="me noopener" href="${esc(github.href)}" target="_blank">${appIcon("github", 22)} GitHub</a>` : "",
-    twitter?.href ? `<a class="btn" rel="me noopener" href="${esc(twitter.href)}" target="_blank">${appIcon("x", 22)} X</a>` : "",
-    telegram?.href ? `<a class="btn" href="${esc(telegram.href)}" target="_blank" rel="noopener">${appIcon("telegram", 22)} Telegram</a>` : "",
-    mail?.href ? `<a class="btn" href="${esc(mail.href)}">${appIcon("mail", 22)} 写信</a>` : "",
+    `<a class="btn primary" href="#sites">探索作品 <span aria-hidden="true">↘</span></a>`,
+    github?.href ? `<a class="hero-link" rel="me noopener" href="${esc(github.href)}" target="_blank">GitHub <span aria-hidden="true">↗</span></a>` : "",
+    `<a class="hero-link" href="/about/">关于我 <span aria-hidden="true">↗</span></a>`,
   ].join("");
   const nowText = state.now?.text || "";
   const nowBox = document.getElementById("profileNow");
@@ -109,8 +106,23 @@ function renderHero() {
     <div class="stat"><b>${projects.length}</b><span>在线站点</span></div>
     <div class="stat"><b>${noteCount}</b><span>条观点</span></div>
     <div class="stat"><b>${stockCount}</b><span>只在盯</span></div>
-    ${visits ? `<div class="stat"><b>${visits.toLocaleString("zh-CN")}</b><span>次到访</span></div>` : ""}
+    ${visits ? `<div class="stat"><b>${visits.toLocaleString("zh-CN", { notation: "compact", maximumFractionDigits: 1 })}</b><span>次到访</span></div>` : ""}
   `;
+}
+
+function renderScene() {
+  const scene = document.getElementById("sceneApps");
+  if (!scene) return;
+  const projects = liveProjects().slice(0, 5);
+  scene.innerHTML = projects.map((item, i) => `
+    <div class="scene-app scene-app-${i}"><div class="scene-float">
+      <a class="scene-chip glass${i === 0 ? " scene-featured" : ""}" data-tint="${esc(item.tint || "blue")}" href="${esc(item.live)}" target="_blank" rel="noopener">
+        ${i === 0 && item.shot ? `<div class="scene-preview">${shotImg(item.shot, "")}</div>` : ""}
+        <span class="scene-app-copy">${appIcon(item.icon || "book", 48)}<span><small>${esc(item.tag)}</small><strong>${esc(item.name)}</strong></span><span class="scene-arrow" aria-hidden="true">↗</span></span>
+      </a>
+    </div></div>
+  `).join("");
+  scene.closest(".liquid-scene").hidden = !projects.length;
 }
 
 function siteCardHtml(item, clone) {
@@ -154,23 +166,28 @@ function renderSites() {
   setSectionVisible("siteGrid", items.length > 0);
   const track = document.getElementById("siteGrid");
   if (!track) return;
-  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  // 卡片够多才横滚;管理态(要用编辑按钮)/减少动态 退回普通 grid
-  const wantMarquee = !state.admin && !reduceMotion && items.length >= 4;
+  const reduceMotion = reducedMotion.matches;
+  const canMarquee = !state.admin && !reduceMotion && items.length >= 4;
   const build = (clone) => items.map((item) => siteCardHtml(item, clone)).join("");
-  // 无缝循环的关键:轨道里放两组相同卡片,动画平移 -50% 正好一整组
-  track.innerHTML = wantMarquee ? build(false) + build(true) : build(false);
-  document.body.classList.toggle("marquee-on", wantMarquee);
-  if (wantMarquee) {
-    // 按轨道半宽换算时长,保持滚动速度恒定(约 65px/s)
+  track.innerHTML = canMarquee ? build(false) + build(true) : build(false);
+  document.body.classList.toggle("marquee-on", canMarquee);
+  syncMarqueeButton(canMarquee);
+  if (canMarquee) {
     requestAnimationFrame(() => {
       const half = track.scrollWidth / 2;
-      const dur = Math.min(90, Math.max(22, Math.round(half / 65)));
-      track.style.setProperty("--board-dur", `${dur}s`);
+      track.style.setProperty("--board-dur", `${Math.min(110, Math.max(28, half / 48))}s`);
     });
-  } else {
-    track.style.removeProperty("--board-dur");
-  }
+  } else track.style.removeProperty("--board-dur");
+}
+
+function syncMarqueeButton(canMarquee = !state.admin && !reducedMotion.matches && visibleProjects().length >= 4) {
+  const toggle = document.getElementById("toggleMarqueeBtn");
+  if (!toggle) return;
+  toggle.hidden = !canMarquee;
+  toggle.setAttribute("aria-pressed", String(canMarquee && marqueePlaying));
+  toggle.innerHTML = `<span aria-hidden="true">${marqueePlaying ? "Ⅱ" : "▷"}</span><span>${marqueePlaying ? "暂停流动" : "继续流动"}</span>`;
+  // Pause the existing CSS timeline; never replace cards or reset their position.
+  document.body.classList.toggle("marquee-paused", !marqueePlaying);
 }
 
 function renderNotes() {
@@ -259,11 +276,13 @@ function applyHealth() {
 export function render() {
   if (!state.site) return;
   renderHero();
+  renderScene();
   renderSites();
   renderNotes();
   renderWatch();
   renderContact();
   applyHealth();
+  refreshMotion();
 }
 
 async function loadStaticSeed() {
@@ -306,9 +325,9 @@ async function loadHealth() {
 
 async function initialize() {
   bindThemeSwitch();
-  bindGlassLight();
   await loadContent();
   render();
+  initMotion();
   try {
     const session = await api("/api/session");
     setAdmin(Boolean(session.admin));
@@ -318,6 +337,14 @@ async function initialize() {
   initAdmin();
   initDanmaku();
   initPalette();
+  document.getElementById("toggleMarqueeBtn")?.addEventListener("click", () => {
+    marqueePlaying = !marqueePlaying;
+    syncMarqueeButton();
+  });
+  reducedMotion.addEventListener?.("change", () => {
+    renderSites();
+    refreshMotion();
+  });
   // 这两个都是装饰性的，失败就安静地保持静态兜底
   loadHealth().catch(() => {});
   countVisit().catch(() => {});
