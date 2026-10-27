@@ -7,7 +7,7 @@ export const SITE_NAME = "chaestblog";
 export const AUTHOR = "Chase Xie";
 export const TWITTER = "@johny_xie";
 // CSS / JS 的防缓存版本号。改了样式或脚本就 bump 这里和 index.html 里的 ?v=。
-export const ASSET_V = "2026102002";
+export const ASSET_V = "2026102701";
 
 export function escapeHtml(value) {
   return String(value ?? "").replace(/[&<>"']/g, (char) => ({
@@ -206,7 +206,7 @@ function head({ title, description, canonical, type = "website", extraMeta = "",
     <meta name="twitter:title" content="${escapeHtml(title)}" />
     <meta name="twitter:description" content="${escapeHtml(description)}" />
     <meta name="twitter:image" content="${ORIGIN}/assets/og.jpg" />
-${extraMeta}    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+${extraMeta}    <link rel="icon" type="image/jpeg" href="/assets/avatar.jpg?v=${ASSET_V}" />
     <link rel="stylesheet" href="/css/themes.css?v=${ASSET_V}" />
     <link rel="stylesheet" href="/css/styles.css?v=${ASSET_V}" />
     <link rel="stylesheet" href="/css/liquid.css?v=${ASSET_V}" />
@@ -387,7 +387,7 @@ export function notFoundPage() {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>页面不存在 · ${AUTHOR}</title>
     <meta name="robots" content="noindex" />
-    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+    <link rel="icon" type="image/jpeg" href="/assets/avatar.jpg?v=${ASSET_V}" />
     <link rel="stylesheet" href="/css/themes.css?v=${ASSET_V}" />
     <link rel="stylesheet" href="/css/styles.css?v=${ASSET_V}" />
     <link rel="stylesheet" href="/css/liquid.css?v=${ASSET_V}" />

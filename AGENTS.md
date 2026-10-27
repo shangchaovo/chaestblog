@@ -80,6 +80,8 @@ bash scripts/deploy-pages.sh    # 手动发生产(需 env:CLOUDFLARE_API_TOKEN +
 
 Liquid UI 的材质与动画在 `css/liquid.css` 和 `js/motion.js`：首屏真实项目悬浮桌面、灰阶环境光、玻璃边缘/高光、分层入场、鼠标弹簧倾斜/磁吸、导航滑块、点击涟漪、主题过渡。保持原生 ESM、无第三方依赖。连续动画优先直接动画 transform/opacity；材质模糊保持静态，不逐帧改变 filter/渐变。JS 只在交互弹簧未收敛时调度 rAF，离屏和后台暂停装饰，尊重减少动态/透明度偏好。内容更新、探活和访问计数不得重播首屏动画。项目桌面也必须来自 `/api/content`，不能硬编码覆盖线上内容。
 
+`js/glass.js` 为 Chromium 的导航和首屏五个浮窗生成静态圆角边缘 SVG 位移图；只在尺寸变化时更新，不为跑马灯卡片生成滤镜。Safari / Firefox 保留 CSS 磨砂与双层高光。内容重绘时回收旧滤镜，减少透明度时禁用折射。按压回弹使用独立的 `scale` 动画，与原有倾斜/浮动叠加，失焦、取消触摸、管理态和减少动态时清理。
+
 ## 部署
 
 两种方式发 Cloudflare Pages(项目名 `chaestblog`,生产分支 `main`),**都只增量上传同一组受控文件**:`index.html`、`404.html`、`robots.txt`、`rss.xsl`、`_headers` + 目录 `assets/ css/ js/ data/ functions/ shared/ about/ notes/ rss/`:

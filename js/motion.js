@@ -1,4 +1,5 @@
-import { initHeroMotion } from "./hero.js?v=2026102002";
+import { initHeroMotion } from "./hero.js?v=2026102701";
+import { initGlass, refreshGlass } from "./glass.js?v=2026102701";
 
 // A shared, event-driven spring loop. Idle pages use CSS/WAAPI, not a JS ticker.
 let started = false;
@@ -22,6 +23,31 @@ let indicator;
 let indicatorSpring;
 let progress;
 let scrollFrame = 0;
+let pressed;
+const pressAnimations = new Map();
+
+function animatePress(element, keyframes, options) {
+  pressAnimations.get(element)?.cancel();
+  const animation = element.animate(keyframes, options);
+  pressAnimations.set(element, animation);
+  animation.finished.then(() => {
+    if (pressAnimations.get(element) === animation && options.fill !== "forwards") pressAnimations.delete(element);
+  }).catch(() => {});
+}
+
+function releasePress() {
+  if (!pressed) return;
+  const { element } = pressed;
+  pressed = null;
+  const scale = getComputedStyle(element).scale;
+  animatePress(element, [{ scale: scale === "none" ? "1" : scale }, { scale: "1.025 .985", offset: .5 }, { scale: ".997 1.003", offset: .75 }, { scale: "1" }], { duration: 520, easing: "cubic-bezier(.2,.7,.2,1)" });
+}
+
+function cancelPress() {
+  pressed = null;
+  for (const animation of pressAnimations.values()) animation.cancel();
+  pressAnimations.clear();
+}
 
 function wake(spring) {
   moving.add(spring);
@@ -87,10 +113,14 @@ function followSurface(element, event) {
       sheen.className = "glass-sheen";
       sheen.setAttribute("aria-hidden", "true");
       element.append(sheen);
+      const caustic = document.createElement("span");
+      caustic.className = "glass-caustic";
+      caustic.setAttribute("aria-hidden", "true");
+      element.append(caustic);
     }
     const light = springFor(sheen, 2, ([x,y]) => { sheen.style.transform = `translate3d(${x - 190}px,${y - 190}px,0)`; }, 24);
     const tilt = springFor(element, 2, ([x,y]) => {
-      element.style.transform = Math.abs(x) + Math.abs(y) < .001 ? "" : `perspective(900px) rotateX(${y}deg) rotateY(${x}deg)`;
+      element.style.transform = Math.abs(x) + Math.abs(y) < .001 ? "" : `perspective(900px) rotateX(${y}deg) rotateY(${x}deg) scale(${1 + Math.abs(x) * .003},${1 + Math.abs(y) * .003})`;
     });
     hovered = { element, bounds: element.getBoundingClientRect(), light, tilt };
     const x = event.clientX - hovered.bounds.left;
@@ -102,7 +132,7 @@ function followSurface(element, event) {
   const x = event.clientX - bounds.left;
   const y = event.clientY - bounds.top;
   light.target = [x,y];
-  tilt.target = [(x / bounds.width - .5) * 5, (.5 - y / bounds.height) * 4];
+  tilt.target = [Math.max(-.5, Math.min(.5, x / bounds.width - .5)) * 7, Math.max(-.5, Math.min(.5, .5 - y / bounds.height)) * 6];
   wake(light);
   wake(tilt);
 }
@@ -175,6 +205,8 @@ function reveal(entries) {
 
 export function refreshMotion() {
   if (!started) return;
+  refreshGlass();
+  if (document.body.classList.contains("admin")) { clearPointer(); cancelPress(); }
   // Retire detached admin/content renders without keeping old nodes alive.
   for (const item of moving) if (!item.element.isConnected) moving.delete(item);
   document.querySelectorAll(".section-head, .board-marquee, .repo-card, .note, .sector, .contact, .archive-note, .rss-entry").forEach((node) => {
@@ -188,6 +220,7 @@ export function refreshMotion() {
 
 function syncPreference() {
   clearPointer();
+  cancelPress();
   if (reduce.matches) {
     cancelAnimationFrame(frame);
     frame = 0;
@@ -211,6 +244,7 @@ export function initMotion() {
   initHeroMotion();
   reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
   fine = window.matchMedia("(hover: hover) and (pointer: fine)");
+  initGlass();
   revealObserver = new IntersectionObserver(reveal, { threshold: .08 });
   visibilityObserver = new IntersectionObserver((entries) => {
     for (const { target, isIntersecting } of entries) target.classList.toggle("is-offscreen", !isIntersecting);
@@ -241,11 +275,14 @@ export function initMotion() {
     nav.append(bar);
   }
   document.addEventListener("pointermove", movePointer, { passive: true });
-  document.addEventListener("pointerleave", clearPointer);
+  document.addEventListener("pointerleave", () => { clearPointer(); cancelPress(); });
   document.addEventListener("pointerdown", (event) => {
-    if (reduce.matches) return;
-    const button = event.target.closest?.(".btn, .hero-link, .theme-btn, .marquee-toggle");
-    if (!button) return;
+    if (reduce.matches || document.body.classList.contains("admin") || event.button !== 0) return;
+    const button = event.target.closest?.(".btn, .scene-chip, .theme-btn, .marquee-toggle, .palette-entry, .dock-toggle, .avatar-frame, .nav-more summary");
+    if (!button || button.disabled) return;
+    releasePress();
+    pressed = { element: button, pointerId: event.pointerId };
+    animatePress(button, [{ scale: "1" }, { scale: ".965 .94" }], { duration: 140, easing: "ease-out", fill: "forwards" });
     const bounds = button.getBoundingClientRect();
     const ripple = document.createElement("span");
     ripple.className = "tap-ripple";
@@ -256,6 +293,9 @@ export function initMotion() {
     const animation = ripple.animate([{ transform: "scale(.1)", opacity: .8 }, { transform: "scale(2.8)", opacity: 0 }], { duration: 650, easing: "cubic-bezier(.2,.7,.2,1)" });
     animation.finished.finally(() => ripple.remove()).catch(() => {});
   }, { passive: true });
+  document.addEventListener("pointerup", (event) => { if (event.pointerId === pressed?.pointerId) releasePress(); }, { passive: true });
+  document.addEventListener("pointercancel", cancelPress, { passive: true });
+  window.addEventListener("blur", () => { clearPointer(); cancelPress(); });
   window.addEventListener("scroll", () => {
     if (scrollFrame) return;
     scrollFrame = requestAnimationFrame(() => {
@@ -272,6 +312,8 @@ export function initMotion() {
   document.addEventListener("visibilitychange", () => {
     document.body.classList.toggle("motion-hidden", document.hidden);
     if (document.hidden) {
+      clearPointer();
+      cancelPress();
       cancelAnimationFrame(frame);
       frame = 0;
     } else if (moving.size) wake(moving.values().next().value);
