@@ -46,6 +46,7 @@ python3 scripts/test-api.py    # 接口 + 页面冒烟
 node --experimental-vm-modules scripts/test-modules.mjs # 单次启动、共享状态和模块版本
 node scripts/test-home-function.mjs # 线上首页函数、KV 失败回退和响应头
 node scripts/test-assistant.mjs # 内容范围、流式回答、限额、私网中转与安全渲染
+node scripts/test-assistant-workerd.mjs # 使用已安装的 Wrangler，在 Cloudflare 本身的运行时验证接口
 python3 scripts/test-assistant-ui.py # 已启动本机服务时运行；需开发机的 Playwright / Chrome
 python3 scripts/make-webp.py   # 新增截图后生成同名 WebP
 node scripts/build-static.mjs  # 重新生成 404.html

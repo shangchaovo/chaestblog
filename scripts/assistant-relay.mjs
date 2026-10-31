@@ -71,7 +71,7 @@ const server = http.createServer(async (req, res) => {
     }
     if (!reserveBudget()) { json(res, 429, "Daily budget reached"); return; }
     const upstream = await fetch(`${base}/chat/completions`, {
-      method: "POST", signal: controller.signal, redirect: "error",
+      method: "POST", signal: controller.signal, redirect: "manual",
       headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json", Accept: "text/event-stream" },
       body: JSON.stringify({ model: ASSISTANT_MODEL, messages: messages.map(({ role, content }) => ({ role, content })), max_tokens: 1800, stream: true }),
     });

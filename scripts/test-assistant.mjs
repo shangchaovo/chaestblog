@@ -77,6 +77,7 @@ try {
   assert.equal(sent.body.model, ASSISTANT_MODEL);
   assert.equal(sent.body.max_tokens, 1800);
   assert.equal(sent.options.headers.Authorization, "Bearer test-key");
+  assert.equal(sent.options.redirect, "manual", "Reject redirects without forwarding credentials; compatible with workerd");
   assert.ok(sent.body.messages[0].content.includes("Current KV author"));
   assert.ok(sent.body.messages[0].content.includes("Current long article"));
   assert.ok(sent.body.messages[0].content.includes("VERIFIED_PUBLIC_EXCERPT"));

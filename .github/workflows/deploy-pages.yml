@@ -20,6 +20,10 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v4
+      - name: Verify assistant and Workers runtime
+        run: |
+          node scripts/test-assistant.mjs
+          npx --yes --package wrangler@4.113.0 --call 'node scripts/test-assistant-workerd.mjs'
       - name: Stage Pages files
         run: |
           set -euo pipefail

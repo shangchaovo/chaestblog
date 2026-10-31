@@ -181,7 +181,7 @@ export async function assistantResponse({ request, body, env, loadContent, consu
   let upstream;
   try {
     upstream = await fetcher(relay || `${base}/chat/completions`, {
-      method: "POST", signal: controller.signal, redirect: "error",
+      method: "POST", signal: controller.signal, redirect: "manual",
       headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json", Accept: "text/event-stream" },
       body: JSON.stringify({ model: ASSISTANT_MODEL, messages: [{ role: "system", content: assistantPrompt(sources) }, ...messages], stream: true, max_tokens: 1800 }),
     });
