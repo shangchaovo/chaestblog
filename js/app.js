@@ -1,12 +1,13 @@
-import { esc, toast, api, formatDay, icon, appIcon, shotImg } from "./util.js?v=2026102701";
-import { initMotion, refreshMotion } from "./motion.js?v=2026102701";
-import { bindThemeSwitch } from "./theme.js?v=2026102701";
-import { initAdmin } from "./admin.js?v=2026102701";
-import { initDanmaku } from "./danmaku.js?v=2026102701";
-import { initPalette } from "./palette.js?v=2026102701";
-import { noteHref } from "../shared/notes.mjs?v=2026102701";
-import { renderHeroTitle } from "./hero.js?v=2026102701";
-import { initMarquee, refreshMarquee } from "./marquee.js?v=2026102701";
+import { esc, toast, api, formatDay, icon, appIcon, shotImg } from "./util.js?v=2026103101";
+import { initMotion, refreshMotion } from "./motion.js?v=2026103101";
+import { bindThemeSwitch } from "./theme.js?v=2026103101";
+import { initAdmin } from "./admin.js?v=2026103101";
+import { initDanmaku } from "./danmaku.js?v=2026103101";
+import { initPalette } from "./palette.js?v=2026103101";
+import { noteHref } from "../shared/notes.mjs?v=2026103101";
+import { renderHeroTitle } from "./hero.js?v=2026103101";
+import { initMarquee, refreshMarquee } from "./marquee.js?v=2026103101";
+import { initAssistant } from "./assistant.js?v=2026103101";
 
 const RESEARCH = "https://fresearch.cc.cd/";
 const TELEGRAM_URL = "https://t.me/chaestgetrichbot";
@@ -356,6 +357,7 @@ async function initialize() {
   initAdmin();
   initDanmaku();
   initPalette();
+  initAssistant();
   document.getElementById("toggleMarqueeBtn")?.addEventListener("click", () => {
     marqueePlaying = !marqueePlaying;
     syncMarqueeButton();

@@ -28,6 +28,7 @@
 - **⌘K**（或按 `/`）：搜站点、观点、板块，也能切主题。
 - **玻璃 / 护眼 / 墨夜** 三套主题；没选过就跟系统深色模式。
 - 右下角可以留言。RSS：[`/rss.xml`](https://chaestblog.pages.dev/rss.xml)
+- **站点助理**：右下角「问问助理」，了解项目用途、按需求找入口、解读公开观点；回答逐字出现，附可点击出处，支持停止、新对话和复制，首页与子页都能使用。
 
 无构建、无框架、无第三方依赖：静态 HTML/CSS + 原生 ESM，线上走 Cloudflare Pages Functions。
 
@@ -44,6 +45,8 @@ node server.js         # http://127.0.0.1:8777
 python3 scripts/test-api.py    # 接口 + 页面冒烟
 node --experimental-vm-modules scripts/test-modules.mjs # 单次启动、共享状态和模块版本
 node scripts/test-home-function.mjs # 线上首页函数、KV 失败回退和响应头
+node scripts/test-assistant.mjs # 内容范围、流式回答、限额、私网中转与安全渲染
+python3 scripts/test-assistant-ui.py # 已启动本机服务时运行；需开发机的 Playwright / Chrome
 python3 scripts/make-webp.py   # 新增截图后生成同名 WebP
 node scripts/build-static.mjs  # 重新生成 404.html
 ```
@@ -61,6 +64,41 @@ node scripts/build-static.mjs  # 重新生成 404.html
 - **线上**写进 KV（`HUB_KV`），只改仓库里的 `data/*.json` 不会改变线上。
 - **本机**写进 `data/site.json`、`data/notes.json`、`data/watchlist.json`、`data/now.json`、`data/danmaku.json`。
 - 每次保存留最近 10 个版本；登录状态 7 天。
+
+## AI 站点助理
+
+使用 Magpie 列表中的 `workbuddy/deepseek-v4.1-flash`，固定模型由服务端决定。浏览器只访问本站 `/api/assistant`，密钥不进入 HTML、JS、对话或公开数据。默认回答围绕当前公开目录，不作全网实时搜索，也不把本机私有文件当知识库。
+
+每次提问从与 `/api/content` 相同的 KV 键读取作者介绍、项目、观点全文、关注与近况，再结合 `data/assistant.json` 中的公开页面 / README 摘录。删除或隐藏项目、修改项目地址、删除观点后，旧摘录会被排除。仓库部署说明只作技术背景，不用于断言当前线上服务状态。数字引用及下方出处卡片由服务端提供的资料列表生成；模型返回的 HTML 和任意链接不会直接执行。
+
+本机直连：在不入库的 `.env` 中配置 `MAGPIE_BASE_URL`（含 `/v1`）、`MAGPIE_API_KEY`。随后正常启动 `node server.js`。刷新公开摘录：
+
+```bash
+python3 scripts/sync-assistant-knowledge.py
+# 本机网络需要代理时：
+python3 scripts/sync-assistant-knowledge.py --proxy http://127.0.0.1:1082
+```
+
+当 Magpie 只在 Tailscale 私网中时，Pages 通过独立鉴权的 HTTPS 中转访问：
+
+```text
+浏览器 → 本站 Pages Function（读取当前 KV 内容）
+       → HTTPS 中转（独立口令、固定模型、调用限额）
+       → 私网 Magpie → DeepSeek 4.1 Flash
+```
+
+私网设备的 `.env` 额外配置 32 字符以上的随机 `ASSISTANT_RELAY_TOKEN`，运行 `node scripts/assistant-relay.mjs`。它只监听 `127.0.0.1:8778`，开放需鉴权的 `/chat` 与 `/healthz`，不提供模型列表、管理或任意目标代理。可用 `python3 scripts/install-assistant-relay.py` 安装 macOS 登录自启与退出重启；日志只记录服务启动 / 故障，应用不写入聊天正文。项目外盘必须保持挂载。
+
+当前通过 Tailscale Funnel 的独立 HTTPS 8443 端口连接；原有其他端口保持各自服务。Pages **生产环境**配置 `ASSISTANT_RELAY_URL`（完整 HTTPS `/chat` 地址）与 Secret 类型的 `ASSISTANT_RELAY_TOKEN`，然后重新部署。远端口令与私网设备一致，Magpie 主密钥只在私网设备上。此模式依赖中转设备开机、网络与 Tailscale 正常；离线时助理给出可重试提示，站点内容仍可浏览。
+
+为限制公开调用，Pages 在 KV 中按匿名化 IP 每小时最多 12 次、全站每天 180 次，KV 配额为尽力限制；中转另有持久化的每日 240 次硬上限和 3 个并发上限，每次最多 1800 输出 token。应用不持久化对话，窗口收起后保留本页对话，刷新 / 换页清空。停止、关闭或超时会取消正在生成的请求，半途断流会明确标记未完成。
+
+停止本机中转（按需手动操作）：
+
+```bash
+launchctl bootout gui/$(id -u) ~/Library/LaunchAgents/com.chaestblog.assistant.plist
+tailscale funnel --https=8443 off
+```
 
 ## 部署
 

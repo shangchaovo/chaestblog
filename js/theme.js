@@ -1,4 +1,4 @@
-import { THEMES } from "./util.js?v=2026102701";
+import { THEMES } from "./util.js?v=2026103101";
 
 export function applyTheme(theme, persist) {
   const next = THEMES.includes(theme) ? theme : "liquid";

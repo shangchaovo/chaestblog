@@ -1,5 +1,5 @@
-import { initHeroMotion } from "./hero.js?v=2026102701";
-import { initGlass, refreshGlass } from "./glass.js?v=2026102701";
+import { initHeroMotion } from "./hero.js?v=2026103101";
+import { initGlass, refreshGlass } from "./glass.js?v=2026103101";
 
 // A shared, event-driven spring loop. Idle pages use CSS/WAAPI, not a JS ticker.
 let started = false;

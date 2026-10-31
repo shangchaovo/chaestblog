@@ -9,6 +9,20 @@ const PORT = Number(process.env.PORT || 8777);
 // shared/ 是 ESM（functions/ 也从那里取同一份规则和模板），CJS 这边用动态 import 装载
 let rules = null;
 let view = null;
+let assistant = null;
+const assistantCounts = new Map();
+const assistantQuota = {
+  get(key) {
+    const entry = assistantCounts.get(key);
+    if (entry && entry.expires > Date.now()) return entry.value;
+    assistantCounts.delete(key);
+    return null;
+  },
+  put(key, value, { expirationTtl }) {
+    for (const [id, entry] of assistantCounts) if (entry.expires <= Date.now()) assistantCounts.delete(id);
+    assistantCounts.set(key, { value, expires: Date.now() + expirationTtl * 1000 });
+  },
+};
 
 function loadEnv() {
   const file = path.join(ROOT, ".env");
@@ -254,11 +268,14 @@ function readBody(req, limit = 200_000) {
   return new Promise((resolve, reject) => {
     const chunks = [];
     let size = 0;
+    let tooLarge = false;
     req.on("data", (chunk) => {
+      if (tooLarge) return;
       size += chunk.length;
       if (size > limit) {
+        tooLarge = true;
+        chunks.length = 0;
         reject(Object.assign(new Error("内容太大"), { status: 413 }));
-        req.destroy();
         return;
       }
       chunks.push(chunk);
@@ -271,6 +288,32 @@ function readBody(req, limit = 200_000) {
 async function handleApi(req, res, url) {
   const route = url.pathname.replace(/\/+$/, "") || "/";
   const secure = url.protocol === "https:" || req.headers["x-forwarded-proto"] === "https";
+
+  if (route === "/api/assistant") {
+    const controller = new AbortController();
+    const request = new Request(url, { method: req.method, headers: req.headers, signal: controller.signal });
+    assistant.checkAssistantRequest(request);
+    const body = JSON.parse((await readBody(req, assistant.ASSISTANT_BODY_LIMIT)) || "{}");
+    const abort = () => controller.abort();
+    res.once("close", abort);
+    try {
+      const response = await assistant.assistantResponse({
+        request, body, env: process.env,
+        consumeQuota: () => assistant.consumeAssistantQuota(assistantQuota, clientIp(req)),
+        loadContent: async () => ({
+          content: Object.fromEntries(["site", "notes", "watchlist", "now"].map((key) => [key, readJson(`${key}.json`, {})])),
+          knowledge: readJson("assistant.json", {}),
+        }),
+      });
+      res.writeHead(response.status, Object.fromEntries(response.headers));
+      for await (const chunk of response.body) {
+        if (res.destroyed) break;
+        res.write(chunk);
+      }
+      res.end();
+    } finally { res.off("close", abort); }
+    return;
+  }
 
   if (route === "/api/session" && req.method === "GET") {
     sendJson(res, 200, { admin: isAdmin(req) });
@@ -535,14 +578,16 @@ const server = http.createServer(async (req, res) => {
     if (renderDynamic(res, url.pathname)) return;
     send(res, 404, fs.readFileSync(path.join(ROOT, "404.html")), { "Content-Type": MIME[".html"] });
   } catch (error) {
+    if (res.headersSent || res.destroyed) { res.end(); return; }
     const status = error.status || (error instanceof SyntaxError ? 400 : 500);
-    sendJson(res, status, { error: error.message || "服务器出错了" });
+    sendJson(res, status, { error: error.message || "服务器出错了" }, error.retryAfter ? { "Retry-After": String(error.retryAfter) } : {});
   }
 });
 
 (async () => {
   rules = await import("./shared/rules.mjs");
   view = await import("./shared/view.mjs");
+  assistant = await import("./shared/assistant.mjs");
   server.listen(PORT, "127.0.0.1", () => {
     console.log(`Chase hub http://127.0.0.1:${PORT}`);
   });

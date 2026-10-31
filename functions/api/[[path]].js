@@ -30,6 +30,7 @@ import {
   bumpHits,
   readHits,
 } from "../_utils.js";
+import { ASSISTANT_BODY_LIMIT, assistantResponse, checkAssistantRequest, consumeAssistantQuota } from "../../shared/assistant.mjs";
 
 function routeName(context) {
   const parts = context.params.path;
@@ -69,6 +70,28 @@ export async function onRequest(context) {
   const method = request.method;
 
   try {
+    if (route === "assistant") {
+      checkAssistantRequest(request);
+      const body = await readJson(request, ASSISTANT_BODY_LIMIT);
+      return await assistantResponse({
+        request, body, env,
+        consumeQuota: async () => {
+          if (!env.HUB_KV) throw Object.assign(new Error("助理暂时不可用，请稍后再试"), { status: 503 });
+          await consumeAssistantQuota(env.HUB_KV, request.headers.get("CF-Connecting-IP") || "unknown");
+        },
+        loadContent: async () => {
+          const values = await Promise.all([
+            readStore(env, request, "site", "/data/site.json", { projects: [] }),
+            readStore(env, request, "notes", "/data/notes.json", { items: [] }),
+            readStore(env, request, "watchlist", "/data/watchlist.json", { sectors: [] }),
+            readStore(env, request, "now", "/data/now.json", { text: "" }),
+            env.ASSETS.fetch(new Request(new URL("/data/assistant.json", request.url))).then((r) => r.ok ? r.json() : {}).catch(() => ({})),
+          ]);
+          return { content: { site: values[0], notes: values[1], watchlist: values[2], now: values[3] }, knowledge: values[4] };
+        },
+      });
+    }
+
     if (route === "session" && method === "GET") {
       return json(200, { admin: await isAdmin(request, env) });
     }
@@ -236,6 +259,6 @@ export async function onRequest(context) {
     return json(404, { error: "找不到这个接口" });
   } catch (error) {
     const status = error.status || (error instanceof SyntaxError ? 400 : 500);
-    return json(status, { error: error.message || "服务器出错了" });
+    return json(status, { error: error.message || "服务器出错了" }, error.retryAfter ? { "Retry-After": String(error.retryAfter) } : {});
   }
 }
