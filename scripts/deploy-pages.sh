@@ -18,7 +18,7 @@ for dir in assets css js data functions shared about notes rss; do
 done
 
 # 默认发生产分支 main。不指定 --branch 时 wrangler 会跟当前 git 分支走，变成预览部署。
-npx -y wrangler@4.113.0 pages deploy "$STAGE" \
+npx -y wrangler@4.151.3 pages deploy "$STAGE" \
   --project-name "${CLOUDFLARE_PAGES_PROJECT:-chaestblog}" \
   --branch "${CLOUDFLARE_PAGES_BRANCH:-main}" \
   --commit-dirty=true

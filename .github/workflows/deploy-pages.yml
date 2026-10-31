@@ -23,7 +23,7 @@ jobs:
       - name: Verify assistant and Workers runtime
         run: |
           node scripts/test-assistant.mjs
-          npx --yes --package wrangler@4.113.0 --call 'node scripts/test-assistant-workerd.mjs'
+          npx --yes --package wrangler@4.151.3 --call 'node scripts/test-assistant-workerd.mjs'
       - name: Stage Pages files
         run: |
           set -euo pipefail
@@ -41,5 +41,5 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: "7cc8529bb0488ee3f2e232fb6d79a875"
-          wranglerVersion: "4.113.0"
+          wranglerVersion: "4.151.3"
           command: pages deploy dist --project-name chaestblog --branch main --commit-dirty=true
